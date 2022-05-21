@@ -15,6 +15,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Composable Sheep Animations"
+rootProject.name = "Composable Sheep"
 include ':app'
 include ':design'

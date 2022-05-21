@@ -32,8 +32,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = ModuleExtension.jvmTarget
@@ -68,4 +68,6 @@ dependencies {
     kapt(libs.jetpack.lifecycle.compiler)
     kapt(libs.hilt.compiler)
     kapt(libs.room.compiler)
+
+    debugImplementation(libs.debug.compose.ui.tooling)
 }
