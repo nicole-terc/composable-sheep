@@ -11,9 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ComposableSheepAnimations">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".screens.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.ComposableSheepAnimations">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

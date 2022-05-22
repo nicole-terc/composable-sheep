@@ -1,4 +1,4 @@
-package nstv.sheep.sheep
+package nstv.sheep.maths
 
 import androidx.compose.ui.geometry.Offset
 import kotlin.math.PI
@@ -91,8 +91,8 @@ fun getCurveControlPoint(p1: Offset, p2: Offset, center: Offset): Offset {
 }
 
 fun getMiddlePoint(p1: Offset, p2: Offset): Offset {
-    val x = (p2.x - p1.x).div(2).plus(p1.x)
-    val y = (p2.y - p1.y).div(2).plus(p1.y)
+    val x = (p2.x + p1.x).div(2)
+    val y = (p2.y + p1.y).div(2)
     return Offset(x, y)
 }
 

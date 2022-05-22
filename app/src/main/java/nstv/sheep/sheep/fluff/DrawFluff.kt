@@ -8,12 +8,12 @@ import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
-import nstv.sheep.sheep.FullCircleAngleInRadians
+import nstv.sheep.maths.FullCircleAngleInRadians
+import nstv.sheep.maths.distanceToOffset
+import nstv.sheep.maths.getCircumferencePointForAngle
+import nstv.sheep.maths.getCurveControlPoint
+import nstv.sheep.maths.getMiddlePoint
 import nstv.sheep.sheep.Sheep
-import nstv.sheep.sheep.distanceToOffset
-import nstv.sheep.sheep.getCircumferencePointForAngle
-import nstv.sheep.sheep.getCurveControlPoint
-import nstv.sheep.sheep.getMiddlePoint
 
 fun DrawScope.drawFluff(
     circleCenterOffset: Offset,

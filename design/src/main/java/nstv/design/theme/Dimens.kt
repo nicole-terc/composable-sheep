@@ -53,4 +53,3 @@ object TextUnit {
 val GridCellMinWidth = 70.dp
 val GridCellWidth = 64.dp
 val FabSize = 72.dp
-val RanddoButtonSize = 48.dp

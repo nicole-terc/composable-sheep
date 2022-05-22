@@ -1,4 +1,4 @@
-package nstv.sheep.ui.sheepscreen
+package nstv.sheep.screens.sheepscreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
