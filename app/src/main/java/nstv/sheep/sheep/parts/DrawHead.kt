@@ -5,7 +5,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import nstv.sheep.sheep.drawRectGuideline
+import nstv.sheep.guidelines.drawRectGuideline
 import nstv.sheep.sheep.model.Sheep
 
 fun DrawScope.drawHead(

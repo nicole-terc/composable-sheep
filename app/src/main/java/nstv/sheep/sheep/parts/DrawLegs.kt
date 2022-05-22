@@ -1,5 +1,6 @@
 package nstv.sheep.sheep.parts
 
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -8,10 +9,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
+import nstv.sheep.guidelines.GuidelineAlpha
+import nstv.sheep.guidelines.GuidelineDashPattern
+import nstv.sheep.guidelines.GuidelineStrokeWidth
 import nstv.sheep.maths.getCircumferencePointForAngle
-import nstv.sheep.sheep.GuidelineAlpha
-import nstv.sheep.sheep.GuidelineDashPattern
-import nstv.sheep.sheep.GuidelineStrokeWidth
 import nstv.sheep.sheep.model.Sheep
 
 private const val OverlapPercentage = 0.5f
@@ -48,10 +49,11 @@ fun DrawScope.drawLegs(
             degrees = leg.rotationDegrees,
             pivot = legPointInCircumference
         ) {
-            drawRect(
+            drawRoundRect(
                 color = sheep.legColor,
                 topLeft = topLeft,
-                size = legSize
+                size = legSize,
+                cornerRadius = CornerRadius(20f)
             )
         }
 

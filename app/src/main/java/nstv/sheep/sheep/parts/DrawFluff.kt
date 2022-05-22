@@ -7,14 +7,14 @@ import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
+import nstv.sheep.guidelines.GuidelineAlpha
+import nstv.sheep.guidelines.drawCenterAxis
+import nstv.sheep.guidelines.drawGrid
 import nstv.sheep.maths.FullCircleAngleInRadians
 import nstv.sheep.maths.distanceToOffset
 import nstv.sheep.maths.getCircumferencePointForAngle
 import nstv.sheep.maths.getCurveControlPoint
 import nstv.sheep.maths.getMiddlePoint
-import nstv.sheep.sheep.GuidelineAlpha
-import nstv.sheep.sheep.GuidelineDashPattern
-import nstv.sheep.sheep.GuidelineStrokeWidth
 import nstv.sheep.sheep.model.Sheep
 
 fun DrawScope.drawFluff(
@@ -24,30 +24,17 @@ fun DrawScope.drawFluff(
     showGuidelines: Boolean = false
 ) {
 
-    val fluffPoints =
-        getFluffPoints(
-            sheep = sheep,
-            radius = circleRadius,
-            circleCenter = circleCenterOffset
-        )
+    val fluffPoints: List<Offset> = getFluffPoints(
+        sheep = sheep,
+        radius = circleRadius,
+        circleCenter = circleCenterOffset
+    )
 
-    val fluffPath = Path().apply {
-        var currentPoint =
-            getCircumferencePointForAngle(
-                Math.toRadians(0.0),
-                circleRadius,
-                circleCenterOffset
-            )
-        moveTo(currentPoint.x, currentPoint.y)
-
-        fluffPoints.forEach { fluffPoint ->
-            val controlPoint =
-                getCurveControlPoint(currentPoint, fluffPoint, circleCenterOffset)
-            quadraticBezierTo(controlPoint.x, controlPoint.y, fluffPoint.x, fluffPoint.y)
-            currentPoint = fluffPoint
-        }
-        close()
-    }
+    val fluffPath = getFluffPath(
+        circleCenterOffset = circleCenterOffset,
+        circleRadius = circleRadius,
+        fluffPoints = fluffPoints
+    )
 
     drawPath(path = fluffPath, color = sheep.fluffColor)
 
@@ -60,6 +47,64 @@ fun DrawScope.drawFluff(
     }
 }
 
+fun getFluffPath(
+    circleCenterOffset: Offset,
+    circleRadius: Float,
+    sheep: Sheep
+) = getFluffPath(
+    circleCenterOffset = circleCenterOffset,
+    circleRadius = circleRadius,
+    fluffPoints = getFluffPoints(
+        sheep = sheep,
+        radius = circleRadius,
+        circleCenter = circleCenterOffset
+    )
+)
+
+fun getFluffPath(
+    circleCenterOffset: Offset,
+    circleRadius: Float,
+    fluffPoints: List<Offset> = emptyList(),
+) = Path().apply {
+    var currentPoint = getCircumferencePointForAngle(
+        Math.toRadians(0.0),
+        circleRadius,
+        circleCenterOffset
+    )
+
+    moveTo(currentPoint.x, currentPoint.y)
+
+    fluffPoints.forEach { fluffPoint ->
+        val controlPoint = getCurveControlPoint(currentPoint, fluffPoint, circleCenterOffset)
+        quadraticBezierTo(controlPoint.x, controlPoint.y, fluffPoint.x, fluffPoint.y)
+        currentPoint = fluffPoint
+    }
+
+    close()
+}
+
+private fun getFluffPoints(
+    sheep: Sheep,
+    radius: Float,
+    circleCenter: Offset = Offset.Zero,
+    totalAngleInRadians: Double = FullCircleAngleInRadians
+): List<Offset> {
+    val fluffPoints = mutableListOf<Offset>()
+
+    var totalPercentage = 0.0
+    sheep.fluffChunksPercentages.forEach { fluffPercentage ->
+        totalPercentage += fluffPercentage
+        fluffPoints.add(
+            getCircumferencePointForAngle(
+                totalPercentage.div(100.0).times(totalAngleInRadians),
+                radius,
+                circleCenter
+            )
+        )
+    }
+    return fluffPoints
+}
+
 private fun DrawScope.drawFluffGuidelines(
     circleCenterOffset: Offset,
     circleRadius: Float,
@@ -70,24 +115,6 @@ private fun DrawScope.drawFluffGuidelines(
         color = Color.Blue.copy(alpha = GuidelineAlpha.strong),
         center = center,
         radius = circleRadius
-    )
-
-    // Vertical Axis from Circle Center
-    drawLine(
-        color = Color.LightGray,
-        strokeWidth = GuidelineStrokeWidth,
-        pathEffect = GuidelineDashPattern,
-        start = Offset(circleCenterOffset.x, 0f),
-        end = Offset(circleCenterOffset.x, size.height)
-    )
-
-    // Horizontal Axis from Circle Center
-    drawLine(
-        color = Color.LightGray,
-        strokeWidth = GuidelineStrokeWidth,
-        pathEffect = GuidelineDashPattern,
-        start = Offset(0f, circleCenterOffset.y),
-        end = Offset(size.width, circleCenterOffset.y)
     )
 
     // Current fluff point in circumference
@@ -119,15 +146,6 @@ private fun DrawScope.drawFluffGuidelines(
         currentPointGuidelines = fluffPoint
     }
 
-    // Center point of Main Circle
-    drawPoints(
-        listOf(circleCenterOffset),
-        color = Color.White,
-        pointMode = PointMode.Points,
-        cap = StrokeCap.Round,
-        strokeWidth = 16.dp.toPx()
-    )
-
     // Fluff points (start/end of fluff curves)
     drawPoints(
         fluffPoints,
@@ -145,25 +163,8 @@ private fun DrawScope.drawFluffGuidelines(
         cap = StrokeCap.Butt,
         strokeWidth = 8.dp.toPx()
     )
-}
 
-private fun getFluffPoints(
-    sheep: Sheep,
-    radius: Float,
-    circleCenter: Offset = Offset.Zero,
-    totalAngleInRadians: Double = FullCircleAngleInRadians
-): List<Offset> {
-    val fluffPoints = mutableListOf<Offset>()
-    var totalPercentage = 0.0
-    sheep.fluffChunksPercentages.forEach { fluffPercentage ->
-        totalPercentage += fluffPercentage
-        fluffPoints.add(
-            getCircumferencePointForAngle(
-                totalPercentage.div(100.0).times(totalAngleInRadians),
-                radius,
-                circleCenter
-            )
-        )
-    }
-    return fluffPoints
+    // Draw axis at the end
+    drawGrid()
+    drawCenterAxis()
 }

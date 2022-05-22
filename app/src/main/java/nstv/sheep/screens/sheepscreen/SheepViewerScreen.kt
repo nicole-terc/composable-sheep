@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
@@ -15,7 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
+import nstv.design.theme.Grid
 import nstv.sheep.sheep.SheepComposable
 import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.FourLegs
@@ -36,12 +35,7 @@ val legs = listOf(
 )
 
 @Composable
-fun SheepViewerScreen() {
-    SheepViewer()
-}
-
-@Composable
-private fun SheepViewer() {
+fun SheepViewerScreen(modifier: Modifier = Modifier) {
     val showGuidelines = remember { mutableStateOf(false) }
     val fluffStyleIndex = remember { mutableStateOf(0) }
     val legsIndex = remember { mutableStateOf(0) }
@@ -56,7 +50,7 @@ private fun SheepViewer() {
         }
 
     Column(
-        modifier = Modifier.padding(16.dp)
+        modifier = modifier
     ) {
         SheepComposable(
             sheep = sheep.value,
@@ -71,7 +65,7 @@ private fun SheepViewer() {
                 "| ${floor(sheep.value.headAngle)}°"
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(Grid.Two))
 
         val valueRange = -30f..30f
 

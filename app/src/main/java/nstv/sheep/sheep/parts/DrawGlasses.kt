@@ -6,8 +6,8 @@ import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import nstv.sheep.sheep.GuidelineAlpha
-import nstv.sheep.sheep.drawRectGuideline
+import nstv.sheep.guidelines.GuidelineAlpha
+import nstv.sheep.guidelines.drawRectGuideline
 
 fun DrawScope.drawGlasses(
     headTopLeft: Offset,
