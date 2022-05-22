@@ -83,13 +83,15 @@ fun DrawScope.drawGlasses(
         drawGlassGuidelines(
             topLeft = leftGlassTopLeft,
             size = glassSize,
-            degrees = glassAngle
+            degrees = glassAngle,
+            headCenter = headCenter
         )
 
         drawGlassGuidelines(
             topLeft = rightGlassTopLeft,
             size = glassSize,
-            degrees = glassAngle
+            degrees = glassAngle,
+            headCenter = headCenter
         )
     }
 }
@@ -97,17 +99,23 @@ fun DrawScope.drawGlasses(
 private fun DrawScope.drawGlassGuidelines(
     topLeft: Offset,
     size: Size,
-    degrees: Float
+    degrees: Float,
+    headCenter: Offset,
 ) {
-    drawRectGuideline(
-        topLeft = topLeft,
-        size = size,
-        degrees = degrees
-    )
+    rotate(
+        degrees = degrees,
+        pivot = headCenter
+    ) {
+        drawRectGuideline(
+            topLeft = topLeft,
+            size = size,
+            degrees = degrees
+        )
 
-    drawCircle(
-        color = Color.Magenta.copy(GuidelineAlpha.normal),
-        radius = size.width.div(2f),
-        center = topLeft + size.center
-    )
+        drawCircle(
+            color = Color.Magenta.copy(GuidelineAlpha.normal),
+            radius = size.width.div(2f),
+            center = topLeft + size.center
+        )
+    }
 }

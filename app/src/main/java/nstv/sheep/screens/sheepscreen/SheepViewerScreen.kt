@@ -1,16 +1,19 @@
 package nstv.sheep.screens.sheepscreen
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import nstv.sheep.sheep.SheepComposable
@@ -18,6 +21,7 @@ import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.FourLegs
 import nstv.sheep.sheep.model.Sheep
 import nstv.sheep.sheep.model.TwoLegsStraight
+import kotlin.math.floor
 
 val fluffStyles = listOf(
     "Random" to FluffStyle.Random(),
@@ -61,9 +65,27 @@ private fun SheepViewer() {
                 .aspectRatio(1f),
             showGuidelines = showGuidelines.value
         )
-        Text(text = "${fluffStyles[fluffStyleIndex.value].first} - ${legs[legsIndex.value].first}")
+        Text(
+            text = "${fluffStyles[fluffStyleIndex.value].first} " +
+                "| ${legs[legsIndex.value].first} " +
+                "| ${floor(sheep.value.headAngle)}°"
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
+
+        val valueRange = -30f..30f
+
+        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+            Text(text = "Head Angle:")
+            Slider(
+                value = sheep.value.headAngle,
+                valueRange = valueRange,
+                onValueChange = {
+                    sheep.value = sheep.value.copy(headAngle = it)
+                }
+            )
+        }
+
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
@@ -75,7 +97,8 @@ private fun SheepViewer() {
                     }
                 sheep.value = Sheep(
                     fluffStyle = fluffStyles[fluffStyleIndex.value].second,
-                    legs = legs[legsIndex.value].second
+                    legs = legs[legsIndex.value].second,
+                    headAngle = sheep.value.headAngle
                 )
             }
         ) {

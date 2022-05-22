@@ -67,7 +67,7 @@ private fun DrawScope.drawFluffGuidelines(
 ) {
     // Base Circle
     drawCircle(
-        color = Color.Black.copy(alpha = GuidelineAlpha.strong),
+        color = Color.Black.copy(alpha = GuidelineAlpha.normal),
         center = center,
         radius = circleRadius
     )

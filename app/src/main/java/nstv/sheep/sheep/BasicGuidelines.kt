@@ -13,8 +13,8 @@ const val GuidelineStrokeWidth = 3f
 val GuidelineDashPattern = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
 
 object GuidelineAlpha {
-    const val strong: Float = 0.9f
-    const val normal: Float = 0.5f
+    const val strong: Float = 0.8f
+    const val normal: Float = 0.4f
     const val low: Float = 0.2f
 }
 
