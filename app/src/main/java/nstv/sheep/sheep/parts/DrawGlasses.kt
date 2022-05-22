@@ -14,6 +14,7 @@ fun DrawScope.drawGlasses(
     headSize: Size,
     headAngle: Float,
     headCenter: Offset,
+    color: Color = Color.Black,
     singleGlassHeadRatio: Float = 0.45f,
     glassOverlapPercentage: Float = 0.25f,
     glassOffsetFromHeadCenter: Float = 0.9f,
@@ -51,7 +52,7 @@ fun DrawScope.drawGlasses(
 
         // Left glass
         drawArc(
-            color = Color.Black,
+            color = color,
             startAngle = 0f,
             sweepAngle = 180f,
             useCenter = true,
@@ -61,7 +62,7 @@ fun DrawScope.drawGlasses(
 
         // Right glass
         drawArc(
-            color = Color.Black,
+            color = color,
             startAngle = 0f,
             sweepAngle = 180f,
             useCenter = true,
@@ -71,7 +72,7 @@ fun DrawScope.drawGlasses(
 
         // Bridge
         drawLine(
-            color = Color.Black,
+            color = color,
             start = leftGlassTopLeft + glassSize.center.times(1.4f),
             end = rightGlassTopLeft + glassSize.center.times(1.4f),
             strokeWidth = 6f

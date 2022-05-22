@@ -10,8 +10,10 @@ import androidx.compose.ui.unit.dp
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.Sheep
+import nstv.sheep.sheep.model.TwoLegsStraight
 import nstv.sheep.sheep.parts.drawFluff
 import nstv.sheep.sheep.parts.drawHead
+import nstv.sheep.sheep.parts.drawLegs
 
 @Composable
 fun SheepComposable(
@@ -25,6 +27,13 @@ fun SheepComposable(
 
         val circleRadius = canvasWidth * 0.3f
         val circleCenterOffset = Offset(canvasWidth / 2f, canvasHeight / 2f)
+
+        drawLegs(
+            circleCenterOffset = circleCenterOffset,
+            circleRadius = circleRadius,
+            sheep = sheep,
+            showGuidelines = showGuidelines
+        )
 
         drawFluff(
             circleCenterOffset = circleCenterOffset,
@@ -47,6 +56,17 @@ fun SheepComposable(
 private fun PreviewSheep() {
     ComposableSheepAnimationsTheme {
         SheepComposable(modifier = Modifier.size(300.dp), sheep = Sheep(FluffStyle.Random()))
+    }
+}
+
+@Preview(showBackground = true, widthDp = 320)
+@Composable
+private fun PreviewSheepTwoLeg() {
+    ComposableSheepAnimationsTheme {
+        SheepComposable(
+            modifier = Modifier.size(300.dp),
+            sheep = Sheep(FluffStyle.Random(), legs = TwoLegsStraight())
+        )
     }
 }
 

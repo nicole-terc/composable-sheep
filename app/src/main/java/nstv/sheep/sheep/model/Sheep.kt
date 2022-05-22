@@ -1,13 +1,19 @@
 package nstv.sheep.sheep.model
 
+import androidx.compose.ui.graphics.Color
 import kotlin.random.Random
 
 private const val DefaultHeadRotationAngle = -10f
 
 data class Sheep(
-    val fluffStyle: FluffStyle,
-    val fluffChunksPercentages: List<Double> = getFluffPercentages(fluffStyle = fluffStyle),
+    val fluffStyle: FluffStyle = FluffStyle.Random(),
     val headAngle: Float = DefaultHeadRotationAngle,
+    val legs: List<Leg> = FourLegs(),
+    val fluffColor: Color = Color.Blue,
+    val headColor: Color = Color.DarkGray,
+    val legColor: Color = Color.DarkGray,
+    val glassesColor: Color = Color.Black,
+    val fluffChunksPercentages: List<Double> = getFluffPercentages(fluffStyle = fluffStyle)
 )
 
 private fun getFluffPercentages(

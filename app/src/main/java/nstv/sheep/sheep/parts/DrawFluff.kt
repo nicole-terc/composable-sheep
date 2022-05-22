@@ -49,7 +49,7 @@ fun DrawScope.drawFluff(
         close()
     }
 
-    drawPath(path = fluffPath, color = Color.Blue.copy(alpha = 0.7f))
+    drawPath(path = fluffPath, color = sheep.fluffColor)
 
     if (showGuidelines) {
         drawFluffGuidelines(
@@ -121,7 +121,7 @@ private fun DrawScope.drawFluffGuidelines(
 
     // Center point of Main Circle
     drawPoints(
-        mutableListOf(circleCenterOffset),
+        listOf(circleCenterOffset),
         color = Color.White,
         pointMode = PointMode.Points,
         cap = StrokeCap.Round,

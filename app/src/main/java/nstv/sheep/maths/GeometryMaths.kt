@@ -96,9 +96,9 @@ fun getMiddlePoint(p1: Offset, p2: Offset): Offset {
     return Offset(x, y)
 }
 
-fun getRectTopLeftOfPoints(p1: Offset, p2: Offset) = Offset(
-    x = if (p1.x < p2.x) p1.x else p2.x,
-    y = if (p1.y < p2.y) p1.y else p2.y
+fun getRectTopLeftForDiagonal(lineStart: Offset, lineEnd: Offset) = Offset(
+    x = if (lineStart.x < lineEnd.x) lineStart.x else lineEnd.x,
+    y = if (lineStart.y < lineEnd.y) lineStart.y else lineEnd.y
 )
 
 /**
