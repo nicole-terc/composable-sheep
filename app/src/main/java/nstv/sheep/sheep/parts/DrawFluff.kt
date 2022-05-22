@@ -1,9 +1,8 @@
-package nstv.sheep.sheep.fluff
+package nstv.sheep.sheep.parts
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -13,7 +12,10 @@ import nstv.sheep.maths.distanceToOffset
 import nstv.sheep.maths.getCircumferencePointForAngle
 import nstv.sheep.maths.getCurveControlPoint
 import nstv.sheep.maths.getMiddlePoint
-import nstv.sheep.sheep.Sheep
+import nstv.sheep.sheep.GuidelineAlpha
+import nstv.sheep.sheep.GuidelineDashPattern
+import nstv.sheep.sheep.GuidelineStrokeWidth
+import nstv.sheep.sheep.model.Sheep
 
 fun DrawScope.drawFluff(
     circleCenterOffset: Offset,
@@ -58,14 +60,14 @@ fun DrawScope.drawFluff(
     }
 }
 
-fun DrawScope.drawFluffGuidelines(
+private fun DrawScope.drawFluffGuidelines(
     circleCenterOffset: Offset,
     circleRadius: Float,
     fluffPoints: List<Offset>,
 ) {
     // Base Circle
     drawCircle(
-        color = Color.Black.copy(alpha = 0.8f),
+        color = Color.Black.copy(alpha = GuidelineAlpha.strong),
         center = center,
         radius = circleRadius
     )
@@ -73,8 +75,8 @@ fun DrawScope.drawFluffGuidelines(
     // Vertical Axis from Circle Center
     drawLine(
         color = Color.LightGray,
-        strokeWidth = 3f,
-        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f)),
+        strokeWidth = GuidelineStrokeWidth,
+        pathEffect = GuidelineDashPattern,
         start = Offset(circleCenterOffset.x, 0f),
         end = Offset(circleCenterOffset.x, size.height)
     )
@@ -82,8 +84,8 @@ fun DrawScope.drawFluffGuidelines(
     // Horizontal Axis from Circle Center
     drawLine(
         color = Color.LightGray,
-        strokeWidth = 3f,
-        pathEffect = PathEffect.dashPathEffect(floatArrayOf(10f, 10f)),
+        strokeWidth = GuidelineStrokeWidth,
+        pathEffect = GuidelineDashPattern,
         start = Offset(0f, circleCenterOffset.y),
         end = Offset(size.width, circleCenterOffset.y)
     )
@@ -102,14 +104,14 @@ fun DrawScope.drawFluffGuidelines(
 
         // Circles used to obtain reference point for Quadratic Bezier Curve
         drawCircle(
-            color = Color.Cyan.copy(alpha = 0.5f),
+            color = Color.Cyan.copy(alpha = GuidelineAlpha.normal),
             radius = middlePoint.distanceToOffset(fluffPoint).div(2),
             center = middlePoint
         )
 
         // Lines between 2 fluff points
         drawLine(
-            color = Color.Red.copy(alpha = 0.9f),
+            color = Color.Red.copy(alpha = GuidelineAlpha.strong),
             start = currentPointGuidelines,
             end = fluffPoint
         )
@@ -138,7 +140,7 @@ fun DrawScope.drawFluffGuidelines(
     // Mid points between 2 fluff points
     drawPoints(
         midPoints,
-        color = Color.Yellow.copy(alpha = 0.2f),
+        color = Color.Yellow.copy(alpha = GuidelineAlpha.low),
         pointMode = PointMode.Points,
         cap = StrokeCap.Butt,
         strokeWidth = 8.dp.toPx()

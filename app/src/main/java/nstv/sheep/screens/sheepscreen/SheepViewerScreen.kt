@@ -13,14 +13,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nstv.sheep.sheep.Sheep
 import nstv.sheep.sheep.SheepComposable
-import nstv.sheep.sheep.fluff.FluffStyle
+import nstv.sheep.sheep.model.FluffStyle
+import nstv.sheep.sheep.model.Sheep
 
 val fluffStyles = listOf(
     "Random" to FluffStyle.Random(),
     "Uniform" to FluffStyle.Uniform(10),
-    "Uniform Intervals" to FluffStyle.UniformIntervals(listOf(5.0, 15.0))
+    "Uniform Intervals" to FluffStyle.UniformIntervals(listOf(5.0, 15.0)),
+    "Circle" to FluffStyle.Uniform(10000)
 )
 
 @Composable

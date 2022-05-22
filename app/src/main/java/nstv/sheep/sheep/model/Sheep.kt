@@ -1,11 +1,13 @@
-package nstv.sheep.sheep
+package nstv.sheep.sheep.model
 
-import nstv.sheep.sheep.fluff.FluffStyle
 import kotlin.random.Random
+
+private const val DefaultHeadRotationAngle = -10f
 
 data class Sheep(
     val fluffStyle: FluffStyle,
-    val fluffChunksPercentages: List<Double> = getFluffPercentages(fluffStyle = fluffStyle)
+    val fluffChunksPercentages: List<Double> = getFluffPercentages(fluffStyle = fluffStyle),
+    val headAngle: Float = DefaultHeadRotationAngle,
 )
 
 private fun getFluffPercentages(
