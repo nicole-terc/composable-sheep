@@ -33,10 +33,11 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.sheep.screens.canvasbasics.LineScreen
+import nstv.sheep.screens.canvasbasics.PointsScreen
 import nstv.sheep.screens.sheepscreen.SheepViewerScreen
 
 enum class Screen {
-    SHEEP, LINE
+    SHEEP, LINE, POINTS,
 }
 
 @ExperimentalMaterial3Api
@@ -104,6 +105,7 @@ class MainActivity : ComponentActivity() {
                         when (selectedScreen) {
                             Screen.SHEEP -> SheepViewerScreen()
                             Screen.LINE -> LineScreen()
+                            Screen.POINTS -> PointsScreen()
                         }
                     }
                 }

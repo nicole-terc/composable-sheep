@@ -16,17 +16,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.graphics.StampedPathEffectStyle
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.sheep.guidelines.GuidelineDashPattern
 import nstv.sheep.guidelines.drawCenterAxis
 import nstv.sheep.guidelines.drawGrid
-import nstv.sheep.sheep.model.FluffStyle
-import nstv.sheep.sheep.model.Sheep
-import nstv.sheep.sheep.parts.getFluffPath
+import nstv.sheep.sheep.extra.getSheepPathEffect
 
 @Composable
 fun LineScreen(modifier: Modifier = Modifier) {
@@ -65,16 +61,7 @@ fun LineScreen(modifier: Modifier = Modifier) {
                 color = Color.Blue,
                 start = Offset(0f, size.center.y),
                 end = Offset(size.width, 0f),
-                pathEffect = PathEffect.stampedPathEffect(
-                    shape = getFluffPath(
-                        circleCenterOffset = Offset.Zero,
-                        circleRadius = miniFluffRadius,
-                        sheep = Sheep(fluffStyle = FluffStyle.Uniform(10))
-                    ),
-                    advance = miniFluffRadius * 3f,
-                    phase = miniFluffRadius,
-                    style = StampedPathEffectStyle.Morph
-                )
+                pathEffect = getSheepPathEffect(miniFluffRadius)
             )
         }
 
@@ -125,7 +112,7 @@ fun LineScreen(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewSheepTwoLeg() {
+private fun Preview() {
     ComposableSheepAnimationsTheme {
         LineScreen()
     }

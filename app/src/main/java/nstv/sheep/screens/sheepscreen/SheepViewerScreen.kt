@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import nstv.design.theme.Grid
+import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.sheep.SheepComposable
 import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.FourLegs
@@ -22,14 +23,14 @@ import nstv.sheep.sheep.model.Sheep
 import nstv.sheep.sheep.model.TwoLegsStraight
 import kotlin.math.floor
 
-val fluffStyles = listOf(
+private val fluffStyles = listOf(
     "Random" to FluffStyle.Random(),
     "Uniform" to FluffStyle.Uniform(10),
     "Uniform Intervals" to FluffStyle.UniformIntervals(listOf(5.0, 15.0)),
     "Circle" to FluffStyle.Uniform(10000)
 )
 
-val legs = listOf(
+private val legs = listOf(
     "Two Legs" to TwoLegsStraight(),
     "Four Legs" to FourLegs(),
 )
@@ -83,12 +84,7 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                fluffStyleIndex.value =
-                    if (fluffStyleIndex.value + 1 >= fluffStyles.size) {
-                        0
-                    } else {
-                        fluffStyleIndex.value + 1
-                    }
+                fluffStyleIndex.value = fluffStyles.nextIndexLoop(fluffStyleIndex.value)
                 sheep.value = Sheep(
                     fluffStyle = fluffStyles[fluffStyleIndex.value].second,
                     legs = legs[legsIndex.value].second,
@@ -103,12 +99,7 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                legsIndex.value =
-                    if (legsIndex.value + 1 >= legs.size) {
-                        0
-                    } else {
-                        legsIndex.value + 1
-                    }
+                legsIndex.value = legs.nextIndexLoop(legsIndex.value)
                 sheep.value = sheep.value.copy(legs = legs[legsIndex.value].second)
             }
         ) {
