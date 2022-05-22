@@ -13,9 +13,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import nstv.sheep.sheep.FluffStyle
 import nstv.sheep.sheep.Sheep
 import nstv.sheep.sheep.SheepComposable
+import nstv.sheep.sheep.fluff.FluffStyle
 
 val fluffStyles = listOf(
     "Random" to FluffStyle.Random(),

@@ -1,5 +1,6 @@
 package nstv.sheep.sheep
 
+import nstv.sheep.sheep.fluff.FluffStyle
 import kotlin.random.Random
 
 data class Sheep(

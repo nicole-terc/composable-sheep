@@ -1,4 +1,4 @@
-package nstv.sheep.sheep
+package nstv.sheep.sheep.fluff
 
 const val MinAnglePercentage = 10.0
 const val MaxAnglePercentage = 20.0
