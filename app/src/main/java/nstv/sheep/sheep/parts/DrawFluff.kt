@@ -67,7 +67,7 @@ private fun DrawScope.drawFluffGuidelines(
 ) {
     // Base Circle
     drawCircle(
-        color = Color.Black.copy(alpha = GuidelineAlpha.normal),
+        color = Color.Blue.copy(alpha = GuidelineAlpha.strong),
         center = center,
         radius = circleRadius
     )
@@ -140,7 +140,7 @@ private fun DrawScope.drawFluffGuidelines(
     // Mid points between 2 fluff points
     drawPoints(
         midPoints,
-        color = Color.Yellow.copy(alpha = GuidelineAlpha.low),
+        color = Color.Yellow.copy(alpha = GuidelineAlpha.normal),
         pointMode = PointMode.Points,
         cap = StrokeCap.Butt,
         strokeWidth = 8.dp.toPx()
