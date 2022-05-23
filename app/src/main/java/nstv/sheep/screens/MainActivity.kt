@@ -34,10 +34,11 @@ import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.sheep.screens.canvasbasics.LineScreen
 import nstv.sheep.screens.canvasbasics.PointsScreen
+import nstv.sheep.screens.canvasbasics.ShapeScreen
 import nstv.sheep.screens.sheepscreen.SheepViewerScreen
 
 enum class Screen {
-    SHEEP, LINE, POINTS,
+    SHEEP, LINE, POINTS, SHAPE
 }
 
 @ExperimentalMaterial3Api
@@ -106,6 +107,7 @@ class MainActivity : ComponentActivity() {
                             Screen.SHEEP -> SheepViewerScreen()
                             Screen.LINE -> LineScreen()
                             Screen.POINTS -> PointsScreen()
+                            Screen.SHAPE -> ShapeScreen()
                         }
                     }
                 }

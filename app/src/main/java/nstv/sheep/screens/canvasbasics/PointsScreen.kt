@@ -16,9 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.PointMode
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
@@ -26,26 +24,6 @@ import nstv.design.theme.components.LabeledText
 import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.guidelines.drawCenterAxis
 import nstv.sheep.guidelines.drawGrid
-import nstv.sheep.sheep.extra.getSheepPathEffect
-
-val pointModeOptions = listOf(
-    "Points" to PointMode.Points,
-    "Lines" to PointMode.Lines,
-    "Polygon" to PointMode.Polygon,
-)
-
-val strokeCapOptions = listOf(
-    "Butt" to StrokeCap.Butt,
-    "Round" to StrokeCap.Round,
-    "Square" to StrokeCap.Square,
-)
-
-val pathEffectOptions = listOf(
-    "None" to null,
-    "Corner" to PathEffect.cornerPathEffect(40f),
-    "Dash" to PathEffect.dashPathEffect(floatArrayOf(40f, 40f)),
-    "Stamped" to getSheepPathEffect(20f),
-)
 
 @Composable
 fun PointsScreen(modifier: Modifier = Modifier) {
