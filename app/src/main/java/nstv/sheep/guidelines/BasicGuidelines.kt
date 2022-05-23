@@ -82,10 +82,10 @@ fun DrawScope.drawGrid(
     }
 }
 
-fun DrawScope.drawAxisFromPoint(
-    colorX: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
-    colorY: Color = colorX,
-    colorCenter: Color = colorX,
+fun DrawScope.drawAxis(
+    color: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
+    colorX: Color = color,
+    colorY: Color = color,
     pathEffect: PathEffect = GuidelineDashPattern,
     lineStrokeWidth: Float = GuidelineStrokeWidth,
     axisCenter: Offset = size.center
@@ -95,8 +95,8 @@ fun DrawScope.drawAxisFromPoint(
         color = colorX,
         strokeWidth = lineStrokeWidth,
         pathEffect = pathEffect,
-        start = Offset(0f, size.center.y),
-        end = Offset(size.width, size.center.y)
+        start = Offset(0f, axisCenter.y),
+        end = Offset(size.width, axisCenter.y)
     )
 
     // Vertical Axis from Circle Center
@@ -104,20 +104,21 @@ fun DrawScope.drawAxisFromPoint(
         color = colorY,
         strokeWidth = lineStrokeWidth,
         pathEffect = pathEffect,
-        start = Offset(size.center.x, 0f),
-        end = Offset(size.center.x, size.height)
+        start = Offset(axisCenter.x, 0f),
+        end = Offset(axisCenter.x, size.height)
     )
 
-    drawCenterPoint(colorCenter, lineStrokeWidth.times(4f))
+    drawPoint(color, lineStrokeWidth.times(4f), offset = axisCenter)
 }
 
-fun DrawScope.drawCenterPoint(
+fun DrawScope.drawPoint(
     color: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
     strokeWidth: Float = Grid.One.toPx(),
+    offset: Offset = size.center
 ) {
     // Center point of Main Circle
     drawPoints(
-        listOf(size.center),
+        listOf(offset),
         color = color,
         pointMode = PointMode.Points,
         cap = StrokeCap.Round,

@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,9 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
+import nstv.design.theme.components.LabeledText
+import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.guidelines.GuidelineAlpha
-import nstv.sheep.guidelines.drawCenterPoint
 import nstv.sheep.guidelines.drawGrid
+import nstv.sheep.guidelines.drawPoint
 import nstv.sheep.guidelines.drawRectGuideline
 
 @Composable
@@ -32,12 +36,15 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
     var showRoundRect by remember { mutableStateOf(false) }
     var showOval by remember { mutableStateOf(false) }
     var showGuidelines by remember { mutableStateOf(true) }
+    var drawStyleIndex by remember { mutableStateOf(0) }
 
     Canvas(
         modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f)
     ) {
+
+        val drawStyle = drawStyleOptions[drawStyleIndex].second
 
         val shapeSize = Size(size.width.times(0.9f), size.height.times(0.6f))
 
@@ -50,7 +57,8 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
             drawCircle(
                 color = Color.Blue.copy(alpha = GuidelineAlpha.strong),
                 radius = shapeSize.minDimension.div(2),
-                center = size.center
+                center = size.center,
+                style = drawStyle
             )
         }
 
@@ -58,7 +66,8 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
             drawRect(
                 color = Color.Red.copy(alpha = GuidelineAlpha.normal),
                 size = shapeSize,
-                topLeft = topLeft
+                topLeft = topLeft,
+                style = drawStyle
             )
         }
 
@@ -67,7 +76,8 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
                 color = Color.Cyan.copy(alpha = GuidelineAlpha.normal),
                 size = shapeSize,
                 topLeft = topLeft,
-                cornerRadius = CornerRadius(100f)
+                cornerRadius = CornerRadius(100f),
+                style = drawStyle
             )
         }
 
@@ -75,13 +85,14 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
             drawOval(
                 color = Color.Yellow.copy(alpha = GuidelineAlpha.normal),
                 size = shapeSize,
-                topLeft = topLeft
+                topLeft = topLeft,
+                style = drawStyle
             )
         }
 
         if (showGuidelines) {
             drawGrid()
-            drawCenterPoint()
+            drawPoint()
 
             if (showOval || showRect || showRoundRect) {
                 drawRectGuideline(
@@ -94,6 +105,18 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
     }
 
     Spacer(modifier = Modifier.height(Grid.Two))
+
+    LabeledText("DrawStyle: ", drawStyleOptions[drawStyleIndex].first)
+
+    Button(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            drawStyleIndex = drawStyleOptions.nextIndexLoop(drawStyleIndex)
+        }
+    ) {
+        val text = "Change DrawStyle"
+        Text(text = text)
+    }
 
     CheckBoxLabel(
         text = "Show Circle",

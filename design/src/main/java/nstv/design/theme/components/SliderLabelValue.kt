@@ -24,6 +24,7 @@ fun SliderLabelValue(
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+    onValueChangeFinished: () -> Unit = {}
 ) {
     Row(
         modifier,
@@ -41,7 +42,8 @@ fun SliderLabelValue(
                 .padding(horizontal = Grid.One),
             value = value,
             valueRange = valueRange,
-            onValueChange = { onValueChange(round(it)) }
+            onValueChange = { onValueChange(round(it)) },
+            onValueChangeFinished = onValueChangeFinished
         )
         Text(
             modifier = Modifier

@@ -8,7 +8,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
 import nstv.sheep.guidelines.GuidelineAlpha
-import nstv.sheep.guidelines.drawAxisFromPoint
+import nstv.sheep.guidelines.drawAxis
 import nstv.sheep.guidelines.drawGrid
 import nstv.sheep.maths.FullCircleAngleInRadians
 import nstv.sheep.maths.distanceToOffset
@@ -166,5 +166,5 @@ private fun DrawScope.drawFluffGuidelines(
 
     // Draw axis at the end
     drawGrid()
-    drawAxisFromPoint()
+    drawAxis()
 }

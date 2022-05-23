@@ -32,13 +32,14 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
+import nstv.sheep.screens.canvasbasics.ArcScreen
 import nstv.sheep.screens.canvasbasics.LineScreen
 import nstv.sheep.screens.canvasbasics.PointsScreen
 import nstv.sheep.screens.canvasbasics.ShapeScreen
 import nstv.sheep.screens.sheepscreen.SheepViewerScreen
 
 enum class Screen {
-    SHEEP, LINE, POINTS, SHAPE
+    SHEEP, LINE, POINTS, SHAPE, ARC
 }
 
 @ExperimentalMaterial3Api
@@ -108,6 +109,7 @@ class MainActivity : ComponentActivity() {
                             Screen.LINE -> LineScreen()
                             Screen.POINTS -> PointsScreen()
                             Screen.SHAPE -> ShapeScreen()
+                            Screen.ARC -> ArcScreen()
                         }
                     }
                 }

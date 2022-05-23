@@ -23,7 +23,7 @@ import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
 import nstv.sheep.extensions.nextIndexLoop
-import nstv.sheep.guidelines.drawAxisFromPoint
+import nstv.sheep.guidelines.drawAxis
 import nstv.sheep.guidelines.drawGrid
 
 @Composable
@@ -66,7 +66,7 @@ fun PointsScreen(modifier: Modifier = Modifier) {
             )
 
             drawGrid()
-            drawAxisFromPoint()
+            drawAxis()
         }
     }
 

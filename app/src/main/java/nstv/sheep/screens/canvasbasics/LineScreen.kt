@@ -19,7 +19,7 @@ import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.sheep.guidelines.GuidelineDashPattern
-import nstv.sheep.guidelines.drawAxisFromPoint
+import nstv.sheep.guidelines.drawAxis
 import nstv.sheep.guidelines.drawGrid
 import nstv.sheep.sheep.extra.getSheepPathEffect
 
@@ -66,7 +66,7 @@ fun LineScreen(modifier: Modifier = Modifier) {
 
         if (showGuidelines) {
             drawGrid()
-            drawAxisFromPoint()
+            drawAxis()
         }
     }
 

@@ -29,7 +29,7 @@ val pathEffectOptions = listOf(
 
 val drawStyleOptions = listOf(
     "Fill" to Fill,
-    "Stroke" to Stroke
+    "Stroke" to Stroke(20f)
 )
 
 val strokeJoinOptions = listOf(
