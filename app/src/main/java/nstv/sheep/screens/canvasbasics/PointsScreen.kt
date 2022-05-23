@@ -20,9 +20,10 @@ import androidx.compose.ui.graphics.PointMode
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
+import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
 import nstv.sheep.extensions.nextIndexLoop
-import nstv.sheep.guidelines.drawCenterAxis
+import nstv.sheep.guidelines.drawAxisFromPoint
 import nstv.sheep.guidelines.drawGrid
 
 @Composable
@@ -65,7 +66,7 @@ fun PointsScreen(modifier: Modifier = Modifier) {
             )
 
             drawGrid()
-            drawCenterAxis()
+            drawAxisFromPoint()
         }
     }
 
@@ -105,14 +106,11 @@ fun PointsScreen(modifier: Modifier = Modifier) {
         Text(text = text)
     }
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showGuidelines = !showGuidelines }
-    ) {
-        val text =
-            if (showGuidelines) "Hide Guidelines" else "Show Guidelines"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Guidelines",
+        checked = showGuidelines,
+        onCheckedChange = { showGuidelines = it }
+    )
 }
 
 @Preview(showBackground = true)

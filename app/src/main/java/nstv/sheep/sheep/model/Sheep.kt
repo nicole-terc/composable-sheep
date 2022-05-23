@@ -3,7 +3,7 @@ package nstv.sheep.sheep.model
 import androidx.compose.ui.graphics.Color
 import kotlin.random.Random
 
-private const val DefaultHeadRotationAngle = -10f
+private const val DefaultHeadRotationAngle = 5f
 
 data class Sheep(
     val fluffStyle: FluffStyle = FluffStyle.Random(),

@@ -12,7 +12,8 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import nstv.design.theme.Grid
 
-const val GuidelineStrokeWidth = 3f
+const val GuidelineStrokeWidth = 5f
+const val GridStrokeWidth = 2f
 val GuidelineDashPattern = PathEffect.dashPathEffect(floatArrayOf(10f, 10f))
 
 object GuidelineAlpha {
@@ -48,7 +49,7 @@ fun DrawScope.drawGrid(
     numberOfCells: Int = 20,
     color: Color = Color.LightGray.copy(GuidelineAlpha.normal),
     pathEffect: PathEffect = GuidelineDashPattern,
-    strokeWidth: Float = 2f
+    strokeWidth: Float = GridStrokeWidth
 ) {
     val stepSize = size.minDimension.div(numberOfCells)
     var currentStepPosition = 0f
@@ -81,31 +82,33 @@ fun DrawScope.drawGrid(
     }
 }
 
-fun DrawScope.drawCenterAxis(
-    color: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
+fun DrawScope.drawAxisFromPoint(
+    colorX: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
+    colorY: Color = colorX,
+    colorCenter: Color = colorX,
     pathEffect: PathEffect = GuidelineDashPattern,
     lineStrokeWidth: Float = GuidelineStrokeWidth,
+    axisCenter: Offset = size.center
 ) {
-
-    // Vertical Axis from Circle Center
-    drawLine(
-        color = color,
-        strokeWidth = lineStrokeWidth,
-        pathEffect = pathEffect,
-        start = Offset(size.center.x, 0f),
-        end = Offset(size.center.x, size.height)
-    )
-
     // Horizontal Axis from Circle Center
     drawLine(
-        color = color,
+        color = colorX,
         strokeWidth = lineStrokeWidth,
         pathEffect = pathEffect,
         start = Offset(0f, size.center.y),
         end = Offset(size.width, size.center.y)
     )
 
-    drawCenterPoint(color)
+    // Vertical Axis from Circle Center
+    drawLine(
+        color = colorY,
+        strokeWidth = lineStrokeWidth,
+        pathEffect = pathEffect,
+        start = Offset(size.center.x, 0f),
+        end = Offset(size.center.x, size.height)
+    )
+
+    drawCenterPoint(colorCenter, lineStrokeWidth.times(4f))
 }
 
 fun DrawScope.drawCenterPoint(

@@ -10,11 +10,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import nstv.design.theme.Grid
+import nstv.design.theme.components.CheckBoxLabel
 import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.sheep.SheepComposable
 import nstv.sheep.sheep.model.FluffStyle
@@ -37,33 +40,33 @@ private val legs = listOf(
 
 @Composable
 fun SheepViewerScreen(modifier: Modifier = Modifier) {
-    val showGuidelines = remember { mutableStateOf(false) }
-    val fluffStyleIndex = remember { mutableStateOf(0) }
-    val legsIndex = remember { mutableStateOf(0) }
-    val sheep =
-        remember {
-            mutableStateOf(
-                Sheep(
-                    fluffStyle = fluffStyles[fluffStyleIndex.value].second,
-                    legs = legs[legsIndex.value].second
-                )
+    var showGuidelines by remember { mutableStateOf(false) }
+    var fluffStyleIndex by remember { mutableStateOf(0) }
+    var legsIndex by remember { mutableStateOf(0) }
+    var sheep by
+    remember {
+        mutableStateOf(
+            Sheep(
+                fluffStyle = fluffStyles[fluffStyleIndex].second,
+                legs = legs[legsIndex].second
             )
-        }
+        )
+    }
 
     Column(
         modifier = modifier
     ) {
         SheepComposable(
-            sheep = sheep.value,
+            sheep = sheep,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
-            showGuidelines = showGuidelines.value
+            showGuidelines = showGuidelines
         )
         Text(
-            text = "${fluffStyles[fluffStyleIndex.value].first} " +
-                "| ${legs[legsIndex.value].first} " +
-                "| ${floor(sheep.value.headAngle)}°"
+            text = "${fluffStyles[fluffStyleIndex].first} " +
+                "| ${legs[legsIndex].first} " +
+                "| ${floor(sheep.headAngle)}°"
         )
 
         Spacer(modifier = Modifier.height(Grid.Two))
@@ -73,10 +76,10 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
             Text(text = "Head Angle:")
             Slider(
-                value = sheep.value.headAngle,
+                value = sheep.headAngle,
                 valueRange = valueRange,
                 onValueChange = {
-                    sheep.value = sheep.value.copy(headAngle = it)
+                    sheep = sheep.copy(headAngle = it)
                 }
             )
         }
@@ -84,11 +87,11 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                fluffStyleIndex.value = fluffStyles.nextIndexLoop(fluffStyleIndex.value)
-                sheep.value = Sheep(
-                    fluffStyle = fluffStyles[fluffStyleIndex.value].second,
-                    legs = legs[legsIndex.value].second,
-                    headAngle = sheep.value.headAngle
+                fluffStyleIndex = fluffStyles.nextIndexLoop(fluffStyleIndex)
+                sheep = Sheep(
+                    fluffStyle = fluffStyles[fluffStyleIndex].second,
+                    legs = legs[legsIndex].second,
+                    headAngle = sheep.headAngle
                 )
             }
         ) {
@@ -99,21 +102,18 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         Button(
             modifier = Modifier.fillMaxWidth(),
             onClick = {
-                legsIndex.value = legs.nextIndexLoop(legsIndex.value)
-                sheep.value = sheep.value.copy(legs = legs[legsIndex.value].second)
+                legsIndex = legs.nextIndexLoop(legsIndex)
+                sheep = sheep.copy(legs = legs[legsIndex].second)
             }
         ) {
             val text = "Change Legs"
             Text(text = text)
         }
 
-        Button(
-            modifier = Modifier.fillMaxWidth(),
-            onClick = { showGuidelines.value = !showGuidelines.value }
-        ) {
-            val text =
-                if (showGuidelines.value) "Hide Guidelines" else "Show Guidelines"
-            Text(text = text)
-        }
+        CheckBoxLabel(
+            text = "Show Guidelines",
+            checked = showGuidelines,
+            onCheckedChange = { showGuidelines = it }
+        )
     }
 }

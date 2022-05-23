@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
+import nstv.design.theme.components.CheckBoxLabel
 import nstv.sheep.guidelines.GuidelineAlpha
 import nstv.sheep.guidelines.drawCenterPoint
 import nstv.sheep.guidelines.drawGrid
@@ -49,7 +48,7 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
 
         if (showCircle) {
             drawCircle(
-                color = Color.Blue.copy(alpha = GuidelineAlpha.normal),
+                color = Color.Blue.copy(alpha = GuidelineAlpha.strong),
                 radius = shapeSize.minDimension.div(2),
                 center = size.center
             )
@@ -96,50 +95,35 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
 
     Spacer(modifier = Modifier.height(Grid.Two))
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showCircle = !showCircle }
-    ) {
-        val text =
-            (if (showCircle) "Hide " else "Show ") + "Circle"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Circle",
+        checked = showCircle,
+        onCheckedChange = { showCircle = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showRect = !showRect }
-    ) {
-        val text =
-            (if (showRect) "Hide " else "Show ") + "Rect"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Rect",
+        checked = showRect,
+        onCheckedChange = { showRect = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showRoundRect = !showRoundRect }
-    ) {
-        val text =
-            (if (showRoundRect) "Hide " else "Show ") + "Round Rect"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Round Rect",
+        checked = showRoundRect,
+        onCheckedChange = { showRoundRect = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showOval = !showOval }
-    ) {
-        val text =
-            (if (showOval) "Hide " else "Show ") + "Oval"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Oval",
+        checked = showOval,
+        onCheckedChange = { showOval = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showGuidelines = !showGuidelines }
-    ) {
-        val text =
-            if (showGuidelines) "Hide Guidelines" else "Show Guidelines"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Guidelines",
+        checked = showGuidelines,
+        onCheckedChange = { showGuidelines = it }
+    )
 }
 
 @Preview(showBackground = true)

@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -19,8 +17,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
+import nstv.design.theme.components.CheckBoxLabel
 import nstv.sheep.guidelines.GuidelineDashPattern
-import nstv.sheep.guidelines.drawCenterAxis
+import nstv.sheep.guidelines.drawAxisFromPoint
 import nstv.sheep.guidelines.drawGrid
 import nstv.sheep.sheep.extra.getSheepPathEffect
 
@@ -67,47 +66,35 @@ fun LineScreen(modifier: Modifier = Modifier) {
 
         if (showGuidelines) {
             drawGrid()
-            drawCenterAxis()
+            drawAxisFromPoint()
         }
     }
 
     Spacer(modifier = Modifier.height(Grid.Two))
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showSimpleDiagonal = !showSimpleDiagonal }
-    ) {
-        val text =
-            if (showSimpleDiagonal) "Hide Simple Diagonal" else "Show Simple Diagonal"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Simple Diagonal",
+        checked = showSimpleDiagonal,
+        onCheckedChange = { showSimpleDiagonal = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showDashPattern = !showDashPattern }
-    ) {
-        val text =
-            if (showDashPattern) "Hide Dash Pattern" else "Show Dash Pattern"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Dash Pattern",
+        checked = showDashPattern,
+        onCheckedChange = { showDashPattern = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showSheepLine = !showSheepLine }
-    ) {
-        val text =
-            if (showSheepLine) "Hide Sheep Line" else "Show Sheep Line"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Sheep Line",
+        checked = showSheepLine,
+        onCheckedChange = { showSheepLine = it }
+    )
 
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = { showGuidelines = !showGuidelines }
-    ) {
-        val text =
-            if (showGuidelines) "Hide Guidelines" else "Show Guidelines"
-        Text(text = text)
-    }
+    CheckBoxLabel(
+        text = "Show Guidelines",
+        checked = showGuidelines,
+        onCheckedChange = { showGuidelines = it }
+    )
 }
 
 @Preview(showBackground = true)
