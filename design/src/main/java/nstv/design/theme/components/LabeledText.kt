@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import nstv.design.theme.ComposableSheepAnimationsTheme
 
 @Composable
 fun LabeledText(label: String, body: String) {
@@ -24,8 +25,10 @@ fun LabeledText(label: String, body: String) {
     )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    LabeledText(label = "Label: ", body = "body body")
+    ComposableSheepAnimationsTheme() {
+        LabeledText(label = "Label: ", body = "body body")
+    }
 }

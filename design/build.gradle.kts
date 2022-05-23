@@ -45,4 +45,6 @@ android {
 
 dependencies {
     api(libs.bundles.compose.design)
+    implementation(libs.compose.ui.preview)
+    debugImplementation(libs.debug.compose.ui.tooling)
 }

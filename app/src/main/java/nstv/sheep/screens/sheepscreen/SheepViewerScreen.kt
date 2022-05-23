@@ -1,23 +1,21 @@
 package nstv.sheep.screens.sheepscreen
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Button
-import androidx.compose.material3.Slider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
+import nstv.design.theme.components.SliderLabelValue
 import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.sheep.SheepComposable
 import nstv.sheep.sheep.model.FluffStyle
@@ -71,18 +69,15 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(Grid.Two))
 
-        val valueRange = -30f..30f
-
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(text = "Head Angle:")
-            Slider(
-                value = sheep.headAngle,
-                valueRange = valueRange,
-                onValueChange = {
-                    sheep = sheep.copy(headAngle = it)
-                }
-            )
-        }
+        SliderLabelValue(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Head Angle:",
+            value = sheep.headAngle,
+            onValueChange = {
+                sheep = sheep.copy(headAngle = it)
+            },
+            valueRange = -30f..30f
+        )
 
         Button(
             modifier = Modifier.fillMaxWidth(),
