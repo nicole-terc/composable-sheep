@@ -29,6 +29,7 @@ fun LineScreen(modifier: Modifier = Modifier) {
     var showDashPattern by remember { mutableStateOf(false) }
     var showSheepLine by remember { mutableStateOf(false) }
     var showGuidelines by remember { mutableStateOf(true) }
+    var showCanvasGuideline by remember { mutableStateOf(false) }
 
     Canvas(
         modifier = modifier
@@ -68,6 +69,17 @@ fun LineScreen(modifier: Modifier = Modifier) {
             drawGrid()
             drawAxis()
         }
+
+        if (showCanvasGuideline) {
+            drawGrid(color = Color.Black, numberOfCells = 10)
+            drawAxis(
+                colorX = Color.Red,
+                colorY = Color.Blue,
+                axisCenter = Offset.Zero,
+                pathEffect = null,
+                lineStrokeWidth = Grid.Half.toPx()
+            )
+        }
     }
 
     Spacer(modifier = Modifier.height(Grid.Two))
@@ -94,6 +106,12 @@ fun LineScreen(modifier: Modifier = Modifier) {
         text = "Show Guidelines",
         checked = showGuidelines,
         onCheckedChange = { showGuidelines = it }
+    )
+
+    CheckBoxLabel(
+        text = "Show Guidelines from (0,0)",
+        checked = showCanvasGuideline,
+        onCheckedChange = { showCanvasGuideline = it }
     )
 }
 

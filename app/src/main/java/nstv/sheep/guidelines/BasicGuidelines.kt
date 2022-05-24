@@ -86,7 +86,7 @@ fun DrawScope.drawAxis(
     color: Color = Color.DarkGray.copy(GuidelineAlpha.strong),
     colorX: Color = color,
     colorY: Color = color,
-    pathEffect: PathEffect = GuidelineDashPattern,
+    pathEffect: PathEffect? = GuidelineDashPattern,
     lineStrokeWidth: Float = GuidelineStrokeWidth,
     axisCenter: Offset = size.center
 ) {
