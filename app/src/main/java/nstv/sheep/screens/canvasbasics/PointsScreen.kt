@@ -113,7 +113,7 @@ fun PointsScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
     ComposableSheepAnimationsTheme {

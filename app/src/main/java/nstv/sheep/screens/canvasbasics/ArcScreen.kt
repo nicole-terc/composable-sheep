@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
+import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
@@ -182,4 +184,12 @@ fun ArcScreen(
         checked = showGuidelines,
         onCheckedChange = { showGuidelines = it }
     )
+}
+
+@Preview(showSystemUi = true)
+@Composable
+private fun Preview() {
+    ComposableSheepAnimationsTheme {
+        ArcScreen()
+    }
 }

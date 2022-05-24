@@ -55,7 +55,7 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
 
         if (showCircle) {
             drawCircle(
-                color = Color.Blue.copy(alpha = GuidelineAlpha.strong),
+                color = Color.Blue.copy(alpha = GuidelineAlpha.normal),
                 radius = shapeSize.minDimension.div(2),
                 center = size.center,
                 style = drawStyle
@@ -149,10 +149,10 @@ fun ShapeScreen(modifier: Modifier = Modifier) {
     )
 }
 
-@Preview(showBackground = true)
+@Preview(showSystemUi = true)
 @Composable
 private fun Preview() {
     ComposableSheepAnimationsTheme {
-        LineScreen()
+        ShapeScreen()
     }
 }
