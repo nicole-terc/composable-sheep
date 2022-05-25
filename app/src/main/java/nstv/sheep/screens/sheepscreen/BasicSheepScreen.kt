@@ -7,14 +7,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.ComposableSheepAnimationsTheme
+import nstv.sheep.guidelines.GuidelineDashPattern
 import nstv.sheep.guidelines.drawAxis
+import nstv.sheep.guidelines.drawPoint
 import nstv.sheep.guidelines.drawRectGuideline
+import nstv.sheep.maths.distanceToOffset
+import nstv.sheep.maths.getCircumferencePointForAngle
+import nstv.sheep.maths.getMiddlePoint
 
-private const val ShowGuidelines = true
+private const val ShowGuidelines = false
 
 @Composable
 fun BasicSheepScreen() {
@@ -92,6 +99,7 @@ fun BasicSheepScreen() {
             )
 
             if (ShowGuidelines) {
+                drawPoint()
                 drawAxis(
                     colorY = Color.Blue,
                     colorX = Color.Red
@@ -116,76 +124,70 @@ fun BasicSheepScreen() {
     )
 }
 
-fun DrawScope.drawBasicFluffCircle(
+fun DrawScope.drawSimpleFluffCircles(
     color: Color,
-    bodyRadius: Float
+    radius: Float,
+    center: Offset = size.center,
+    numberOfFluffs: Int = 10
 ) {
-    drawCircle(
-        color = color,
-        center = center,
-        radius = bodyRadius
-    )
-}
+    val fullCircleAngleInRadians = Math.toRadians(360.0)
+    val singleFluffAngle = fullCircleAngleInRadians.div(numberOfFluffs)
 
-fun DrawScope.drawBasicHead(
-    color: Color,
-    bodyRadius: Float
-) {
-    // HEAD
-    // Head size is as width as half the body (circle radius) and has a 2/3 height ratio
-    val headSize = Size(
-        width = bodyRadius,
-        height = bodyRadius.times(2f / 3f)
+    var totalAngle = 0.0 // Previous angle
+
+    var lastFluffEndOffset = getCircumferencePointForAngle(
+        angleInRadians = 0.0,
+        radius = radius,
+        circleCenter = center
     )
 
-    // Head is 1/3 out of the fluff and 1/4 above the center of the circle
-    val headTopLeft = Offset(
-        x = center.x - bodyRadius - headSize.width.div(3f),
-        y = center.y - headSize.height.div(4f)
-    )
+    while (totalAngle < fullCircleAngleInRadians) {
+        // 1. Get the next fluff end point
+        val nextFluffTotalAngle = totalAngle + singleFluffAngle
+        val nextFluffEndOffset = getCircumferencePointForAngle(
+            angleInRadians = nextFluffTotalAngle,
+            radius = radius,
+            circleCenter = center
+        )
 
-    drawOval(
-        color = color,
-        topLeft = headTopLeft,
-        size = headSize
-    )
-}
+        // 2. Get the radius of the fluff
+        val fluffRadius = lastFluffEndOffset.distanceToOffset(nextFluffEndOffset).div(2)
 
-fun DrawScope.drawBasicLegs(
-    color: Color,
-    bodyRadius: Float
-) {
-    // LEGS
-    val legSize = Size(
-        width = bodyRadius.div(4f),
-        height = bodyRadius.times(1.2f)
-    )
+        // 3. Get the middle point between the start and end of the current fluff
+        val fluffCenter = getMiddlePoint(lastFluffEndOffset, nextFluffEndOffset)
 
-    val legSeparation = legSize.width.times(2f)
+        // 4. Build the fluff circle
+        drawCircle(
+            color = color,
+            radius = fluffRadius,
+            center = fluffCenter
+        )
 
-    val leftLegTopLeft = Offset(
-        x = center.x - legSize.width - legSeparation.div(2),
-        y = center.y
-    )
+        // Update values to the next fluff
+        totalAngle = nextFluffTotalAngle
+        lastFluffEndOffset = nextFluffEndOffset
 
-    val rightLegTopLeft = Offset(
-        x = center.x + legSeparation.div(2),
-        y = center.y
-    )
+        if(ShowGuidelines){
+            // Guidelines
+            drawLine(
+                color = Color.Cyan,
+                strokeWidth = 10f,
+                start = center,
+                end = nextFluffEndOffset
+            )
+            drawCircle(
+                color = Color.Black,
+                radius = fluffRadius,
+                center = fluffCenter,
+                style = Stroke(pathEffect = GuidelineDashPattern, width = 5f)
+            )
 
-    // Left leg
-    drawRect(
-        color = color,
-        topLeft = leftLegTopLeft,
-        size = legSize
-    )
-
-    // Right leg
-    drawRect(
-        color = color,
-        topLeft = rightLegTopLeft,
-        size = legSize
-    )
+            drawPoint(
+                color = Color.Red,
+                offset = nextFluffEndOffset,
+            )
+        }
+    }
 }
 
 @Preview(showSystemUi = true)

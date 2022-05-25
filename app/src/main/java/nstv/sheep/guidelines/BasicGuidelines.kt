@@ -125,3 +125,5 @@ fun DrawScope.drawPoint(
         strokeWidth = strokeWidth
     )
 }
+
+fun Size.getCenterOffset(topLeft: Offset) = topLeft + this.center
