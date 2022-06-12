@@ -7,6 +7,7 @@ pluginManagement {
 }
 
 enableFeaturePreview("VERSION_CATALOGS")
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -15,6 +16,8 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Composable Sheep"
-include ':app'
+rootProject.name = "composable-sheep"
+include ':sheepCanvas'
 include ':design'
+include ':canvasExtensions'
+include ':sheep'

@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import nstv.design.theme.ComposableSheepAnimationsTheme
+import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 import kotlin.math.round
 
@@ -64,7 +64,7 @@ fun SliderLabelValue(
 @Preview
 @Composable
 private fun Preview() {
-    ComposableSheepAnimationsTheme {
+    ComposableSheepTheme {
         SliderLabelValue(
             modifier = Modifier.fillMaxWidth(),
             text = "Label",

@@ -66,7 +66,7 @@ private val DarkThemeColors = darkColorScheme(
 )
 
 @Composable
-fun ComposableSheepAnimationsTheme(
+fun ComposableSheepTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {

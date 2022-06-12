@@ -10,7 +10,3 @@ object Plugins {
     val ktlint by lazy { "org.jlleitschuh.gradle.ktlint" }
     val detekt by lazy { "io.gitlab.arturbosch.detekt" }
 }
-
-object ProjectPath {
-    const val design = ":design"
-}

@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import nstv.design.theme.ComposableSheepAnimationsTheme
+import nstv.design.theme.ComposableSheepTheme
 
 @Composable
 fun CheckBoxLabel(
@@ -27,7 +27,7 @@ fun CheckBoxLabel(
 @Preview
 @Composable
 private fun Preview() {
-    ComposableSheepAnimationsTheme {
+    ComposableSheepTheme {
         Column {
             CheckBoxLabel(text = "Checked", checked = true, onCheckedChange = {})
             CheckBoxLabel(text = "UnChecked", checked = false, onCheckedChange = {})
