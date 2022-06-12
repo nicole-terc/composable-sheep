@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android").version("1.6.10").apply(false)
     kotlin("plugin.serialization") version "1.6.10"
     id(Plugins.ktlint).version(libs.plugins.ktlint.get().version.toString())
+    id(Plugins.detekt).version(libs.plugins.detekt.get().version.toString())
 }
 
 buildscript {
@@ -16,6 +17,12 @@ buildscript {
 
 subprojects {
     apply(plugin = Plugins.ktlint)
+    apply(plugin = Plugins.detekt)
+
+    detekt {
+        config = files("$rootDir/${ModuleExtension.FilePath.detekt}")
+        buildUponDefaultConfig = true
+    }
 
     tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
         kotlinOptions {

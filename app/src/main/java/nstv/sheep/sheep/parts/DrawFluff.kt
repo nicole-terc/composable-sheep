@@ -15,56 +15,87 @@ import nstv.sheep.maths.distanceToOffset
 import nstv.sheep.maths.getCircumferencePointForAngle
 import nstv.sheep.maths.getCurveControlPoint
 import nstv.sheep.maths.getMiddlePoint
+import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.Sheep
 
 fun DrawScope.drawFluff(
-    circleCenterOffset: Offset,
-    circleRadius: Float,
     sheep: Sheep,
+    circleRadius: Float,
+    circleCenterOffset: Offset,
     showGuidelines: Boolean = false
 ) {
 
     val fluffPoints: List<Offset> = getFluffPoints(
-        sheep = sheep,
+        fluffPercentages = sheep.fluffStyle.fluffChunksPercentages,
         radius = circleRadius,
         circleCenter = circleCenterOffset
     )
 
     val fluffPath = getFluffPath(
-        circleCenterOffset = circleCenterOffset,
+        fluffPoints = fluffPoints,
         circleRadius = circleRadius,
-        fluffPoints = fluffPoints
+        circleCenterOffset = circleCenterOffset,
     )
 
     drawPath(path = fluffPath, color = sheep.fluffColor)
 
     if (showGuidelines) {
         drawFluffGuidelines(
-            circleCenterOffset = circleCenterOffset,
+            fluffPoints = fluffPoints,
             circleRadius = circleRadius,
-            fluffPoints = fluffPoints
+            circleCenterOffset = circleCenterOffset,
         )
     }
 }
 
-fun getFluffPath(
-    circleCenterOffset: Offset,
-    circleRadius: Float,
-    sheep: Sheep
-) = getFluffPath(
-    circleCenterOffset = circleCenterOffset,
-    circleRadius = circleRadius,
-    fluffPoints = getFluffPoints(
-        sheep = sheep,
-        radius = circleRadius,
-        circleCenter = circleCenterOffset
-    )
-)
+/**
+ * Returns the coordinates (points) of the middle points between fluff chunks.
+ */
+private fun getFluffPoints(
+    fluffPercentages: List<Double>,
+    radius: Float,
+    circleCenter: Offset = Offset.Zero,
+    totalAngleInRadians: Double = FullCircleAngleInRadians
+): List<Offset> {
+    val fluffPoints = mutableListOf<Offset>()
+
+    var totalPercentage = 0.0
+    fluffPercentages.forEach { fluffPercentage ->
+        totalPercentage += fluffPercentage
+        fluffPoints.add(
+            getCircumferencePointForAngle(
+                totalPercentage.div(100.0).times(totalAngleInRadians),
+                radius,
+                circleCenter
+            )
+        )
+    }
+    return fluffPoints
+}
 
 fun getFluffPath(
-    circleCenterOffset: Offset,
     circleRadius: Float,
-    fluffPoints: List<Offset> = emptyList(),
+    circleCenterOffset: Offset,
+    fluffStyle: FluffStyle = FluffStyle.Random(),
+) = getFluffPath(
+    fluffPoints = getFluffPoints(
+        fluffPercentages = fluffStyle.fluffChunksPercentages,
+        radius = circleRadius,
+        circleCenter = circleCenterOffset
+    ),
+    circleRadius = circleRadius,
+    circleCenterOffset = circleCenterOffset,
+)
+
+/**
+ * Returns the path of the fluff for the given fluff points.
+ * Uses quadratic brazier curves to create the fluff curves.
+ */
+
+fun getFluffPath(
+    fluffPoints: List<Offset>,
+    circleRadius: Float,
+    circleCenterOffset: Offset,
 ) = Path().apply {
     var currentPoint = getCircumferencePointForAngle(
         Math.toRadians(0.0),
@@ -83,32 +114,10 @@ fun getFluffPath(
     close()
 }
 
-private fun getFluffPoints(
-    sheep: Sheep,
-    radius: Float,
-    circleCenter: Offset = Offset.Zero,
-    totalAngleInRadians: Double = FullCircleAngleInRadians
-): List<Offset> {
-    val fluffPoints = mutableListOf<Offset>()
-
-    var totalPercentage = 0.0
-    sheep.fluffChunksPercentages.forEach { fluffPercentage ->
-        totalPercentage += fluffPercentage
-        fluffPoints.add(
-            getCircumferencePointForAngle(
-                totalPercentage.div(100.0).times(totalAngleInRadians),
-                radius,
-                circleCenter
-            )
-        )
-    }
-    return fluffPoints
-}
-
 private fun DrawScope.drawFluffGuidelines(
-    circleCenterOffset: Offset,
-    circleRadius: Float,
     fluffPoints: List<Offset>,
+    circleRadius: Float,
+    circleCenterOffset: Offset,
 ) {
     // Base Circle
     drawCircle(

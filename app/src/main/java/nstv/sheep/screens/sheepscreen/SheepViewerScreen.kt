@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,9 +21,9 @@ import nstv.design.theme.components.SliderLabelValue
 import nstv.sheep.extensions.nextIndexLoop
 import nstv.sheep.sheep.SheepComposable
 import nstv.sheep.sheep.model.FluffStyle
-import nstv.sheep.sheep.model.FourLegs
 import nstv.sheep.sheep.model.Sheep
-import nstv.sheep.sheep.model.TwoLegsStraight
+import nstv.sheep.sheep.model.fourLegs
+import nstv.sheep.sheep.model.twoLegsStraight
 import kotlin.math.floor
 
 private val fluffStyles = listOf(
@@ -32,8 +34,8 @@ private val fluffStyles = listOf(
 )
 
 private val legs = listOf(
-    "Two Legs" to TwoLegsStraight(),
-    "Four Legs" to FourLegs(),
+    "Two Legs" to twoLegsStraight(),
+    "Four Legs" to fourLegs(),
 )
 
 @Composable
@@ -41,8 +43,7 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
     var showGuidelines by remember { mutableStateOf(false) }
     var fluffStyleIndex by remember { mutableStateOf(0) }
     var legsIndex by remember { mutableStateOf(0) }
-    var sheep by
-    remember {
+    var sheep by remember {
         mutableStateOf(
             Sheep(
                 fluffStyle = fluffStyles[fluffStyleIndex].second,
@@ -52,7 +53,7 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
     }
 
     Column(
-        modifier = modifier
+        modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
         SheepComposable(
             sheep = sheep,
@@ -83,10 +84,8 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxWidth(),
             onClick = {
                 fluffStyleIndex = fluffStyles.nextIndexLoop(fluffStyleIndex)
-                sheep = Sheep(
+                sheep = sheep.copy(
                     fluffStyle = fluffStyles[fluffStyleIndex].second,
-                    legs = legs[legsIndex].second,
-                    headAngle = sheep.headAngle
                 )
             }
         ) {

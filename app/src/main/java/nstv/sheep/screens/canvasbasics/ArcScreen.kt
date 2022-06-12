@@ -1,10 +1,14 @@
 package nstv.sheep.screens.canvasbasics
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -49,141 +53,147 @@ fun ArcScreen(
     val backgroundColorSmall = MaterialTheme.colorScheme.onTertiaryContainer
     val foregroundColorSmall = MaterialTheme.colorScheme.tertiaryContainer
 
-    Canvas(
+    Column(
         modifier = modifier
-            .fillMaxWidth()
-            .aspectRatio(1f)
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()),
     ) {
-        val drawStyle = drawStyleOptions[drawStyleIndex].second
+        Canvas(
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(1f)
+        ) {
+            val drawStyle = drawStyleOptions[drawStyleIndex].second
 
-        drawArc(
-            color = backgroundColor,
-            startAngle = startAngle,
-            sweepAngle = sweepAngleBack,
-            useCenter = useCenter,
-            topLeft = Offset(0f, 0f),
-            alpha = GuidelineAlpha.strong,
-            size = size,
-            style = drawStyle
-        )
-
-        drawArc(
-            color = foregroundColor,
-            startAngle = startAngle,
-            sweepAngle = sweepAngleFront,
-            useCenter = useCenter,
-            topLeft = Offset(0f, 0f),
-            size = size,
-            alpha = GuidelineAlpha.strong,
-            style = drawStyle
-        )
-
-        if (showSmallArc) {
-            val smallArcTopLeft = Offset(size.width.times(0.2f), size.height.times(0.2f))
-            val smallArcSize = size.div(4f)
             drawArc(
-                color = backgroundColorSmall,
+                color = backgroundColor,
                 startAngle = startAngle,
                 sweepAngle = sweepAngleBack,
                 useCenter = useCenter,
-                topLeft = smallArcTopLeft,
-                size = smallArcSize,
+                topLeft = Offset(0f, 0f),
                 alpha = GuidelineAlpha.strong,
+                size = size,
                 style = drawStyle
             )
 
             drawArc(
-                color = foregroundColorSmall,
+                color = foregroundColor,
                 startAngle = startAngle,
                 sweepAngle = sweepAngleFront,
                 useCenter = useCenter,
-                topLeft = smallArcTopLeft,
-                size = smallArcSize,
+                topLeft = Offset(0f, 0f),
+                size = size,
                 alpha = GuidelineAlpha.strong,
                 style = drawStyle
             )
+
+            if (showSmallArc) {
+                val smallArcTopLeft = Offset(size.width.times(0.2f), size.height.times(0.2f))
+                val smallArcSize = size.div(4f)
+                drawArc(
+                    color = backgroundColorSmall,
+                    startAngle = startAngle,
+                    sweepAngle = sweepAngleBack,
+                    useCenter = useCenter,
+                    topLeft = smallArcTopLeft,
+                    size = smallArcSize,
+                    alpha = GuidelineAlpha.strong,
+                    style = drawStyle
+                )
+
+                drawArc(
+                    color = foregroundColorSmall,
+                    startAngle = startAngle,
+                    sweepAngle = sweepAngleFront,
+                    useCenter = useCenter,
+                    topLeft = smallArcTopLeft,
+                    size = smallArcSize,
+                    alpha = GuidelineAlpha.strong,
+                    style = drawStyle
+                )
+                if (showGuidelines) {
+                    val smallCircleCenter = smallArcTopLeft + smallArcSize.center
+                    drawPoint(offset = smallCircleCenter)
+                    drawLine(
+                        color = Color.Red,
+                        start = smallCircleCenter,
+                        end = getCircumferencePointForAngle(
+                            angleInRadians = Math.toRadians(startAngle.toDouble()),
+                            radius = smallArcSize.width.div(2),
+                            circleCenter = smallCircleCenter
+                        ),
+                        strokeWidth = 5f
+                    )
+                }
+            }
+
             if (showGuidelines) {
-                val smallCircleCenter = smallArcTopLeft + smallArcSize.center
-                drawPoint(offset = smallCircleCenter)
+                drawGrid()
+                drawAxis(color = Color.Red)
                 drawLine(
-                    color = Color.Red,
-                    start = smallCircleCenter,
+                    color = Color.Green,
+                    start = size.center,
                     end = getCircumferencePointForAngle(
                         angleInRadians = Math.toRadians(startAngle.toDouble()),
-                        radius = smallArcSize.width.div(2),
-                        circleCenter = smallCircleCenter
+                        radius = size.width.div(2),
+                        circleCenter = size.center
                     ),
                     strokeWidth = 5f
                 )
             }
         }
 
-        if (showGuidelines) {
-            drawGrid()
-            drawAxis(color = Color.Red)
-            drawLine(
-                color = Color.Green,
-                start = size.center,
-                end = getCircumferencePointForAngle(
-                    angleInRadians = Math.toRadians(startAngle.toDouble()),
-                    radius = size.width.div(2),
-                    circleCenter = size.center
-                ),
-                strokeWidth = 5f
-            )
+        Spacer(modifier = Modifier.height(Grid.Two))
+
+        LabeledText("DrawStyle: ", drawStyleOptions[drawStyleIndex].first)
+
+        Button(
+            modifier = Modifier.fillMaxWidth(),
+            onClick = {
+                drawStyleIndex = drawStyleOptions.nextIndexLoop(drawStyleIndex)
+            }
+        ) {
+            val text = "Change DrawStyle"
+            Text(text = text)
         }
+
+        val angleRange = 0f..360f
+
+        SliderLabelValue(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Start Angle:",
+            value = startAngle,
+            onValueChange = { startAngle = it },
+            valueRange = angleRange
+        )
+
+        SliderLabelValue(
+            modifier = Modifier.fillMaxWidth(),
+            text = "Sweep Angle:",
+            value = sweepAngleBack,
+            onValueChange = { sweepAngleBack = it },
+            valueRange = angleRange,
+            onValueChangeFinished = { sweepAngleFront = sweepAngleBack }
+        )
+
+        CheckBoxLabel(
+            text = "Use Center",
+            checked = useCenter,
+            onCheckedChange = { useCenter = it }
+        )
+
+        CheckBoxLabel(
+            text = "Show Small Arc",
+            checked = showSmallArc,
+            onCheckedChange = { showSmallArc = it }
+        )
+
+        CheckBoxLabel(
+            text = "Show Guidelines",
+            checked = showGuidelines,
+            onCheckedChange = { showGuidelines = it }
+        )
     }
-
-    Spacer(modifier = Modifier.height(Grid.Two))
-
-    LabeledText("DrawStyle: ", drawStyleOptions[drawStyleIndex].first)
-
-    Button(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = {
-            drawStyleIndex = drawStyleOptions.nextIndexLoop(drawStyleIndex)
-        }
-    ) {
-        val text = "Change DrawStyle"
-        Text(text = text)
-    }
-
-    val angleRange = 0f..360f
-
-    SliderLabelValue(
-        modifier = Modifier.fillMaxWidth(),
-        text = "Start Angle:",
-        value = startAngle,
-        onValueChange = { startAngle = it },
-        valueRange = angleRange
-    )
-
-    SliderLabelValue(
-        modifier = Modifier.fillMaxWidth(),
-        text = "Sweep Angle:",
-        value = sweepAngleBack,
-        onValueChange = { sweepAngleBack = it },
-        valueRange = angleRange,
-        onValueChangeFinished = { sweepAngleFront = sweepAngleBack }
-    )
-
-    CheckBoxLabel(
-        text = "Use Center",
-        checked = useCenter,
-        onCheckedChange = { useCenter = it }
-    )
-
-    CheckBoxLabel(
-        text = "Show Small Arc",
-        checked = showSmallArc,
-        onCheckedChange = { showSmallArc = it }
-    )
-
-    CheckBoxLabel(
-        text = "Show Guidelines",
-        checked = showGuidelines,
-        onCheckedChange = { showGuidelines = it }
-    )
 }
 
 @Preview(showSystemUi = true)

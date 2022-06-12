@@ -25,10 +25,10 @@ object Dimens {
 }
 
 object ZIndex {
-    val Back = -1f
-    val None = 0f
-    val Front = 1f
-    val Top = 2f
+    const val Back = -1f
+    const val None = 0f
+    const val Front = 1f
+    const val Top = 2f
 }
 
 object Elevation {

@@ -28,7 +28,7 @@ fun LabeledText(label: String, body: String) {
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    ComposableSheepAnimationsTheme() {
+    ComposableSheepAnimationsTheme {
         LabeledText(label = "Label: ", body = "body body")
     }
 }

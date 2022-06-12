@@ -4,7 +4,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.StampedPathEffectStyle
 import nstv.sheep.sheep.model.FluffStyle
-import nstv.sheep.sheep.model.Sheep
 import nstv.sheep.sheep.parts.getFluffPath
 
 fun getSheepPathEffect(
@@ -14,7 +13,7 @@ fun getSheepPathEffect(
         shape = getFluffPath(
             circleCenterOffset = Offset.Zero,
             circleRadius = miniFluffRadius,
-            sheep = Sheep(fluffStyle = FluffStyle.Uniform(10))
+            fluffStyle = FluffStyle.Random()
         ),
         advance = miniFluffRadius * 3f,
         phase = miniFluffRadius,

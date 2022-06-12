@@ -27,7 +27,7 @@ fun CheckBoxLabel(
 @Preview
 @Composable
 private fun Preview() {
-    ComposableSheepAnimationsTheme() {
+    ComposableSheepAnimationsTheme {
         Column {
             CheckBoxLabel(text = "Checked", checked = true, onCheckedChange = {})
             CheckBoxLabel(text = "UnChecked", checked = false, onCheckedChange = {})

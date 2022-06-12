@@ -17,7 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -44,7 +43,6 @@ enum class Screen {
     SHEEP, BASIC_SHEEP, LINE, POINTS, SHAPE, ARC, SUPER
 }
 
-@ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

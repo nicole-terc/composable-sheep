@@ -167,7 +167,7 @@ fun DrawScope.drawSimpleFluffCircles(
         totalAngle = nextFluffTotalAngle
         lastFluffEndOffset = nextFluffEndOffset
 
-        if(ShowGuidelines){
+        if (ShowGuidelines) {
             // Guidelines
             drawLine(
                 color = Color.Cyan,

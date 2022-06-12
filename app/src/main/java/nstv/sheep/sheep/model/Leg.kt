@@ -13,7 +13,7 @@ data class Leg(
     val legBodyRatioHeight: Float = DefaultLegRatioHeight,
 )
 
-fun FourLegs(innerAngle: Float = FourLegAngleInner, outerAngle: Float = FourLegAngle): List<Leg> =
+fun fourLegs(innerAngle: Float = FourLegAngleInner, outerAngle: Float = FourLegAngle): List<Leg> =
     listOf(
         Leg( // outer right
             positionAngleInCircle = 50f,
@@ -41,7 +41,7 @@ fun FourLegs(innerAngle: Float = FourLegAngleInner, outerAngle: Float = FourLegA
         ),
     )
 
-fun TwoLegsStraight(): List<Leg> =
+fun twoLegsStraight(): List<Leg> =
     listOf(65f, 115f).map { angle ->
         Leg(positionAngleInCircle = angle)
     }

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import nstv.design.theme.ComposableSheepAnimationsTheme
 import nstv.sheep.sheep.model.FluffStyle
 import nstv.sheep.sheep.model.Sheep
-import nstv.sheep.sheep.model.TwoLegsStraight
+import nstv.sheep.sheep.model.twoLegsStraight
 import nstv.sheep.sheep.parts.drawFluff
 import nstv.sheep.sheep.parts.drawHead
 import nstv.sheep.sheep.parts.drawLegs
@@ -65,7 +65,7 @@ private fun PreviewSheepTwoLeg() {
     ComposableSheepAnimationsTheme {
         SheepComposable(
             modifier = Modifier.size(300.dp),
-            sheep = Sheep(FluffStyle.Random(), legs = TwoLegsStraight())
+            sheep = Sheep(FluffStyle.Random(), legs = twoLegsStraight())
         )
     }
 }
