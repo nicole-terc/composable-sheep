@@ -10,7 +10,7 @@ plugins {
 android {
     compileSdk = ModuleExtension.compileSdkVersion
     defaultConfig {
-        applicationId = ModuleExtension.App.applicationId
+        applicationId = ModuleExtension.App.applicationIdCanvas
         minSdk = ModuleExtension.DefaultConfigs.minSdkVersion
         targetSdk = ModuleExtension.DefaultConfigs.targetSdkVersion
         versionName = ModuleExtension.App.versionName

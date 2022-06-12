@@ -12,7 +12,8 @@ object ModuleExtension {
     }
 
     object App {
-        const val applicationId = "nstv.sheep"
+        const val applicationIdCanvas = "nstv.sheep.canvas"
+        const val applicationIdAnimations = "nstv.sheep.animations"
         const val versionName = "1.0"
         const val versionCode = 1
     }
