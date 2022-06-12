@@ -17,8 +17,8 @@ import nstv.sheep.parts.drawLegs
 
 @Composable
 fun SheepComposable(
+    modifier: Modifier,
     sheep: Sheep,
-    modifier: Modifier = Modifier,
     showGuidelines: Boolean = false,
 ) {
     Canvas(modifier = modifier) {

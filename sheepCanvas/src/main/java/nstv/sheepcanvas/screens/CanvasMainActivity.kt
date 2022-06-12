@@ -39,11 +39,11 @@ import nstv.sheepcanvas.screens.canvasbasics.ShapeScreen
 import nstv.sheepcanvas.screens.sheepscreen.BasicSheepScreen
 import nstv.sheepcanvas.screens.sheepscreen.SheepViewerScreen
 
-enum class Screen {
+private enum class Screen {
     SHEEP, BASIC_SHEEP, LINE, POINTS, SHAPE, ARC, SUPER
 }
 
-class MainActivity : ComponentActivity() {
+class CanvasMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

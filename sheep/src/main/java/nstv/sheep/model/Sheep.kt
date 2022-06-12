@@ -7,7 +7,7 @@ private const val DefaultHeadRotationAngle = 5f
 data class Sheep(
     val fluffStyle: FluffStyle = FluffStyle.Random(),
     val headAngle: Float = DefaultHeadRotationAngle,
-    val legs: List<Leg> = fourLegs(),
+    val legs: List<Leg> = twoLegsStraight(),
     val fluffColor: Color = Color.LightGray,
     val headColor: Color = Color.DarkGray,
     val legColor: Color = headColor,
