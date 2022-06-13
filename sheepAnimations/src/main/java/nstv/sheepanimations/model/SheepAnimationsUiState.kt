@@ -9,7 +9,7 @@ import nstv.sheepanimations.extensions.scaled
 val SheepCanvasSize = 200.dp
 val SheepOriginalSize = DpSize(SheepCanvasSize, SheepCanvasSize)
 
-private val SheepJumpSize = SheepCanvasSize
+val SheepJumpSize = SheepCanvasSize
 
 data class SheepAnimationsUiState(
     val screenSize: DpSize,
@@ -23,13 +23,8 @@ data class SheepAnimationsUiState(
     val isJumping: Boolean = false,
 ) {
     val topLeftPosition: DpSize
-        get() {
-            var position = sheepCenterPosition - sheepSize.scaled(sheepScale) / 2
+        get() = sheepCenterPosition - sheepSize.scaled(sheepScale) / 2
 
-            if (isJumping) {
-                position -= DpSize(0.dp, SheepJumpSize)
-            }
-
-            return position
-        }
+    val topLeftJumping: DpSize
+        get() = topLeftPosition - DpSize(0.dp, SheepJumpSize)
 }

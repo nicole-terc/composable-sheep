@@ -1,6 +1,10 @@
 package nstv.sheepanimations.screens
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.keyframes
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,9 +28,10 @@ import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepAnimationsUiState
+import nstv.sheepanimations.model.SheepJumpSize
 
 @Composable
-fun SimpleMoveScreen(
+fun SimpleJumpScreen(
     modifier: Modifier = Modifier,
 ) {
     val screenSize = DpSize(
@@ -35,10 +40,18 @@ fun SimpleMoveScreen(
     )
 
     var uiState by remember { mutableStateOf(SheepAnimationsUiState(screenSize)) }
-    val offsetY by animateDpAsState(
-        targetValue =
-        if (uiState.isJumping) uiState.topLeftJumping.height
-        else uiState.topLeftPosition.height
+
+    val infiniteTransition = rememberInfiniteTransition()
+
+    val offsetY by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            animation = keyframes {
+                durationMillis = 1000
+            },
+            repeatMode = RepeatMode.Reverse
+        )
     )
 
     Column(
@@ -57,7 +70,7 @@ fun SimpleMoveScreen(
                     .size(uiState.sheepSize)
                     .offset(
                         x = uiState.topLeftPosition.width,
-                        y = offsetY
+                        y = if (uiState.isJumping) uiState.topLeftPosition.height - SheepJumpSize * offsetY else uiState.topLeftPosition.height
                     )
                     .scale(scaleX = uiState.sheepScale.x, scaleY = uiState.sheepScale.y)
 

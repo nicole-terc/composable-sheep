@@ -33,7 +33,7 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 
 private enum class Screen {
-    SIMPLE_MOVE
+    SIMPLE_MOVE, SIMPLE_JUMP
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -58,7 +58,7 @@ class AnimationsMainActivity : ComponentActivity() {
                         .fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.SIMPLE_MOVE) }
+                    var selectedScreen by remember { mutableStateOf(Screen.SIMPLE_JUMP) }
 
                     Column(
                         modifier = Modifier
@@ -99,6 +99,7 @@ class AnimationsMainActivity : ComponentActivity() {
 
                         when (selectedScreen) {
                             Screen.SIMPLE_MOVE -> SimpleMoveScreen()
+                            Screen.SIMPLE_JUMP -> SimpleJumpScreen()
                         }
                     }
                 }
