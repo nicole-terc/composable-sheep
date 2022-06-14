@@ -6,13 +6,16 @@ import androidx.compose.ui.unit.dp
 import nstv.sheep.model.Sheep
 import nstv.sheepanimations.extensions.scaled
 
-val SheepCanvasSize = 200.dp
+val SheepCanvasSize = 250.dp
 val SheepOriginalSize = DpSize(SheepCanvasSize, SheepCanvasSize)
 
-val SheepJumpSize = SheepCanvasSize
+private val SheepJumpSize = SheepCanvasSize
+
+// Float value of the sheep jump size dp. Used for animations, meant to be used with .dp extension
+val SheepJumpingOffset = -SheepJumpSize.value
 
 data class SheepAnimationsUiState(
-    val screenSize: DpSize,
+    val screenSize: DpSize = DpSize(0.dp, 0.dp),
     val sheep: Sheep = Sheep(),
     val sheepSize: DpSize = SheepOriginalSize,
     val sheepScale: Offset = Offset(1f, 1f),

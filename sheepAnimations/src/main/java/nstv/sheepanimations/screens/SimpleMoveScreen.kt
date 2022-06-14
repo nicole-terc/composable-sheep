@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,35 +14,30 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepAnimationsUiState
+import nstv.sheepanimations.model.SheepJumpingOffset
 
 @Composable
 fun SimpleMoveScreen(
     modifier: Modifier = Modifier,
 ) {
-    val screenSize = DpSize(
-        width = LocalConfiguration.current.screenWidthDp.dp,
-        height = LocalConfiguration.current.screenHeightDp.dp
-    )
-
-    var uiState by remember { mutableStateOf(SheepAnimationsUiState(screenSize)) }
+    var uiState by remember { mutableStateOf(SheepAnimationsUiState()) }
     val offsetY by animateDpAsState(
         targetValue =
-        if (uiState.isJumping) uiState.topLeftJumping.height
-        else uiState.topLeftPosition.height
+        if (uiState.isJumping) SheepJumpingOffset.dp
+        else 0.dp
     )
 
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
     ) {
         Box(
             modifier = Modifier
@@ -55,12 +48,8 @@ fun SimpleMoveScreen(
                 sheep = uiState.sheep,
                 modifier = Modifier
                     .size(uiState.sheepSize)
-                    .offset(
-                        x = uiState.topLeftPosition.width,
-                        y = offsetY
-                    )
-                    .scale(scaleX = uiState.sheepScale.x, scaleY = uiState.sheepScale.y)
-
+                    .align(Alignment.BottomCenter)
+                    .offset(y = offsetY)
             )
         }
         Button(
@@ -72,7 +61,7 @@ fun SimpleMoveScreen(
                 )
             }
         ) {
-            Text(text = "Sheep it!")
+            Text(text = "Sheep it!", fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }
     }
 }
