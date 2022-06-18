@@ -3,6 +3,7 @@ package nstv.sheep.parts
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import nstv.canvasExtensions.guidelines.drawRectGuideline
@@ -12,6 +13,8 @@ fun DrawScope.drawHead(
     circleCenterOffset: Offset,
     circleRadius: Float,
     sheep: Sheep,
+    headColor: Color,
+    glassesColor: Color = Color.Black,
     showGuidelines: Boolean = false
 ) {
 
@@ -36,7 +39,7 @@ fun DrawScope.drawHead(
         pivot = headCenter
     ) {
         drawArc(
-            color = sheep.headColor,
+            color = headColor,
             startAngle = 0f,
             sweepAngle = 360f,
             useCenter = true,
@@ -58,7 +61,7 @@ fun DrawScope.drawHead(
         headSize = headSize,
         headAngle = headAngle,
         headCenter = headCenter,
-        color = sheep.glassesColor,
+        color = glassesColor,
         showGuidelines = showGuidelines
     )
 }

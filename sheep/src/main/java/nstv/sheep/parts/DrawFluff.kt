@@ -1,9 +1,11 @@
 package nstv.sheep.parts
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.PointMode
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
@@ -22,6 +24,7 @@ fun DrawScope.drawFluff(
     sheep: Sheep,
     circleRadius: Float,
     circleCenterOffset: Offset,
+    fluffBrush: Brush =  SolidColor(Color.LightGray),
     showGuidelines: Boolean = false
 ) {
 
@@ -37,7 +40,7 @@ fun DrawScope.drawFluff(
         circleCenterOffset = circleCenterOffset,
     )
 
-    drawPath(path = fluffPath, color = sheep.fluffColor)
+    drawPath(path = fluffPath, brush = fluffBrush)
 
     if (showGuidelines) {
         drawFluffGuidelines(

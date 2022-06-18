@@ -33,7 +33,7 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 
 private enum class Screen {
-    SIMPLE_MOVE, SIMPLE_JUMP
+    SIMPLE_COLOR, SIMPLE_MOVE, SIMPLE_JUMP, GROOVY_COLOR,
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -48,17 +48,15 @@ class AnimationsMainActivity : ComponentActivity() {
 
                 SideEffect {
                     systemUiController.setSystemBarsColor(
-                        color = surfaceColor,
-                        darkIcons = useDarkIcons
+                        color = surfaceColor, darkIcons = useDarkIcons
                     )
                 }
 
                 Scaffold(
-                    modifier = Modifier
-                        .fillMaxSize(),
+                    modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.SIMPLE_JUMP) }
+                    var selectedScreen by remember { mutableStateOf(Screen.GROOVY_COLOR) }
 
                     Column(
                         modifier = Modifier
@@ -80,26 +78,24 @@ class AnimationsMainActivity : ComponentActivity() {
                                     contentDescription = "Select Screen"
                                 )
                             }
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
+                            DropdownMenu(expanded = expanded,
+                                onDismissRequest = { expanded = false }) {
                                 Screen.values().forEach { screen ->
-                                    DropdownMenuItem(
-                                        text = { Text(text = screen.name) },
+                                    DropdownMenuItem(text = { Text(text = screen.name) },
                                         onClick = {
                                             expanded = false
                                             selectedScreen = screen
-                                        }
-                                    )
+                                        })
                                 }
                             }
                         }
                         Spacer(modifier = Modifier.padding(vertical = Grid.One))
 
                         when (selectedScreen) {
+                            Screen.SIMPLE_COLOR -> SimpleColorScreen()
                             Screen.SIMPLE_MOVE -> SimpleMoveScreen()
                             Screen.SIMPLE_JUMP -> SimpleJumpScreen()
+                            Screen.GROOVY_COLOR -> GroovySheepScreen()
                         }
                     }
                 }

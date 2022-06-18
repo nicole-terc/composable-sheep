@@ -28,7 +28,7 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
-import nstv.sheepcanvas.extensions.nextIndexLoop
+import nstv.canvasExtensions.nextIndexLoop
 
 @Composable
 fun PointsScreen(modifier: Modifier = Modifier) {

@@ -2,6 +2,17 @@ package nstv.design.theme
 
 import androidx.compose.ui.graphics.Color
 
+
+object SheepColor {
+    val Gray = Color(0xFFCCCCCC)
+    val Blue = Color(0xFF1976D2)
+    val Green = Color(0xFF3DDC84)
+    val Black = Color(0xFF191B1B)
+    val Purple = Color(0xFF6200EA)
+    val Magenta = Color(0xFFC51162)
+    val Orange = Color(0xFFFF9800)
+}
+
 val md_theme_light_primary = Color(0xFF00677e)
 val md_theme_light_onPrimary = Color(0xFFffffff)
 val md_theme_light_primaryContainer = Color(0xFFb1ecff)

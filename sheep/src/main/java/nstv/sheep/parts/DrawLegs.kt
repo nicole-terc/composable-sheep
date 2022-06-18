@@ -21,7 +21,8 @@ fun DrawScope.drawLegs(
     circleCenterOffset: Offset,
     circleRadius: Float,
     sheep: Sheep,
-    showGuidelines: Boolean = false
+    legColor: Color,
+    showGuidelines: Boolean = false,
 ) {
     val circleDiameter = circleRadius.times(2f)
 
@@ -50,7 +51,7 @@ fun DrawScope.drawLegs(
             pivot = legPointInCircumference
         ) {
             drawRoundRect(
-                color = sheep.legColor,
+                color = legColor,
                 topLeft = topLeft,
                 size = legSize,
                 cornerRadius = CornerRadius(20f)

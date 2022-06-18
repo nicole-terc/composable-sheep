@@ -21,18 +21,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
-import nstv.sheepanimations.model.SheepAnimationsUiState
+import nstv.sheepanimations.model.SheepUiState
 import nstv.sheepanimations.model.SheepJumpingOffset
 
 @Composable
 fun SimpleMoveScreen(
     modifier: Modifier = Modifier,
 ) {
-    var uiState by remember { mutableStateOf(SheepAnimationsUiState()) }
+    var sheepUiState by remember { mutableStateOf(SheepUiState()) }
+
     val offsetY by animateDpAsState(
-        targetValue =
-        if (uiState.isJumping) SheepJumpingOffset.dp
-        else 0.dp
+        targetValue = if (sheepUiState.isJumping) SheepJumpingOffset.dp else 0.dp
     )
 
     Column(
@@ -45,9 +44,9 @@ fun SimpleMoveScreen(
                 .weight(1f)
         ) {
             SheepComposable(
-                sheep = uiState.sheep,
+                sheep = sheepUiState.sheep,
                 modifier = Modifier
-                    .size(uiState.sheepSize)
+                    .size(sheepUiState.sheepSize)
                     .align(Alignment.BottomCenter)
                     .offset(y = offsetY)
             )
@@ -56,8 +55,8 @@ fun SimpleMoveScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             onClick = {
-                uiState = uiState.copy(
-                    isJumping = !uiState.isJumping
+                sheepUiState = sheepUiState.copy(
+                    isJumping = !sheepUiState.isJumping
                 )
             }
         ) {

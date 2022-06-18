@@ -23,7 +23,7 @@ import nstv.sheep.model.FluffStyle
 import nstv.sheep.model.Sheep
 import nstv.sheep.model.fourLegs
 import nstv.sheep.model.twoLegsStraight
-import nstv.sheepcanvas.extensions.nextIndexLoop
+import nstv.canvasExtensions.nextIndexLoop
 import kotlin.math.floor
 
 private val fluffStyles = listOf(

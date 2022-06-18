@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nstv.design.theme.ComposableSheepTheme
@@ -15,23 +18,48 @@ import nstv.sheep.parts.drawFluff
 import nstv.sheep.parts.drawHead
 import nstv.sheep.parts.drawLegs
 
+
 @Composable
 fun SheepComposable(
     modifier: Modifier,
     sheep: Sheep,
+    fluffColor: Color = Color.LightGray,
+    headColor: Color = sheep.headColor,
+    legColor: Color = sheep.legColor,
+    glassesColor: Color = sheep.glassesColor,
+    showGuidelines: Boolean = false,
+) {
+    SheepComposable(
+        modifier = modifier,
+        sheep = sheep,
+        fluffBrush = SolidColor(fluffColor),
+        headColor = headColor,
+        legColor = legColor,
+        glassesColor = glassesColor,
+        showGuidelines = showGuidelines
+    )
+}
+
+
+@Composable
+fun SheepComposable(
+    modifier: Modifier,
+    sheep: Sheep,
+    fluffBrush: Brush,
+    headColor: Color = sheep.headColor,
+    legColor: Color = sheep.legColor,
+    glassesColor: Color = sheep.glassesColor,
     showGuidelines: Boolean = false,
 ) {
     Canvas(modifier = modifier) {
-        val canvasWidth = size.width
-        val canvasHeight = size.height
-
-        val circleRadius = canvasWidth * 0.3f
-        val circleCenterOffset = Offset(canvasWidth / 2f, canvasHeight / 2f)
+        val circleRadius = size.width * 0.3f
+        val circleCenterOffset = Offset(size.width / 2f, size.height / 2f)
 
         drawLegs(
             circleCenterOffset = circleCenterOffset,
             circleRadius = circleRadius,
             sheep = sheep,
+            legColor = legColor,
             showGuidelines = showGuidelines
         )
 
@@ -39,6 +67,7 @@ fun SheepComposable(
             circleCenterOffset = circleCenterOffset,
             circleRadius = circleRadius,
             sheep = sheep,
+            fluffBrush = fluffBrush,
             showGuidelines = showGuidelines
         )
 
@@ -46,6 +75,8 @@ fun SheepComposable(
             circleCenterOffset = circleCenterOffset,
             circleRadius = circleRadius,
             sheep = sheep,
+            headColor = headColor,
+            glassesColor = glassesColor,
             showGuidelines = showGuidelines
         )
     }

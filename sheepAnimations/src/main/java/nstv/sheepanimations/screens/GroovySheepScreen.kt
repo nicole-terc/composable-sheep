@@ -1,11 +1,12 @@
 package nstv.sheepanimations.screens
 
-import androidx.compose.animation.core.animate
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -17,41 +18,50 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.DpSize
-import androidx.compose.ui.unit.dp
+import nstv.canvasExtensions.nextIndexLoop
+import nstv.canvasExtensions.nextItemLoop
+import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepUiState
-import nstv.sheepanimations.model.SheepJumpingOffset
+
+
+private val colors = listOf(
+    SheepColor.Gray,
+    SheepColor.Blue,
+    SheepColor.Green,
+    SheepColor.Purple,
+    SheepColor.Magenta,
+    SheepColor.Orange,
+)
 
 @Composable
-fun SimpleJumpScreen(
+fun GroovySheepScreen(
     modifier: Modifier = Modifier,
 ) {
     var sheepUiState by remember { mutableStateOf(SheepUiState()) }
 
-    var offsetY by remember { mutableStateOf(0.dp) }
+    var colorIndex by remember { mutableStateOf(0) }
 
-    LaunchedEffect(sheepUiState.isJumping) {
+    val color = remember { Animatable(colors[0]) }
 
-        if (sheepUiState.isJumping) {
-            animate(0f, SheepJumpingOffset) { value, _ -> offsetY = value.dp }
-            animate(SheepJumpingOffset, 0f) { value, _ -> offsetY = value.dp }
-            sheepUiState = sheepUiState.copy(isJumping = false)
-
+    LaunchedEffect(colorIndex) {
+        if (sheepUiState.isGroovy) {
+            color.animateTo(
+                colors[colorIndex],
+                animationSpec = tween(durationMillis = 500, delayMillis = 200)
+            )
+            colorIndex = colors.nextIndexLoop(colorIndex)
         } else {
-            animate(offsetY.value, 0f) { value, _ ->
-                offsetY = value.dp
-            }
+            colorIndex = 0
+            color.snapTo(colors[colorIndex])
         }
     }
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         Box(
             modifier = Modifier
@@ -60,16 +70,15 @@ fun SimpleJumpScreen(
         ) {
             SheepComposable(
                 sheep = sheepUiState.sheep,
+                fluffColor = color.value,
                 modifier = Modifier
                     .size(sheepUiState.sheepSize)
                     .align(Alignment.BottomCenter)
-                    .offset(y = offsetY)
             )
         }
         Button(modifier = Modifier.fillMaxWidth(), onClick = {
-            sheepUiState = sheepUiState.copy(
-                isJumping = !sheepUiState.isJumping
-            )
+            colorIndex = colors.nextIndexLoop(colorIndex)
+            sheepUiState = sheepUiState.copy(isGroovy = !sheepUiState.isGroovy)
         }) {
             Text(text = "Sheep it!", fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }

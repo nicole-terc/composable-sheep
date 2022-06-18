@@ -32,7 +32,7 @@ import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
 import nstv.design.theme.components.SliderLabelValue
-import nstv.sheepcanvas.extensions.nextIndexLoop
+import nstv.canvasExtensions.nextIndexLoop
 
 @Composable
 fun ArcScreen(
