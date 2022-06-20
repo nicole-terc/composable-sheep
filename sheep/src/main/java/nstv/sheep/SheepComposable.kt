@@ -28,6 +28,7 @@ fun SheepComposable(
     legColor: Color = sheep.legColor,
     eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
+    glassesTranslation: Float = 0f,
     showGuidelines: Boolean = false,
 ) {
     SheepComposable(
@@ -38,6 +39,7 @@ fun SheepComposable(
         legColor = legColor,
         eyeColor = eyeColor,
         glassesColor = glassesColor,
+        glassesTranslation = glassesTranslation,
         showGuidelines = showGuidelines
     )
 }
@@ -52,6 +54,7 @@ fun SheepComposable(
     legColor: Color = sheep.legColor,
     eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
+    glassesTranslation: Float = 0f,
     showGuidelines: Boolean = false,
 ) {
     Canvas(modifier = modifier) {
@@ -81,6 +84,7 @@ fun SheepComposable(
             headColor = headColor,
             eyeColor = eyeColor,
             glassesColor = glassesColor,
+            glassesTranslation = glassesTranslation,
             showGuidelines = showGuidelines
         )
     }

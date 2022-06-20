@@ -24,6 +24,7 @@ fun SliderLabelValue(
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
     valueRange: ClosedFloatingPointRange<Float> = 0f..1f,
+    showDecimal: Boolean = false,
     onValueChangeFinished: () -> Unit = {}
 ) {
     Row(
@@ -48,12 +49,11 @@ fun SliderLabelValue(
         Text(
             modifier = Modifier
                 .background(
-                    color = MaterialTheme.colorScheme.secondaryContainer,
-                    MaterialTheme.shapes.small
+                    color = MaterialTheme.colorScheme.secondaryContainer, MaterialTheme.shapes.small
                 )
                 .padding(Grid.Half)
                 .weight(1f),
-            text = value.toString(),
+            text = if (showDecimal) value.toString() else value.toInt().toString(),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -65,11 +65,9 @@ fun SliderLabelValue(
 @Composable
 private fun Preview() {
     ComposableSheepTheme {
-        SliderLabelValue(
-            modifier = Modifier.fillMaxWidth(),
+        SliderLabelValue(modifier = Modifier.fillMaxWidth(),
             text = "Label",
             value = 0.5f,
-            onValueChange = {}
-        )
+            onValueChange = {})
     }
 }
