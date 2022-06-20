@@ -26,6 +26,7 @@ fun SheepComposable(
     fluffColor: Color = Color.LightGray,
     headColor: Color = sheep.headColor,
     legColor: Color = sheep.legColor,
+    eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
     showGuidelines: Boolean = false,
 ) {
@@ -35,6 +36,7 @@ fun SheepComposable(
         fluffBrush = SolidColor(fluffColor),
         headColor = headColor,
         legColor = legColor,
+        eyeColor = eyeColor,
         glassesColor = glassesColor,
         showGuidelines = showGuidelines
     )
@@ -48,6 +50,7 @@ fun SheepComposable(
     fluffBrush: Brush,
     headColor: Color = sheep.headColor,
     legColor: Color = sheep.legColor,
+    eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
     showGuidelines: Boolean = false,
 ) {
@@ -76,6 +79,7 @@ fun SheepComposable(
             circleRadius = circleRadius,
             sheep = sheep,
             headColor = headColor,
+            eyeColor = eyeColor,
             glassesColor = glassesColor,
             showGuidelines = showGuidelines
         )

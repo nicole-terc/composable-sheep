@@ -6,7 +6,11 @@ import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
+import androidx.compose.ui.graphics.drawscope.translate
+import nstv.canvasExtensions.guidelines.GuidelineAlpha
+import nstv.canvasExtensions.guidelines.drawPoint
 import nstv.canvasExtensions.guidelines.drawRectGuideline
+import nstv.design.theme.SheepColor
 import nstv.sheep.model.Sheep
 
 fun DrawScope.drawHead(
@@ -15,7 +19,9 @@ fun DrawScope.drawHead(
     sheep: Sheep,
     headColor: Color,
     glassesColor: Color = Color.Black,
-    showGuidelines: Boolean = false
+    eyeColor: Color = SheepColor.Eye,
+    glassesTranslation: Float = 0f,
+    showGuidelines: Boolean = false,
 ) {
 
     // head aspect ration 1:2/3 => height = 0.66 * headWidth = 0.66 * radius
@@ -54,14 +60,30 @@ fun DrawScope.drawHead(
             size = headSize,
             degrees = headAngle
         )
+
+        drawPoint(
+            color = Color.Red.copy(alpha = GuidelineAlpha.low),
+            offset = headCenter
+        )
     }
 
-    drawGlasses(
+    drawEyes(
         headTopLeft = headTopLeft,
         headSize = headSize,
         headAngle = headAngle,
         headCenter = headCenter,
-        color = glassesColor,
+        color = eyeColor,
         showGuidelines = showGuidelines
     )
+
+    translate(top = glassesTranslation) {
+        drawGlasses(
+            headTopLeft = headTopLeft,
+            headSize = headSize,
+            headAngle = headAngle,
+            headCenter = headCenter,
+            color = glassesColor,
+            showGuidelines = showGuidelines
+        )
+    }
 }

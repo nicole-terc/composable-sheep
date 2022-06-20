@@ -11,6 +11,8 @@ object SheepColor {
     val Purple = Color(0xFF6200EA)
     val Magenta = Color(0xFFC51162)
     val Orange = Color(0xFFFF9800)
+    val Red = Color(0xFFFF0000)
+    val Eye = Color(0xFFEE8000)
 }
 
 val md_theme_light_primary = Color(0xFF00677e)
