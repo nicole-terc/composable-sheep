@@ -1,7 +1,6 @@
 package nstv.sheepanimations.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -30,7 +29,6 @@ import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepUiState
 
-@ExperimentalAnimationApi
 @Composable
 fun BlinkSheepScreen(
     modifier: Modifier = Modifier,
@@ -86,5 +84,5 @@ fun BlinkSheepScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
-    SimpleMoveScreen()
+    BlinkSheepScreen()
 }

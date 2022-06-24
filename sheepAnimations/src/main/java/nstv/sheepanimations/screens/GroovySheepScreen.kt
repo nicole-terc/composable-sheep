@@ -83,5 +83,5 @@ fun GroovySheepScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
-    SimpleMoveScreen()
+    GroovySheepScreen()
 }

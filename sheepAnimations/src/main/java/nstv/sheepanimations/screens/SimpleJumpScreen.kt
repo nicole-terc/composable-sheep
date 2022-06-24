@@ -114,5 +114,5 @@ fun SimpleJumpScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
-    SimpleMoveScreen()
+    SimpleJumpScreen()
 }

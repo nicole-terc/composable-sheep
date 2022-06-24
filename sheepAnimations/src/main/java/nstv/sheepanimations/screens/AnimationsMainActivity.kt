@@ -3,7 +3,6 @@ package nstv.sheepanimations.screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -34,10 +33,9 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 
 private enum class Screen {
-    SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP,
+    SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP, SHEEP_IT
 }
 
-@ExperimentalAnimationApi
 class AnimationsMainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +56,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.BLINK_VISIBILITY) }
+                    var selectedScreen by remember { mutableStateOf(Screen.SHEEP_IT) }
 
                     Column(
                         modifier = Modifier
@@ -104,6 +102,7 @@ class AnimationsMainActivity : ComponentActivity() {
                             Screen.BLINK_VISIBILITY -> BlinkSheepScreen()
                             Screen.SIMPLE_MOVE -> SimpleMoveScreen()
                             Screen.SIMPLE_JUMP -> SimpleJumpScreen()
+                            Screen.SHEEP_IT -> SheepItScreen()
                         }
                     }
                 }

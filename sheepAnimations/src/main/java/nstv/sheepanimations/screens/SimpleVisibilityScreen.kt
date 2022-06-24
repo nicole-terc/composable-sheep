@@ -1,7 +1,6 @@
 package nstv.sheepanimations.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
@@ -27,7 +26,6 @@ import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepUiState
 
-@ExperimentalAnimationApi
 @Composable
 fun SimpleVisibilityScreen(
     modifier: Modifier = Modifier,
@@ -73,5 +71,5 @@ fun SimpleVisibilityScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
-    SimpleMoveScreen()
+    SimpleVisibilityScreen()
 }

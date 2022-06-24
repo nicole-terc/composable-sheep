@@ -62,5 +62,5 @@ fun SimpleColorScreen(
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
-    SimpleMoveScreen()
+    SimpleColorScreen()
 }
