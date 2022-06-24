@@ -65,9 +65,11 @@ fun SliderLabelValue(
 @Composable
 private fun Preview() {
     ComposableSheepTheme {
-        SliderLabelValue(modifier = Modifier.fillMaxWidth(),
+        SliderLabelValue(
+            modifier = Modifier.fillMaxWidth(),
             text = "Label",
             value = 0.5f,
-            onValueChange = {})
+            onValueChange = {}
+        )
     }
 }

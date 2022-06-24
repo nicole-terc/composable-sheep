@@ -9,9 +9,9 @@ data class Sheep(
     val fluffStyle: FluffStyle = FluffStyle.Random(),
     val headAngle: Float = DefaultHeadRotationAngle,
     val legs: List<Leg> = twoLegsStraight(),
-    val fluffColor: Color = Color.LightGray,
-    val headColor: Color = Color.DarkGray,
+    val fluffColor: Color = SheepColor.Fluff,
+    val headColor: Color = SheepColor.Skin,
     val legColor: Color = headColor,
     val eyeColor: Color = SheepColor.Eye,
-    val glassesColor: Color = Color.Black
+    val glassesColor: Color = SheepColor.Black
 )

@@ -6,9 +6,7 @@ import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
-import nstv.canvasExtensions.guidelines.GuidelineAlpha
 import nstv.canvasExtensions.guidelines.drawPoint
-import nstv.canvasExtensions.guidelines.drawRectGuideline
 import nstv.design.theme.SheepColor
 
 fun DrawScope.drawEyes(
@@ -42,7 +40,6 @@ fun DrawScope.drawEyes(
     )
 
     val eyeAngle = headAngle + 10f
-
 
     rotate(
         degrees = eyeAngle,

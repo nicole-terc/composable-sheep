@@ -3,8 +3,7 @@ package nstv.sheepanimations.screens
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.spring
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,14 +33,15 @@ fun SimpleJumpScreen(
     modifier: Modifier = Modifier,
 ) {
     var sheepUiState by remember { mutableStateOf(SheepUiState()) }
-    var offsetY by remember { mutableStateOf(0.dp) }
 
+    // This declarations can be contained in the UiState, added here for clarity
+    var offsetY by remember { mutableStateOf(0.dp) }
     var dampingRatio by remember { mutableStateOf(Spring.DampingRatioNoBouncy) }
     var stiffness by remember { mutableStateOf(Spring.StiffnessMedium) }
 
     LaunchedEffect(sheepUiState.isJumping) {
         if (sheepUiState.isJumping) {
-            //Jump up
+            // Jump up
             animate(
                 0f, SheepJumpingOffset,
                 animationSpec = spring(
@@ -52,7 +52,7 @@ fun SimpleJumpScreen(
                 offsetY = value.dp
             }
 
-            //Jump down
+            // Jump down
             animate(
                 SheepJumpingOffset, 0f,
                 animationSpec = spring(
@@ -65,7 +65,6 @@ fun SimpleJumpScreen(
 
             // update jumping state when done
             sheepUiState = sheepUiState.copy(isJumping = false)
-
         } else {
             animate(offsetY.value, 0f) { value, _ ->
                 offsetY = value.dp
@@ -74,21 +73,18 @@ fun SimpleJumpScreen(
     }
 
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
     ) {
-        Box(
+
+        SheepComposable(
+            sheep = sheepUiState.sheep,
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            SheepComposable(
-                sheep = sheepUiState.sheep,
-                modifier = Modifier
-                    .size(sheepUiState.sheepSize)
-                    .align(Alignment.BottomCenter)
-                    .offset(y = offsetY)
-            )
-        }
+                .size(sheepUiState.sheepSize)
+                .align(Alignment.CenterHorizontally)
+                .offset(y = offsetY)
+        )
+
         Button(modifier = Modifier.fillMaxWidth(), onClick = {
             sheepUiState = sheepUiState.copy(
                 isJumping = !sheepUiState.isJumping
@@ -114,7 +110,6 @@ fun SimpleJumpScreen(
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -1,7 +1,6 @@
 package nstv.sheepanimations.model
 
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import nstv.sheep.model.Sheep
@@ -20,4 +19,5 @@ data class SheepUiState(
     val sheepScale: Offset = Offset(1f, 1f),
     val isJumping: Boolean = false,
     val isGroovy: Boolean = false,
+    val isBlinking: Boolean = false,
 )

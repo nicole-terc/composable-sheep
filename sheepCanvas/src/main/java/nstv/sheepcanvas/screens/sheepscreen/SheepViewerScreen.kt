@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
@@ -23,7 +24,6 @@ import nstv.sheep.model.FluffStyle
 import nstv.sheep.model.Sheep
 import nstv.sheep.model.fourLegs
 import nstv.sheep.model.twoLegsStraight
-import nstv.canvasExtensions.nextIndexLoop
 import kotlin.math.floor
 
 private val fluffStyles = listOf(

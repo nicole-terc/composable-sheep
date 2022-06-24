@@ -18,12 +18,11 @@ import nstv.sheep.parts.drawFluff
 import nstv.sheep.parts.drawHead
 import nstv.sheep.parts.drawLegs
 
-
 @Composable
 fun SheepComposable(
     modifier: Modifier,
     sheep: Sheep,
-    fluffColor: Color = Color.LightGray,
+    fluffColor: Color = sheep.fluffColor,
     headColor: Color = sheep.headColor,
     legColor: Color = sheep.legColor,
     eyeColor: Color = sheep.eyeColor,
@@ -43,7 +42,6 @@ fun SheepComposable(
         showGuidelines = showGuidelines
     )
 }
-
 
 @Composable
 fun SheepComposable(

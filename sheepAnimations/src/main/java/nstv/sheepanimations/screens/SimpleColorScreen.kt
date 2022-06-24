@@ -2,7 +2,7 @@ package nstv.sheepanimations.screens
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -35,22 +35,18 @@ fun SimpleColorScreen(
     )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
     ) {
-        Box(
+
+        SheepComposable(
+            sheep = sheepUiState.sheep,
+            fluffColor = color,
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            SheepComposable(
-                sheep = sheepUiState.sheep,
-                fluffColor = color,
-                modifier = Modifier
-                    .size(sheepUiState.sheepSize)
-                    .align(Alignment.BottomCenter)
-            )
-        }
+                .size(sheepUiState.sheepSize)
+                .align(Alignment.CenterHorizontally)
+        )
+
         Button(
             modifier = Modifier
                 .fillMaxWidth(),

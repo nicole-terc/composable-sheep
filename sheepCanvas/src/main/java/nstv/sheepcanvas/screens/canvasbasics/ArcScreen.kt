@@ -27,12 +27,12 @@ import nstv.canvasExtensions.guidelines.GuidelineAlpha
 import nstv.canvasExtensions.guidelines.drawAxis
 import nstv.canvasExtensions.guidelines.drawGrid
 import nstv.canvasExtensions.guidelines.drawPoint
+import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.LabeledText
 import nstv.design.theme.components.SliderLabelValue
-import nstv.canvasExtensions.nextIndexLoop
 
 @Composable
 fun ArcScreen(

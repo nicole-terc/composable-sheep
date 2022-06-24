@@ -24,7 +24,7 @@ fun DrawScope.drawFluff(
     sheep: Sheep,
     circleRadius: Float,
     circleCenterOffset: Offset,
-    fluffBrush: Brush =  SolidColor(Color.LightGray),
+    fluffBrush: Brush = SolidColor(Color.LightGray),
     showGuidelines: Boolean = false
 ) {
 

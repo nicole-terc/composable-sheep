@@ -1,7 +1,7 @@
 package nstv.sheepanimations.screens
 
 import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
-import nstv.sheepanimations.model.SheepUiState
 import nstv.sheepanimations.model.SheepJumpingOffset
+import nstv.sheepanimations.model.SheepUiState
 
 @Composable
 fun SimpleMoveScreen(
@@ -35,22 +35,18 @@ fun SimpleMoveScreen(
     )
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
     ) {
-        Box(
+
+        SheepComposable(
+            sheep = sheepUiState.sheep,
             modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f)
-        ) {
-            SheepComposable(
-                sheep = sheepUiState.sheep,
-                modifier = Modifier
-                    .size(sheepUiState.sheepSize)
-                    .align(Alignment.BottomCenter)
-                    .offset(y = offsetY)
-            )
-        }
+                .size(sheepUiState.sheepSize)
+                .align(Alignment.CenterHorizontally)
+                .offset(y = offsetY)
+        )
+
         Button(
             modifier = Modifier
                 .fillMaxWidth(),
