@@ -8,7 +8,7 @@ import nstv.sheep.model.Sheep
 val SheepCanvasSize = 250.dp
 val SheepOriginalSize = DpSize(SheepCanvasSize, SheepCanvasSize)
 
-private val SheepJumpSize = SheepCanvasSize
+val SheepJumpSize = SheepCanvasSize
 
 // Float value of the sheep jump size dp. Used for animations, meant to be used with .dp extension
 val SheepJumpingOffset = -SheepJumpSize.value
@@ -18,6 +18,11 @@ data class SheepUiState(
     val sheepSize: DpSize = SheepOriginalSize,
     val sheepScale: Offset = Offset(1f, 1f),
     val isJumping: Boolean = false,
+    val isHeadBanging: Boolean = false,
     val isGroovy: Boolean = false,
     val isBlinking: Boolean = false,
-)
+    val animationsEnabled: Boolean = false,
+) {
+    val hasAnimations get() = isJumping || isGroovy || isBlinking
+    val isAnimating = animationsEnabled && hasAnimations
+}

@@ -27,7 +27,7 @@ fun SheepComposable(
     legColor: Color = sheep.legColor,
     eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
-    glassesTranslation: Float = 0f,
+    glassesTranslation: Float = sheep.glassesTranslation,
     showGuidelines: Boolean = false,
 ) {
     SheepComposable(
@@ -52,7 +52,7 @@ fun SheepComposable(
     legColor: Color = sheep.legColor,
     eyeColor: Color = sheep.eyeColor,
     glassesColor: Color = sheep.glassesColor,
-    glassesTranslation: Float = 0f,
+    glassesTranslation: Float = sheep.glassesTranslation,
     showGuidelines: Boolean = false,
 ) {
     Canvas(modifier = modifier) {

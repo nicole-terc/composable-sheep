@@ -3,11 +3,12 @@ package nstv.sheep.model
 import androidx.compose.ui.graphics.Color
 import nstv.design.theme.SheepColor
 
-private const val DefaultHeadRotationAngle = 5f
+const val DefaultHeadRotationAngle = 5f
 
 data class Sheep(
     val fluffStyle: FluffStyle = FluffStyle.Random(),
     val headAngle: Float = DefaultHeadRotationAngle,
+    val glassesTranslation: Float = 0f,
     val legs: List<Leg> = twoLegsStraight(),
     val fluffColor: Color = SheepColor.Fluff,
     val headColor: Color = SheepColor.Skin,

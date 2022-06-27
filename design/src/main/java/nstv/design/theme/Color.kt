@@ -12,7 +12,7 @@ object SheepColor {
     val Magenta = Color(0xFFC51162)
     val Orange = Color(0xFFFF9800)
     val Red = Color(0xFFFF0000)
-    val Eye = Color(0xFFEE8000)
+    val Eye = Color(0xFFE69B43)
     val Skin = Color(0xFF444444)
     val Fluff = Color(0xFFCCCCCC)
 }
