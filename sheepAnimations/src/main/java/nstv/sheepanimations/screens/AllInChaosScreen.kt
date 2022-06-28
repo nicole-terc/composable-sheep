@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -36,6 +37,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextIndexLoop
+import nstv.design.theme.Grid
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.CheckBoxLabel
@@ -53,6 +55,11 @@ private val colors = listOf(
     SheepColor.Purple,
     SheepColor.Magenta,
     SheepColor.Orange,
+)
+
+private val simpleColors = listOf(
+    SheepColor.Gray,
+    SheepColor.Green,
 )
 
 @Composable
@@ -73,6 +80,7 @@ fun AllInChaosScreen(
     // COLOR
     var colorIndex by remember { mutableStateOf(0) }
     val color = remember { Animatable(colors[0]) }
+    var useSimpleColors by remember { mutableStateOf(false) }
 
     // VISIBILITY
     var alpha by remember { mutableStateOf(1f) }
@@ -87,9 +95,10 @@ fun AllInChaosScreen(
             // Color
             launch {
                 while (sheepUiState.isGroovy) {
-                    colorIndex = colors.nextIndexLoop(colorIndex)
+                    val colorsToUse = if (useSimpleColors) simpleColors else colors
+                    colorIndex = colorsToUse.nextIndexLoop(colorIndex)
                     color.animateTo(
-                        colors[colorIndex],
+                        colorsToUse[colorIndex],
                         animationSpec = tween(durationMillis = 500, delayMillis = 200)
                     )
                 }
@@ -213,6 +222,17 @@ fun AllInChaosScreen(
         CheckBoxLabel(text = "Groovy", checked = sheepUiState.isGroovy, onCheckedChange = {
             sheepUiState = sheepUiState.copy(isGroovy = !sheepUiState.isGroovy)
         })
+
+        if (sheepUiState.isGroovy) {
+            CheckBoxLabel(
+                modifier = Modifier.padding(start = Grid.Two),
+                text = "Use Simple Colors",
+                checked = useSimpleColors,
+                onCheckedChange = {
+                    useSimpleColors = !useSimpleColors
+                }
+            )
+        }
 
         // JUMP
         CheckBoxLabel(text = "Jumping", checked = sheepUiState.isJumping, onCheckedChange = {
