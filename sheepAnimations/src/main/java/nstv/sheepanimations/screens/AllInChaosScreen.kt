@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -76,10 +77,14 @@ fun AllInChaosScreen(
     // VISIBILITY
     var alpha by remember { mutableStateOf(1f) }
 
+    // SIZE
+    var scale by remember { mutableStateOf(1f) }
+
     LaunchedEffect(sheepUiState) {
-        verticalScroll.animateScrollTo(if (sheepUiState.isAnimating) 0 else verticalScroll.maxValue)
+        verticalScroll.animateScrollTo(if (sheepUiState.isAnimating) 0 else verticalScroll.value)
 
         if (sheepUiState.animationsEnabled) {
+            // Color
             launch {
                 while (sheepUiState.isGroovy) {
                     colorIndex = colors.nextIndexLoop(colorIndex)
@@ -89,6 +94,7 @@ fun AllInChaosScreen(
                     )
                 }
             }
+            // Jump
             launch {
                 while (sheepUiState.isJumping) {
                     // Jump up
@@ -114,6 +120,7 @@ fun AllInChaosScreen(
                     }
                 }
             }
+            // Alpha
             launch {
                 while (sheepUiState.isBlinking) {
                     animate(
@@ -128,6 +135,21 @@ fun AllInChaosScreen(
                     }
                 }
             }
+            // Size
+            launch {
+                while (sheepUiState.isResizing) {
+                    animate(
+                        initialValue = 1f,
+                        targetValue = 0.5f,
+                        animationSpec = infiniteRepeatable(
+                            animation = tween(durationMillis = 500, delayMillis = 200),
+                            repeatMode = RepeatMode.Reverse
+                        )
+                    ) { value, _ ->
+                        scale = value
+                    }
+                }
+            }
         } else {
             // Initial state
             animate(offsetY.value, 0f) { value, _ ->
@@ -136,6 +158,7 @@ fun AllInChaosScreen(
             colorIndex = 0
             color.snapTo(colors[colorIndex])
             alpha = 1f
+            scale = 1f
         }
     }
 
@@ -154,6 +177,7 @@ fun AllInChaosScreen(
                 .size(sheepUiState.sheepSize)
                 .align(Alignment.CenterHorizontally)
                 .offset(y = offsetY)
+                .scale(scale)
                 .alpha(alpha)
         )
 
@@ -174,6 +198,11 @@ fun AllInChaosScreen(
             val text = if (sheepUiState.animationsEnabled) "Shtop it!" else "Sheep it!"
             Text(text = text, fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }
+
+        // SIZE
+        CheckBoxLabel(text = "Resize", checked = sheepUiState.isResizing, onCheckedChange = {
+            sheepUiState = sheepUiState.copy(isResizing = !sheepUiState.isResizing)
+        })
 
         // BLINKING
         CheckBoxLabel(text = "Blinking", checked = sheepUiState.isBlinking, onCheckedChange = {

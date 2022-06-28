@@ -1,6 +1,7 @@
 package nstv.sheepanimations.screens
 
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.snap
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,8 @@ import nstv.design.theme.TextUnit
 import nstv.sheep.SheepComposable
 import nstv.sheepanimations.model.SheepUiState
 
+private const val Animated = true
+
 @Composable
 fun SimpleColorScreen(
     modifier: Modifier = Modifier,
@@ -31,7 +34,7 @@ fun SimpleColorScreen(
 
     val color by animateColorAsState(
         targetValue = if (sheepUiState.isGroovy) SheepColor.Green else SheepColor.Gray,
-        animationSpec = tween(durationMillis = 250)
+        animationSpec = if (Animated) tween(durationMillis = 500) else snap()
     )
 
     Column(
