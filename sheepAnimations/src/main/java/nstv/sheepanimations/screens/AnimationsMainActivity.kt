@@ -33,7 +33,7 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 
 private enum class Screen {
-    SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP, ALL_IN_CHAOS, TRANSITIONS_SCREEN
+    SIMPLE_SIZE, SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP, ALL_IN_CHAOS, TRANSITIONS_SCREEN
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -56,7 +56,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.TRANSITIONS_SCREEN) }
+                    var selectedScreen by remember { mutableStateOf(Screen.SIMPLE_SIZE) }
 
                     Column(
                         modifier = Modifier
@@ -96,6 +96,7 @@ class AnimationsMainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.padding(vertical = Grid.One))
 
                         when (selectedScreen) {
+                            Screen.SIMPLE_SIZE -> SimpleSizeScreen()
                             Screen.SIMPLE_COLOR -> SimpleColorScreen()
                             Screen.GROOVY_COLOR -> GroovySheepScreen()
                             Screen.SIMPLE_VISIBILITY -> SimpleVisibilityScreen()
