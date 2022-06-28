@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import nstv.design.theme.TextUnit
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepUiState
 
 @Composable
@@ -65,7 +65,7 @@ fun BlinkSheepScreen(
             ) + fadeIn(),
             exit = fadeOut(),
         ) {
-            SheepComposable(
+            ComposableSheep(
                 sheep = sheepUiState.sheep,
                 modifier = Modifier
                     .size(sheepUiState.sheepSize)

@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepUiState
 
 private const val Animated = true
@@ -43,7 +43,7 @@ fun SimpleSizeScreen(
         verticalArrangement = Arrangement.Bottom,
     ) {
 
-        SheepComposable(
+        ComposableSheep(
             sheep = sheepUiState.sheep,
             fluffColor = SheepColor.Blue,
             modifier = Modifier

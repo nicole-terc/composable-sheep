@@ -22,7 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepUiState
 
 private val colors = listOf(
@@ -63,7 +63,7 @@ fun GroovySheepScreen(
         verticalArrangement = Arrangement.Bottom,
     ) {
 
-        SheepComposable(
+        ComposableSheep(
             sheep = sheepUiState.sheep,
             fluffColor = color.value,
             modifier = Modifier

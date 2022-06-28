@@ -19,7 +19,7 @@ import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.Grid
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheep.model.FluffStyle
 import nstv.sheep.model.Sheep
 import nstv.sheep.model.fourLegs
@@ -55,7 +55,7 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.verticalScroll(rememberScrollState()),
     ) {
-        SheepComposable(
+        ComposableSheep(
             sheep = sheep,
             modifier = Modifier
                 .fillMaxWidth()

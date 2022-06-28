@@ -24,7 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.SliderLabelValue
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepJumpingOffset
 import nstv.sheepanimations.model.SheepUiState
 
@@ -77,7 +77,7 @@ fun SimpleJumpScreen(
         verticalArrangement = Arrangement.Bottom,
     ) {
 
-        SheepComposable(
+        ComposableSheep(
             sheep = sheepUiState.sheep,
             modifier = Modifier
                 .size(sheepUiState.sheepSize)

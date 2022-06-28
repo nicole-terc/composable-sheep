@@ -23,7 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import nstv.design.theme.TextUnit
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepUiState
 
 @Composable
@@ -51,7 +51,7 @@ fun SimpleVisibilityScreen(
             ) + fadeIn(),
             exit = slideOutHorizontally { fullWidth -> -fullWidth.times(1.2).toInt() },
         ) {
-            SheepComposable(
+            ComposableSheep(
                 sheep = sheepUiState.sheep,
                 modifier = Modifier
                     .size(sheepUiState.sheepSize)

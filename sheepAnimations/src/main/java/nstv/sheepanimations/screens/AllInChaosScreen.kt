@@ -41,7 +41,7 @@ import nstv.design.theme.TextUnit
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
 import nstv.design.theme.components.StartStopBehaviorButton
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepJumpSize
 import nstv.sheepanimations.model.SheepJumpingOffset
 import nstv.sheepanimations.model.SheepUiState
@@ -170,7 +170,7 @@ fun AllInChaosScreen(
         verticalArrangement = Arrangement.Bottom,
     ) {
         Spacer(modifier = Modifier.height(SheepJumpSize))
-        SheepComposable(
+        ComposableSheep(
             sheep = sheepUiState.sheep,
             fluffColor = color.value,
             modifier = Modifier

@@ -19,7 +19,7 @@ import nstv.sheep.parts.drawHead
 import nstv.sheep.parts.drawLegs
 
 @Composable
-fun SheepComposable(
+fun ComposableSheep(
     modifier: Modifier,
     sheep: Sheep,
     fluffColor: Color = sheep.fluffColor,
@@ -30,7 +30,7 @@ fun SheepComposable(
     glassesTranslation: Float = sheep.glassesTranslation,
     showGuidelines: Boolean = false,
 ) {
-    SheepComposable(
+    ComposableSheep(
         modifier = modifier,
         sheep = sheep,
         fluffBrush = SolidColor(fluffColor),
@@ -44,7 +44,7 @@ fun SheepComposable(
 }
 
 @Composable
-fun SheepComposable(
+fun ComposableSheep(
     modifier: Modifier,
     sheep: Sheep,
     fluffBrush: Brush,
@@ -92,7 +92,7 @@ fun SheepComposable(
 @Composable
 private fun PreviewSheep() {
     ComposableSheepTheme {
-        SheepComposable(modifier = Modifier.size(300.dp), sheep = Sheep(FluffStyle.Random()))
+        ComposableSheep(modifier = Modifier.size(300.dp), sheep = Sheep(FluffStyle.Random()))
     }
 }
 
@@ -100,7 +100,7 @@ private fun PreviewSheep() {
 @Composable
 private fun PreviewSheepTwoLeg() {
     ComposableSheepTheme {
-        SheepComposable(
+        ComposableSheep(
             modifier = Modifier.size(300.dp),
             sheep = Sheep(FluffStyle.Random(), legs = twoLegsStraight())
         )
@@ -111,7 +111,7 @@ private fun PreviewSheepTwoLeg() {
 @Composable
 private fun PreviewSheepGuidelines() {
     ComposableSheepTheme {
-        SheepComposable(
+        ComposableSheep(
             modifier = Modifier.size(300.dp),
             sheep = Sheep(FluffStyle.Random()),
             showGuidelines = true

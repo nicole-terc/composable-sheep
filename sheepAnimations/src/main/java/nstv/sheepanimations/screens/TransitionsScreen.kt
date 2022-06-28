@@ -46,7 +46,7 @@ import nstv.design.theme.Grid
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.StartStopBehaviorButton
-import nstv.sheep.SheepComposable
+import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.animations.DpSizeConverter
 import nstv.sheepanimations.model.SheepCanvasSize
 import nstv.sheepanimations.model.SheepJumpSize
@@ -160,7 +160,7 @@ private fun JumpingSheep(
             )
         }
 
-        SheepComposable(
+        ComposableSheep(
             sheep = sheepUiState.sheep.copy(headAngle = jumpTransitionData.headAngle),
             fluffColor = if (Groovy) jumpTransitionData.color else SheepColor.Green,
             modifier = Modifier
