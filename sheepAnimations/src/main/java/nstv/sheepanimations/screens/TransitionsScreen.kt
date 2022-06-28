@@ -2,10 +2,13 @@ package nstv.sheepanimations.screens
 
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.TwoWayConverter
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.animateOffset
+import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.layout.Arrangement
@@ -30,16 +33,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextItemLoop
+import nstv.design.theme.Grid
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.StartStopBehaviorButton
@@ -53,10 +59,7 @@ import nstv.sheepanimations.screens.SheepJumpState.Start
 import nstv.sheepanimations.screens.SheepJumpState.Top
 
 enum class SheepJumpState {
-    Start,
-    Crouch,
-    Top,
-    End,
+    Start, Crouch, Top, End,
 }
 
 private class JumpTransitionData(
@@ -64,13 +67,15 @@ private class JumpTransitionData(
     color: State<Color>,
     headAngle: State<Float>,
     glassesTranslation: State<Float>,
-    sheepScale: State<Offset>
+    sheepScale: State<Offset>,
+    shadowSize: State<DpSize>,
 ) {
     val offsetY by offsetY
     val color by color
     val headAngle by headAngle
     val glassesTranslation by glassesTranslation
     val sheepScale by sheepScale
+    val shadowSize by shadowSize
 }
 
 @Composable
@@ -132,6 +137,15 @@ private fun JumpingSheep(
             .height(SheepJumpSize + SheepCanvasSize)
             .fillMaxWidth()
     ) {
+        Box(
+            modifier = Modifier
+                .size(jumpTransitionData.shadowSize)
+                .align(Alignment.BottomCenter)
+                .drawBehind {
+                    drawOval(color = SheepColor.Black.copy(0.5f))
+                }
+        )
+
         SheepComposable(
             sheep = sheepUiState.sheep.copy(headAngle = jumpTransitionData.headAngle),
             fluffColor = jumpTransitionData.color,
@@ -158,8 +172,8 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
         )
     }) { state ->
         when (state) {
-            Start -> 0.dp
-            Crouch -> SheepCanvasSize.times(0.25f)
+            Start -> SheepCanvasSize.times(0.05f)
+            Crouch -> SheepCanvasSize.times(0.2f)
             Top -> -SheepJumpSize
             End -> SheepCanvasSize.times(0.1f)
         }
@@ -191,8 +205,7 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
     val glassesTranslation =
         transition.animateFloat(label = "jumpSheepTransitionGlassesTranslation", transitionSpec = {
             spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy,
-                stiffness = Spring.StiffnessHigh
+                dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessHigh
             )
         }) { state ->
             when (state) {
@@ -206,7 +219,7 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
     val sheepScale =
         transition.animateOffset(label = "jumpSheepTransitionSheepScale", transitionSpec = {
             spring(
-                dampingRatio = Spring.DampingRatioMediumBouncy, stiffness = Spring.StiffnessMedium
+                dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessLow
             )
         }) { state ->
             when (state) {
@@ -217,9 +230,27 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
             }
         }
 
+    val shadowSize = transition.animateValue(
+        label = "jumpSheepTransitionShadowSize",
+        transitionSpec = {
+            spring(dampingRatio = Spring.DampingRatioNoBouncy, stiffness = Spring.StiffnessLow)
+        },
+        typeConverter = TwoWayConverter(
+            convertToVector = { AnimationVector2D(it.width.value, it.height.value) },
+            convertFromVector = { vector -> DpSize(vector.v1.dp, vector.v2.dp) }
+        )
+    ) { state ->
+        when (state) {
+            Start -> DpSize(SheepCanvasSize.times(0.6f), Grid.Five)
+            Crouch -> DpSize(SheepCanvasSize.times(0.7f), Grid.Six)
+            Top -> DpSize(SheepCanvasSize.times(0.3f), Grid.Two)
+            End -> DpSize(SheepCanvasSize.times(0.7f), Grid.Five)
+        }
+    }
+
     return remember(transition) {
         JumpTransitionData(
-            offsetY, color, headAngle, glassesTranslation, sheepScale
+            offsetY, color, headAngle, glassesTranslation, sheepScale, shadowSize
         )
     }
 }
