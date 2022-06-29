@@ -52,6 +52,7 @@ import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.StartStopBehaviorButton
 import nstv.sheep.ComposableSheep
+import nstv.sheep.model.DefaultHeadRotationAngle
 import nstv.sheepanimations.animations.DpSizeConverter
 import nstv.sheepanimations.model.SheepCanvasSize
 import nstv.sheepanimations.model.SheepJumpSize
@@ -64,6 +65,7 @@ import nstv.sheepanimations.screens.SheepJumpState.Top
 private const val StepByStep = false
 private const val Groovy = true
 private const val MovingGlasses = true
+private const val HeadBanging = true
 private const val WithShadow = true
 private const val Appearing = false
 
@@ -191,7 +193,7 @@ private fun JumpingSheep(
         }
 
         ComposableSheep(
-            sheep = sheepUiState.sheep.copy(headAngle = jumpTransitionData.headAngle),
+            sheep = sheepUiState.sheep.copy(headAngle = if (HeadBanging) jumpTransitionData.headAngle else DefaultHeadRotationAngle),
             fluffColor = if (Groovy) jumpTransitionData.color else SheepColor.Green,
             modifier = Modifier
                 .size(sheepUiState.sheepSize)

@@ -9,7 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,11 +23,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.SliderLabelValue
+import nstv.design.theme.components.StartStopBehaviorButton
 import nstv.sheep.ComposableSheep
 import nstv.sheepanimations.model.SheepJumpingOffset
 import nstv.sheepanimations.model.SheepUiState
+
+private const val SingleJump = false
 
 @Composable
 fun SimpleJumpScreen(
@@ -40,7 +45,7 @@ fun SimpleJumpScreen(
     var stiffness by remember { mutableStateOf(Spring.StiffnessMedium) }
 
     LaunchedEffect(sheepUiState.isJumping) {
-        if (sheepUiState.isJumping) {
+        while (sheepUiState.isJumping) {
             // Jump up
             animate(
                 0f, SheepJumpingOffset,
@@ -62,14 +67,11 @@ fun SimpleJumpScreen(
             ) { value, _ ->
                 offsetY = value.dp
             }
-
-            // update jumping state when done
-            sheepUiState = sheepUiState.copy(isJumping = false)
-        } else {
-            animate(offsetY.value, 0f) { value, _ ->
-                offsetY = value.dp
+            if (SingleJump) {
+                sheepUiState = sheepUiState.copy(isJumping = false)
             }
         }
+        animate(offsetY.value, 0f) { value, _ -> offsetY = value.dp }
     }
 
     Column(
@@ -79,18 +81,28 @@ fun SimpleJumpScreen(
 
         ComposableSheep(
             sheep = sheepUiState.sheep,
+            fluffColor = SheepColor.Orange,
             modifier = Modifier
                 .size(sheepUiState.sheepSize)
                 .align(Alignment.CenterHorizontally)
                 .offset(y = offsetY)
         )
 
-        Button(modifier = Modifier.fillMaxWidth(), onClick = {
-            sheepUiState = sheepUiState.copy(
-                isJumping = !sheepUiState.isJumping
-            )
-        }) {
-            Text(text = "Sheep it!", fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
+        StartStopBehaviorButton(
+            isBehaviorActive = sheepUiState.isJumping,
+            modifier = Modifier.fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(
+                disabledContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
+                disabledContentColor = MaterialTheme.colorScheme.onSecondary,
+            ),
+            onClick = {
+                sheepUiState = sheepUiState.copy(
+                    isJumping = !sheepUiState.isJumping
+                )
+            }
+        ) {
+            val text = if (sheepUiState.isJumping) "Shtop it!" else "Sheep it!"
+            Text(text = text, fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }
 
         SliderLabelValue(

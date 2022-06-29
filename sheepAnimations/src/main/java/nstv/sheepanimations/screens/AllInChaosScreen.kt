@@ -120,7 +120,8 @@ fun AllInChaosScreen(
                 while (sheepUiState.isJumping) {
                     // Jump up
                     animate(
-                        0f, SheepJumpingOffset,
+                        initialValue = 0f,
+                        targetValue = SheepJumpingOffset,
                         animationSpec = spring(
                             dampingRatio = dampingRatio,
                             stiffness = stiffness,
@@ -131,7 +132,8 @@ fun AllInChaosScreen(
 
                     // Jump down
                     animate(
-                        SheepJumpingOffset, 0f,
+                        initialValue = SheepJumpingOffset,
+                        targetValue = 0f,
                         animationSpec = spring(
                             dampingRatio = dampingRatio,
                             stiffness = stiffness,
