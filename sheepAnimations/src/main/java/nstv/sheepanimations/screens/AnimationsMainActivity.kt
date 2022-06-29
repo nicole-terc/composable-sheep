@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
+import nstv.sheepanimations.screens.transition.TransitionsScreen
 
 private enum class Screen {
     SIMPLE_SIZE, SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP, ALL_IN_CHAOS, TRANSITIONS_SCREEN
