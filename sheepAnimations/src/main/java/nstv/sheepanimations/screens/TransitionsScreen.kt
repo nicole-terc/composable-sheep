@@ -1,5 +1,6 @@
 package nstv.sheepanimations.screens
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
@@ -9,6 +10,9 @@ import androidx.compose.animation.core.animateOffset
 import androidx.compose.animation.core.animateValue
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.Offset
@@ -60,6 +65,7 @@ private const val StepByStep = false
 private const val Groovy = true
 private const val MovingGlasses = true
 private const val WithShadow = true
+private const val Appearing = false
 
 enum class SheepJumpState {
     Start, Crouch, Top, End,
@@ -68,6 +74,7 @@ enum class SheepJumpState {
 private class JumpTransitionData(
     offsetY: State<Dp>,
     color: State<Color>,
+    alpha: State<Float>,
     headAngle: State<Float>,
     glassesTranslation: State<Float>,
     sheepScale: State<Offset>,
@@ -75,6 +82,7 @@ private class JumpTransitionData(
 ) {
     val offsetY by offsetY
     val color by color
+    val alpha by alpha
     val headAngle by headAngle
     val glassesTranslation by glassesTranslation
     val sheepScale by sheepScale
@@ -88,10 +96,15 @@ fun TransitionsScreen(
     val verticalScroll = rememberScrollState()
     var sheepUiState by remember { mutableStateOf(SheepUiState()) }
     var jumpState by remember { mutableStateOf(Start) }
+    var isVisible by remember { mutableStateOf(false) }
 
     LaunchedEffect(sheepUiState) {
         if (!StepByStep) {
             launch {
+                if (Appearing) {
+                    isVisible = true
+                    delay(500)
+                }
                 while (sheepUiState.animationsEnabled) {
                     jumpState =
                         SheepJumpState.values()
@@ -99,6 +112,7 @@ fun TransitionsScreen(
                     delay(jumpState.getDelayAfter())
                 }
                 jumpState = Start
+                isVisible = false
             }
         }
     }
@@ -110,8 +124,24 @@ fun TransitionsScreen(
             .animateContentSize(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        JumpingSheep(jumpState = jumpState, sheepUiState = sheepUiState)
-
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                visible = if (Appearing) isVisible else true,
+                enter = scaleIn(
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessMediumLow,
+                        dampingRatio = Spring.DampingRatioMediumBouncy
+                    )
+                ) + fadeIn(),
+                exit = slideOutHorizontally { fullWidth -> -fullWidth.times(1.2).toInt() },
+            ) {
+                JumpingSheep(jumpState = jumpState, sheepUiState = sheepUiState)
+            }
+        }
         StartStopBehaviorButton(
             isBehaviorActive = sheepUiState.animationsEnabled,
             modifier = Modifier.fillMaxWidth(),
@@ -170,7 +200,8 @@ private fun JumpingSheep(
                     scaleX = jumpTransitionData.sheepScale.x
                 )
                 .align(Alignment.BottomCenter)
-                .offset(y = jumpTransitionData.offsetY),
+                .offset(y = jumpTransitionData.offsetY)
+                .alpha(jumpTransitionData.alpha),
             glassesTranslation = if (MovingGlasses) jumpTransitionData.glassesTranslation else 0f,
         )
     }
@@ -199,6 +230,15 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
             Crouch -> SheepColor.Purple
             Top -> SheepColor.Green
             End -> SheepColor.Blue
+        }
+    }
+
+    val alpha = transition.animateFloat(label = "jumpSheepTransitionAlpha") { state ->
+        when (state) {
+            Start -> 1f
+            Crouch -> 1f
+            Top -> 0.5f
+            End -> 1f
         }
     }
 
@@ -261,7 +301,7 @@ private fun updateJumpTransitionData(jumpState: SheepJumpState): JumpTransitionD
 
     return remember(transition) {
         JumpTransitionData(
-            offsetY, color, headAngle, glassesTranslation, sheepScale, shadowSize
+            offsetY, color, alpha, headAngle, glassesTranslation, sheepScale, shadowSize
         )
     }
 }

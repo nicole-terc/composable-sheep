@@ -3,6 +3,8 @@ package nstv.sheepanimations.screens
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
@@ -56,7 +58,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.SIMPLE_SIZE) }
+                    var selectedScreen by remember { mutableStateOf(Screen.TRANSITIONS_SCREEN) }
 
                     Column(
                         modifier = Modifier
@@ -95,16 +97,21 @@ class AnimationsMainActivity : ComponentActivity() {
                         }
                         Spacer(modifier = Modifier.padding(vertical = Grid.One))
 
-                        when (selectedScreen) {
-                            Screen.SIMPLE_SIZE -> SimpleSizeScreen()
-                            Screen.SIMPLE_COLOR -> SimpleColorScreen()
-                            Screen.GROOVY_COLOR -> GroovySheepScreen()
-                            Screen.SIMPLE_VISIBILITY -> SimpleVisibilityScreen()
-                            Screen.BLINK_VISIBILITY -> BlinkSheepScreen()
-                            Screen.SIMPLE_MOVE -> SimpleMoveScreen()
-                            Screen.SIMPLE_JUMP -> SimpleJumpScreen()
-                            Screen.ALL_IN_CHAOS -> AllInChaosScreen()
-                            Screen.TRANSITIONS_SCREEN -> TransitionsScreen()
+                        Crossfade(
+                            targetState = selectedScreen,
+                            animationSpec = tween(durationMillis = 500)
+                        ) { screen ->
+                            when (screen) {
+                                Screen.SIMPLE_SIZE -> SimpleSizeScreen()
+                                Screen.SIMPLE_COLOR -> SimpleColorScreen()
+                                Screen.GROOVY_COLOR -> GroovySheepScreen()
+                                Screen.SIMPLE_VISIBILITY -> SimpleVisibilityScreen()
+                                Screen.BLINK_VISIBILITY -> BlinkSheepScreen()
+                                Screen.SIMPLE_MOVE -> SimpleMoveScreen()
+                                Screen.SIMPLE_JUMP -> SimpleJumpScreen()
+                                Screen.ALL_IN_CHAOS -> AllInChaosScreen()
+                                Screen.TRANSITIONS_SCREEN -> TransitionsScreen()
+                            }
                         }
                     }
                 }

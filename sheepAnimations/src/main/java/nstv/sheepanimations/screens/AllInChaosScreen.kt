@@ -1,13 +1,18 @@
 package nstv.sheepanimations.screens
 
 import androidx.compose.animation.Animatable
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -35,6 +40,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.Grid
@@ -44,6 +50,7 @@ import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
 import nstv.design.theme.components.StartStopBehaviorButton
 import nstv.sheep.ComposableSheep
+import nstv.sheepanimations.model.SheepCanvasSize
 import nstv.sheepanimations.model.SheepJumpSize
 import nstv.sheepanimations.model.SheepJumpingOffset
 import nstv.sheepanimations.model.SheepUiState
@@ -88,10 +95,15 @@ fun AllInChaosScreen(
     // SIZE
     var scale by remember { mutableStateOf(1f) }
 
+    // APPEARING
+    var isVisible by remember { mutableStateOf(false) }
+
     LaunchedEffect(sheepUiState) {
         verticalScroll.animateScrollTo(if (sheepUiState.isAnimating) 0 else verticalScroll.value)
 
         if (sheepUiState.animationsEnabled) {
+            isVisible = true
+            delay(500)
             // Color
             launch {
                 while (sheepUiState.isGroovy) {
@@ -133,10 +145,10 @@ fun AllInChaosScreen(
             launch {
                 while (sheepUiState.isBlinking) {
                     animate(
-                        0.2f,
                         1f,
+                        0f,
                         animationSpec = infiniteRepeatable(
-                            animation = tween(durationMillis = 200, delayMillis = 200),
+                            animation = tween(durationMillis = 500, delayMillis = 200),
                             repeatMode = RepeatMode.Reverse
                         )
                     ) { value, _ ->
@@ -149,7 +161,7 @@ fun AllInChaosScreen(
                 while (sheepUiState.isResizing) {
                     animate(
                         initialValue = 1f,
-                        targetValue = 0.5f,
+                        targetValue = 0f,
                         animationSpec = infiniteRepeatable(
                             animation = tween(durationMillis = 500, delayMillis = 200),
                             repeatMode = RepeatMode.Reverse
@@ -168,6 +180,7 @@ fun AllInChaosScreen(
             color.snapTo(colors[colorIndex])
             alpha = 1f
             scale = 1f
+            isVisible = false
         }
     }
 
@@ -178,18 +191,35 @@ fun AllInChaosScreen(
             .animateContentSize(),
         verticalArrangement = Arrangement.Bottom,
     ) {
-        Spacer(modifier = Modifier.height(SheepJumpSize))
-        ComposableSheep(
-            sheep = sheepUiState.sheep,
-            fluffColor = color.value,
+        Column(
             modifier = Modifier
-                .size(sheepUiState.sheepSize)
-                .align(Alignment.CenterHorizontally)
-                .offset(y = offsetY)
-                .scale(scale)
-                .alpha(alpha)
-        )
-
+                .fillMaxWidth()
+                .height(SheepJumpSize + SheepCanvasSize),
+        ) {
+            Spacer(modifier = Modifier.height(SheepJumpSize))
+            AnimatedVisibility(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
+                visible = if (sheepUiState.isAppearing) isVisible else true,
+                enter = scaleIn(
+                    animationSpec = spring(
+                        stiffness = Spring.StiffnessMediumLow,
+                        dampingRatio = Spring.DampingRatioMediumBouncy
+                    )
+                ) + fadeIn(),
+                exit = slideOutHorizontally { fullWidth -> -fullWidth.times(1.2).toInt() },
+            ) {
+                ComposableSheep(
+                    sheep = sheepUiState.sheep,
+                    fluffColor = color.value,
+                    modifier = Modifier
+                        .size(sheepUiState.sheepSize)
+                        .align(Alignment.CenterHorizontally)
+                        .offset(y = offsetY)
+                        .scale(scale)
+                        .alpha(alpha)
+                )
+            }
+        }
         StartStopBehaviorButton(
             isBehaviorActive = sheepUiState.animationsEnabled,
             enabled = sheepUiState.hasAnimations || sheepUiState.animationsEnabled,
@@ -207,6 +237,11 @@ fun AllInChaosScreen(
             val text = if (sheepUiState.animationsEnabled) "Shtop it!" else "Sheep it!"
             Text(text = text, fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }
+
+        // APPEARING
+        CheckBoxLabel(text = "Appearing", checked = sheepUiState.isAppearing, onCheckedChange = {
+            sheepUiState = sheepUiState.copy(isAppearing = !sheepUiState.isAppearing)
+        })
 
         // SIZE
         CheckBoxLabel(text = "Resize", checked = sheepUiState.isResizing, onCheckedChange = {

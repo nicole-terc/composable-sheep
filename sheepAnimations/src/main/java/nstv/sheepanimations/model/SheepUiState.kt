@@ -22,6 +22,7 @@ data class SheepUiState(
     val isGroovy: Boolean = false,
     val isBlinking: Boolean = false,
     val isResizing: Boolean = false,
+    val isAppearing: Boolean = false,
     val animationsEnabled: Boolean = false,
 ) {
     val hasAnimations get() = isJumping || isGroovy || isBlinking || isHeadBanging || isResizing
