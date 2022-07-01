@@ -33,10 +33,20 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
+import nstv.sheepanimations.screens.gesture.ChasingSheep
 import nstv.sheepanimations.screens.transition.TransitionsScreen
 
 private enum class Screen {
-    SIMPLE_SIZE, SIMPLE_COLOR, GROOVY_COLOR, SIMPLE_VISIBILITY, BLINK_VISIBILITY, SIMPLE_MOVE, SIMPLE_JUMP, ALL_IN_CHAOS, TRANSITIONS_SCREEN
+    SIMPLE_SIZE,
+    SIMPLE_COLOR,
+    GROOVY_COLOR,
+    SIMPLE_VISIBILITY,
+    BLINK_VISIBILITY,
+    SIMPLE_MOVE,
+    SIMPLE_JUMP,
+    ALL_IN_CHAOS,
+    TRANSITIONS_JUMP,
+    CHASING_SHEEP_GESTURES
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -59,7 +69,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.TRANSITIONS_SCREEN) }
+                    var selectedScreen by remember { mutableStateOf(Screen.CHASING_SHEEP_GESTURES) }
 
                     Column(
                         modifier = Modifier
@@ -111,7 +121,8 @@ class AnimationsMainActivity : ComponentActivity() {
                                 Screen.SIMPLE_MOVE -> SimpleMoveScreen()
                                 Screen.SIMPLE_JUMP -> SimpleJumpScreen()
                                 Screen.ALL_IN_CHAOS -> AllInChaosScreen()
-                                Screen.TRANSITIONS_SCREEN -> TransitionsScreen()
+                                Screen.TRANSITIONS_JUMP -> TransitionsScreen()
+                                Screen.CHASING_SHEEP_GESTURES -> ChasingSheep()
                             }
                         }
                     }

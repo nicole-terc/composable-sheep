@@ -34,7 +34,7 @@ fun SimpleSizeScreen(
     var sheepUiState by remember { mutableStateOf(SheepUiState()) }
 
     val scale by animateFloatAsState(
-        targetValue = if (sheepUiState.isResizing) 0.5f else 1f,
+        targetValue = if (sheepUiState.isScaling) 0.5f else 1f,
         animationSpec = if (Animated) tween(durationMillis = 500) else snap()
     )
 
@@ -56,7 +56,7 @@ fun SimpleSizeScreen(
             modifier = Modifier
                 .fillMaxWidth(),
             onClick = {
-                sheepUiState = sheepUiState.copy(isResizing = !sheepUiState.isResizing)
+                sheepUiState = sheepUiState.copy(isScaling = !sheepUiState.isScaling)
             }
         ) {
             Text(text = "Sheep it!", fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)

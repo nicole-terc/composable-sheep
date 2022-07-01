@@ -7,6 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.IntOffset
+import kotlin.math.roundToInt
 
 fun Modifier.nonRippleClickable(onClick: () -> Unit) = composed {
     this.clickable(
@@ -22,3 +24,5 @@ fun DpSize.scaled(scale: Offset): DpSize {
         height = this.height * scale.y
     )
 }
+
+fun Offset.toIntOffset() = IntOffset(x.roundToInt(), y.roundToInt())

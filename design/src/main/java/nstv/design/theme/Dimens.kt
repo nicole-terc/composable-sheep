@@ -17,6 +17,7 @@ object Grid {
     val Six = 48.dp
     val Seven = 54.dp
     val Eight = 72.dp
+    val Ten = 80.dp
 }
 
 object Dimens {

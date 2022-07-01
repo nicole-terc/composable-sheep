@@ -8,13 +8,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
@@ -28,29 +24,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextItemLoop
-import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
 import nstv.design.theme.components.StartStopBehaviorButton
-import nstv.sheep.ComposableSheep
-import nstv.sheep.model.DefaultHeadRotationAngle
-import nstv.sheepanimations.model.SheepCanvasSize
-import nstv.sheepanimations.model.SheepJumpSize
 import nstv.sheepanimations.model.SheepUiState
 import nstv.sheepanimations.screens.transition.SheepJumpState.Start
 
 private const val StepByStep = false
 private const val Groovy = true
+private const val Scaling = true
+private const val Blinking = true
 private const val MovingGlasses = true
 private const val HeadBanging = true
-private const val WithShadow = true
+private const val HasShadow = true
 private const val Appearing = false
 
 @Composable
@@ -58,11 +48,23 @@ fun TransitionsScreen(
     modifier: Modifier = Modifier,
 ) {
     val verticalScroll = rememberScrollState()
-    var sheepUiState by remember { mutableStateOf(SheepUiState()) }
+    var sheepUiState by remember {
+        mutableStateOf(
+            SheepUiState(
+                isGroovy = Groovy,
+                isScaling = Scaling,
+                isBlinking = Blinking,
+                isHeadBanging = HeadBanging,
+                movingGlasses = MovingGlasses,
+                hasShadow = HasShadow,
+                isAppearing = Appearing,
+            )
+        )
+    }
     var jumpState by remember { mutableStateOf(Start) }
     var isVisible by remember { mutableStateOf(false) }
 
-    LaunchedEffect(sheepUiState) {
+    LaunchedEffect(sheepUiState.animationsEnabled) {
         if (!StepByStep) {
             launch {
                 if (Appearing) {
@@ -89,12 +91,11 @@ fun TransitionsScreen(
         verticalArrangement = Arrangement.Bottom,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
-                visible = if (Appearing) isVisible else true,
+                visible = if (sheepUiState.isAppearing) isVisible else true,
                 enter = scaleIn(
                     animationSpec = spring(
                         stiffness = Spring.StiffnessMediumLow,
@@ -103,7 +104,7 @@ fun TransitionsScreen(
                 ) + fadeIn(),
                 exit = slideOutHorizontally { fullWidth -> -fullWidth.times(1.2).toInt() },
             ) {
-                JumpingSheep(jumpState = jumpState, sheepUiState = sheepUiState)
+                JumpingSheep(sheepUiState = sheepUiState, jumpState = jumpState)
             }
         }
         StartStopBehaviorButton(
@@ -129,58 +130,8 @@ fun TransitionsScreen(
     }
 }
 
-@Composable
-private fun JumpingSheep(
-    jumpState: SheepJumpState,
-    sheepUiState: SheepUiState,
-    modifier: Modifier = Modifier
-) {
-    val jumpTransitionData = updateJumpTransitionData(jumpState)
-
-    Box(
-        modifier = modifier
-            .height(SheepJumpSize + SheepCanvasSize)
-            .fillMaxWidth()
-    ) {
-
-        if (WithShadow) {
-            Box(
-                modifier = Modifier
-                    .size(jumpTransitionData.shadowSize)
-                    .align(Alignment.BottomCenter)
-                    .drawBehind {
-                        drawOval(color = SheepColor.Black.copy(0.5f))
-                    }
-            )
-        }
-
-        ComposableSheep(
-            sheep = sheepUiState.sheep.copy(headAngle = if (HeadBanging) jumpTransitionData.headAngle else DefaultHeadRotationAngle),
-            fluffColor = if (Groovy) jumpTransitionData.color else SheepColor.Green,
-            modifier = Modifier
-                .size(sheepUiState.sheepSize)
-                .scale(
-                    scaleY = jumpTransitionData.sheepScale.y,
-                    scaleX = jumpTransitionData.sheepScale.x
-                )
-                .align(Alignment.BottomCenter)
-                .offset(y = jumpTransitionData.offsetY)
-                .alpha(jumpTransitionData.alpha),
-            glassesTranslation = if (MovingGlasses) jumpTransitionData.glassesTranslation else 0f,
-        )
-    }
-}
-
 @Preview(showBackground = true)
 @Composable
 private fun PreviewSheepAnimation() {
     TransitionsScreen()
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun PreviewJumpingSheep() {
-    JumpingSheep(
-        jumpState = Start, sheepUiState = SheepUiState(), modifier = Modifier.fillMaxSize()
-    )
 }

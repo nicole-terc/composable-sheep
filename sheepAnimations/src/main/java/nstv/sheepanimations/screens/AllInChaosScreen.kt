@@ -3,7 +3,6 @@ package nstv.sheepanimations.screens
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animate
@@ -160,7 +159,7 @@ fun AllInChaosScreen(
             }
             // Size
             launch {
-                while (sheepUiState.isResizing) {
+                while (sheepUiState.isScaling) {
                     animate(
                         initialValue = 1f,
                         targetValue = 0f,
@@ -246,8 +245,8 @@ fun AllInChaosScreen(
         })
 
         // SIZE
-        CheckBoxLabel(text = "Resize", checked = sheepUiState.isResizing, onCheckedChange = {
-            sheepUiState = sheepUiState.copy(isResizing = !sheepUiState.isResizing)
+        CheckBoxLabel(text = "Scaling", checked = sheepUiState.isScaling, onCheckedChange = {
+            sheepUiState = sheepUiState.copy(isScaling = !sheepUiState.isScaling)
         })
 
         // BLINKING
