@@ -13,3 +13,6 @@ fun <E> Map<String, E>.nextItemLoop(currentIndex: Int): Pair<String, E> {
 }
 
 fun <E> Array<E>.nextItemLoop(currentIndex: Int): E = this[this.size.nextIndexLoop(currentIndex)]
+
+fun <E> Array<E>.nextItemLoop(currentItem: E): E =
+    this[this.size.nextIndexLoop(this.indexOf(currentItem))]

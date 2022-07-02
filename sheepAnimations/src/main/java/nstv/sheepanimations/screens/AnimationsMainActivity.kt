@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
+import nstv.sheepanimations.screens.coroutine.CoroutinesJumpScreen
 import nstv.sheepanimations.screens.gesture.ChasingSheep
 import nstv.sheepanimations.screens.transition.TransitionsScreen
 
@@ -46,6 +47,7 @@ private enum class Screen {
     SIMPLE_JUMP,
     ALL_IN_CHAOS,
     TRANSITIONS_JUMP,
+    COROUTINES_JUMP,
     CHASING_SHEEP_GESTURES
 }
 
@@ -122,6 +124,7 @@ class AnimationsMainActivity : ComponentActivity() {
                                 Screen.SIMPLE_JUMP -> SimpleJumpScreen()
                                 Screen.ALL_IN_CHAOS -> AllInChaosScreen()
                                 Screen.TRANSITIONS_JUMP -> TransitionsScreen()
+                                Screen.COROUTINES_JUMP -> CoroutinesJumpScreen()
                                 Screen.CHASING_SHEEP_GESTURES -> ChasingSheep()
                             }
                         }
