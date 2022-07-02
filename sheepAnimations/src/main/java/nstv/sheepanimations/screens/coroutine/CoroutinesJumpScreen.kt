@@ -7,7 +7,6 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animate
-import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.scaleIn
@@ -110,7 +109,7 @@ fun CoroutinesJumpScreen(
                             val currentStep = jumpDataMap[currentStepName]
                             val nextStep = jumpDataMap[nextStepName]
 
-                            //OffsetY
+                            // OffsetY
                             launch {
                                 animate(
                                     initialValue = currentStep.offsetY.value,
@@ -149,7 +148,7 @@ fun CoroutinesJumpScreen(
                                     }
                                 }
 
-                            //color
+                            // color
                             if (sheepUiState.isGroovy)
                                 launch {
                                     animate(
@@ -175,7 +174,7 @@ fun CoroutinesJumpScreen(
                                     }
                                 }
 
-                            //headAngle
+                            // headAngle
                             if (sheepUiState.isHeadBanging)
                                 launch {
                                     animate(
@@ -242,12 +241,14 @@ fun CoroutinesJumpScreen(
                 ) {
 
                     if (sheepUiState.hasShadow) {
-                        Box(modifier = Modifier
-                            .size(jumpData.shadowSize)
-                            .align(Alignment.BottomCenter)
-                            .drawBehind {
-                                drawOval(color = SheepColor.Black.copy(0.5f))
-                            })
+                        Box(
+                            modifier = Modifier
+                                .size(jumpData.shadowSize)
+                                .align(Alignment.BottomCenter)
+                                .drawBehind {
+                                    drawOval(color = SheepColor.Black.copy(0.5f))
+                                }
+                        )
                     }
 
                     ComposableSheep(
@@ -266,7 +267,8 @@ fun CoroutinesJumpScreen(
                 }
             }
         }
-        StartStopBehaviorButton(isBehaviorActive = sheepUiState.animationsEnabled,
+        StartStopBehaviorButton(
+            isBehaviorActive = sheepUiState.animationsEnabled,
             modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
                 disabledContainerColor = MaterialTheme.colorScheme.onSecondaryContainer,
@@ -274,13 +276,16 @@ fun CoroutinesJumpScreen(
             ),
             onClick = {
                 if (StepByStep) {
-                    jumpData = jumpDataMap[SheepJumpState.values()
-                        .nextItemLoop(SheepJumpState.values().indexOf(jumpState))]
+                    jumpData = jumpDataMap[
+                        SheepJumpState.values()
+                            .nextItemLoop(SheepJumpState.values().indexOf(jumpState))
+                    ]
                 } else {
                     sheepUiState =
                         sheepUiState.copy(animationsEnabled = !sheepUiState.animationsEnabled)
                 }
-            }) {
+            }
+        ) {
             val text = if (sheepUiState.animationsEnabled) "Shtop it!" else "Sheep it!"
             Text(text = text, fontWeight = FontWeight.Bold, fontSize = TextUnit.Twenty)
         }

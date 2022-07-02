@@ -64,7 +64,7 @@ fun updateJumpTransitionData(
 
     val color = transition.animateColor(label = "jumpSheepTransitionColor") { state ->
         when (state) {
-            SheepJumpState.Start -> SheepColor.Gray
+            SheepJumpState.Start -> sheepUiState.sheep.fluffColor
             SheepJumpState.Crouch -> SheepColor.Purple
             SheepJumpState.Top -> SheepColor.Green
             SheepJumpState.End -> SheepColor.Blue

@@ -91,7 +91,6 @@ fun <T> SheepJumpState.getAnimationSpecForOffsetTo(): FiniteAnimationSpec<T> = w
     )
 }
 
-
 class NonNullMap<K, V>(private val map: Map<K, V>) : Map<K, V> by map {
     override operator fun get(key: K): V {
         return map[key]!! // Force an NPE if the key doesn't exist

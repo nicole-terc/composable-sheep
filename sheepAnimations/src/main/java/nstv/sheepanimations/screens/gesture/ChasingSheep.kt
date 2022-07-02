@@ -3,6 +3,7 @@ package nstv.sheepanimations.screens.gesture
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.VectorConverter
 import androidx.compose.animation.core.animate
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.scaleIn
@@ -33,7 +34,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nstv.design.theme.Grid
 import nstv.design.theme.SheepColor
-import nstv.sheepanimations.animations.DpOffsetConverter
+import nstv.sheep.model.Sheep
 import nstv.sheepanimations.model.SheepOriginalSize
 import nstv.sheepanimations.model.SheepUiState
 import nstv.sheepanimations.model.withGroovyJump
@@ -48,24 +49,33 @@ private val colors = listOf(
     SheepColor.Orange,
 )
 
-private const val SingleTap = false
-private const val ShowPointer = true
+private const val SingleTap = true
+private const val ShowPointer = false
 private const val Warping = false
+private const val IsJumping = false
+private const val HasShadow = false
 private val PointerSize = Grid.Ten
 
 @Composable
 fun ChasingSheep(
     modifier: Modifier = Modifier,
 ) {
-    val sheepUiState by remember { mutableStateOf(SheepUiState(sheepSize = SheepOriginalSize.div(2)).withGroovyJump()) }
+    val sheepUiState by remember {
+        mutableStateOf(
+            SheepUiState(
+                sheep = Sheep(fluffColor = SheepColor.Magenta),
+                sheepSize = SheepOriginalSize.div(2),
+            ).withGroovyJump(HasShadow)
+        )
+    }
     var isSheepVisible by remember { mutableStateOf(true) }
     var isSheepJumping by remember { mutableStateOf(false) }
-    val containerOffset = remember { Animatable(DpOffset(0.dp, 0.dp), DpOffsetConverter) }
+    val containerOffset = remember { Animatable(DpOffset(0.dp, 0.dp), DpOffset.VectorConverter) }
 
     var pointerColor by remember { mutableStateOf(colors.first()) }
     var pointerAlpha by remember { mutableStateOf(0f) }
     var pointerScale by remember { mutableStateOf(0f) }
-    val pointerPosition = remember { Animatable(DpOffset(0.dp, 0.dp), DpOffsetConverter) }
+    val pointerPosition = remember { Animatable(DpOffset(0.dp, 0.dp), DpOffset.VectorConverter) }
 
     val scope = rememberCoroutineScope()
 
@@ -215,7 +225,10 @@ fun ChasingSheep(
         if (ShowPointer) {
             Box(
                 modifier = Modifier
-                    .offset(x = pointerPosition.value.x, y = pointerPosition.value.y)
+                    .offset(
+                        x = pointerPosition.value.x,
+                        y = pointerPosition.value.y
+                    )
                     .size(PointerSize)
                     .scale(scale = pointerScale)
                     .alpha(pointerAlpha)
@@ -232,7 +245,10 @@ fun ChasingSheep(
             ),
             exit = scaleOut()
         ) {
-            JumpingSheep(sheepUiState = sheepUiState, jumping = isSheepJumping)
+            JumpingSheep(
+                sheepUiState = sheepUiState,
+                jumping = if (IsJumping) isSheepJumping else false
+            )
         }
     }
 }

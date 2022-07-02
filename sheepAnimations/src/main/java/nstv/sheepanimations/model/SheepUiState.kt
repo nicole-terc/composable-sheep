@@ -31,10 +31,10 @@ data class SheepUiState(
     val isAnimating = animationsEnabled && hasAnimations
 }
 
-fun SheepUiState.withGroovyJump() = copy(
+fun SheepUiState.withGroovyJump(hasShadow: Boolean = true) = copy(
     isJumping = true,
     isGroovy = true,
     isHeadBanging = true,
     movingGlasses = true,
-    hasShadow = true
+    hasShadow = hasShadow
 )
