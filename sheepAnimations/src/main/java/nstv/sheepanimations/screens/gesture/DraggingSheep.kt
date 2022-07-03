@@ -26,7 +26,6 @@ import nstv.sheepanimations.extensions.toIntOffset
 import nstv.sheepanimations.model.GesturesSheepUiState
 import nstv.sheepanimations.model.SheepDefaultSize
 
-
 @Composable
 fun DraggingSheep(
     modifier: Modifier = Modifier,

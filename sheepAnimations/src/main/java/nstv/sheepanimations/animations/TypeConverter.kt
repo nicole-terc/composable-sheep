@@ -2,8 +2,6 @@ package nstv.sheepanimations.animations
 
 import androidx.compose.animation.core.AnimationVector2D
 import androidx.compose.animation.core.TwoWayConverter
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 
