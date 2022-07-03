@@ -49,7 +49,7 @@ import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
 import nstv.design.theme.components.StartStopBehaviorButton
 import nstv.sheep.ComposableSheep
-import nstv.sheepanimations.model.SheepCanvasSize
+import nstv.sheepanimations.model.SheepCanvasHeight
 import nstv.sheepanimations.model.SheepJumpSize
 import nstv.sheepanimations.model.SheepJumpingOffset
 import nstv.sheepanimations.model.SheepUiState
@@ -195,7 +195,7 @@ fun AllInChaosScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(SheepJumpSize + SheepCanvasSize),
+                .height(SheepJumpSize + SheepCanvasHeight),
         ) {
             Spacer(modifier = Modifier.height(SheepJumpSize))
             AnimatedVisibility(

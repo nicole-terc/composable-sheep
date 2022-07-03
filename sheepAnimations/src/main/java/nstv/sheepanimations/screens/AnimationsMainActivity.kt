@@ -35,6 +35,7 @@ import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
 import nstv.sheepanimations.screens.coroutine.CoroutinesJumpScreen
 import nstv.sheepanimations.screens.gesture.ChasingSheep
+import nstv.sheepanimations.screens.gesture.DraggingSheep
 import nstv.sheepanimations.screens.transition.TransitionsScreen
 
 private enum class Screen {
@@ -48,7 +49,8 @@ private enum class Screen {
     ALL_IN_CHAOS,
     TRANSITIONS_JUMP,
     COROUTINES_JUMP,
-    CHASING_SHEEP_GESTURES
+    CHASING_SHEEP_GESTURES,
+    DRAGGING_SHEEP_GESTURES
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -71,7 +73,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.CHASING_SHEEP_GESTURES) }
+                    var selectedScreen by remember { mutableStateOf(Screen.DRAGGING_SHEEP_GESTURES) }
 
                     Column(
                         modifier = Modifier
@@ -126,6 +128,7 @@ class AnimationsMainActivity : ComponentActivity() {
                                 Screen.TRANSITIONS_JUMP -> TransitionsScreen()
                                 Screen.COROUTINES_JUMP -> CoroutinesJumpScreen()
                                 Screen.CHASING_SHEEP_GESTURES -> ChasingSheep()
+                                Screen.DRAGGING_SHEEP_GESTURES -> DraggingSheep()
                             }
                         }
                     }

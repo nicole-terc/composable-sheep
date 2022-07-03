@@ -25,7 +25,7 @@ import nstv.design.theme.SheepColor
 import nstv.sheep.ComposableSheep
 import nstv.sheep.model.DefaultHeadRotationAngle
 import nstv.sheep.model.Sheep
-import nstv.sheepanimations.model.SheepOriginalSize
+import nstv.sheepanimations.model.SheepDefaultSize
 import nstv.sheepanimations.model.SheepUiState
 import nstv.sheepanimations.model.withGroovyJump
 import nstv.sheepanimations.screens.transition.SheepJumpState.Start
@@ -34,7 +34,7 @@ import nstv.sheepanimations.screens.transition.SheepJumpState.Start
 fun JumpingSheep(
     modifier: Modifier = Modifier,
     sheep: Sheep = Sheep(),
-    size: DpSize = SheepOriginalSize,
+    size: DpSize = SheepDefaultSize,
     jumping: Boolean = true,
 ) {
     val sheepUiState = SheepUiState(sheep = sheep, sheepSize = size).withGroovyJump()
