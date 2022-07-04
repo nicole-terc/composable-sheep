@@ -49,11 +49,11 @@ private val colors = listOf(
     SheepColor.Orange,
 )
 
-private const val SingleTap = true
-private const val ShowPointer = false
-private const val Warping = false
-private const val IsJumping = false
-private const val HasShadow = false
+private const val SingleTap = false
+private const val ShowPointer = true
+private const val Warping = true
+private const val IsJumping = true
+private const val HasShadow = true
 private val PointerSize = Grid.Ten
 
 @Composable
