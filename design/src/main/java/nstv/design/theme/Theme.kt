@@ -82,3 +82,8 @@ fun ComposableSheepTheme(
         content = content
     )
 }
+
+@Composable
+fun ThemeShadow(
+    useDarkTheme: Boolean = isSystemInDarkTheme(),
+) = if (useDarkTheme) md_theme_dark_shadow else md_theme_light_shadow

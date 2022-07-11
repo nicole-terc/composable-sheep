@@ -29,13 +29,13 @@ fun getCircumferencePointForAngle(
     circleCenter: Offset = Offset.Zero
 ): Offset {
     // 1. get X
-    val x = cos(angleInRadians).times(radius).plus(circleCenter.x)
+    val x = cos(angleInRadians).times(radius).plus(circleCenter.x).toFloat()
 
     // 2. get Y sign
     val ySign = if (sin(angleInRadians) >= 0) 1 else -1
     val y = sqrt(radius.pow(2) - (x - circleCenter.x).pow(2)).times(ySign).plus(circleCenter.y)
 
-    return Offset(x.toFloat(), y.toFloat())
+    return Offset(x, y)
 }
 
 /**

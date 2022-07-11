@@ -1,6 +1,5 @@
 package nstv.sheepanimations.screens.coroutine
 
-import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.VectorConverter
 import androidx.compose.animation.animateContentSize
@@ -46,6 +45,7 @@ import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextItemLoop
 import nstv.design.theme.SheepColor
 import nstv.design.theme.TextUnit
+import nstv.design.theme.ThemeShadow
 import nstv.design.theme.components.StartStopBehaviorButton
 import nstv.sheep.ComposableSheep
 import nstv.sheep.model.DefaultHeadRotationAngle
@@ -91,7 +91,7 @@ fun CoroutinesJumpScreen(
     }
 
     // Easy way to get color
-    val color = remember { Animatable(jumpData.color) }
+    val shadowColor = ThemeShadow().copy(0.5f)
 
     LaunchedEffect(sheepUiState.animationsEnabled) {
         if (!StepByStep) {
@@ -246,7 +246,7 @@ fun CoroutinesJumpScreen(
                                 .size(jumpData.shadowSize)
                                 .align(Alignment.BottomCenter)
                                 .drawBehind {
-                                    drawOval(color = SheepColor.Black.copy(0.5f))
+                                    drawOval(color = shadowColor)
                                 }
                         )
                     }

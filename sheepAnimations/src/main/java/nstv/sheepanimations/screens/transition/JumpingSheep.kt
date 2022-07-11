@@ -22,6 +22,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import nstv.canvasExtensions.nextItemLoop
 import nstv.design.theme.SheepColor
+import nstv.design.theme.ThemeShadow
 import nstv.sheep.ComposableSheep
 import nstv.sheep.model.DefaultHeadRotationAngle
 import nstv.sheep.model.Sheep
@@ -70,6 +71,7 @@ fun JumpingSheep(
     modifier: Modifier = Modifier,
 ) {
     val jumpTransitionData = updateJumpTransitionData(sheepUiState, jumpState)
+    val shadowColor = ThemeShadow().copy(0.5f)
 
     Box(
         modifier = modifier.height(sheepUiState.sheepJumpSize + sheepUiState.sheepSize.height)
@@ -81,7 +83,7 @@ fun JumpingSheep(
                     .size(jumpTransitionData.shadowSize)
                     .align(Alignment.BottomCenter)
                     .drawBehind {
-                        drawOval(color = SheepColor.Black.copy(0.5f))
+                        drawOval(color = shadowColor)
                     }
             )
         }
