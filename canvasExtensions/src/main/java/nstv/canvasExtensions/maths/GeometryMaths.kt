@@ -2,6 +2,7 @@ package nstv.canvasExtensions
 
 import androidx.compose.ui.geometry.Offset
 import kotlin.math.PI
+import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.pow
@@ -33,7 +34,7 @@ fun getCircumferencePointForAngle(
 
     // 2. get Y sign
     val ySign = if (sin(angleInRadians) >= 0) 1 else -1
-    val y = sqrt(radius.pow(2) - (x - circleCenter.x).pow(2)).times(ySign).plus(circleCenter.y)
+    val y = sqrt(abs(radius.pow(2) - (x - circleCenter.x).pow(2))).times(ySign).plus(circleCenter.y)
 
     return Offset(x, y)
 }
