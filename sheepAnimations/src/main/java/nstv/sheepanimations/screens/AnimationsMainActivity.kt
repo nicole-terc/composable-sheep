@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
+import nstv.sheepanimations.screens.canvas.CircleAnimationScreen
 import nstv.sheepanimations.screens.coroutine.CoroutinesJumpScreen
 import nstv.sheepanimations.screens.gesture.ChasingSheep
 import nstv.sheepanimations.screens.gesture.DraggingSheep
@@ -55,6 +56,7 @@ private enum class Screen {
     DRAGGING_SHEEP_GESTURES,
     FLYING_SHEEP_GESTURES,
     TRANSFORMING_SHEEP_GESTURES,
+    CIRCLE_ANIMATION,
 }
 
 class AnimationsMainActivity : ComponentActivity() {
@@ -77,7 +79,7 @@ class AnimationsMainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-                    var selectedScreen by remember { mutableStateOf(Screen.TRANSFORMING_SHEEP_GESTURES) }
+                    var selectedScreen by remember { mutableStateOf(Screen.CHASING_SHEEP_GESTURES) }
 
                     Column(
                         modifier = Modifier
@@ -135,6 +137,7 @@ class AnimationsMainActivity : ComponentActivity() {
                                 Screen.DRAGGING_SHEEP_GESTURES -> DraggingSheep()
                                 Screen.FLYING_SHEEP_GESTURES -> FlyingSheep()
                                 Screen.TRANSFORMING_SHEEP_GESTURES -> TransformingSheep()
+                                Screen.CIRCLE_ANIMATION -> CircleAnimationScreen()
                             }
                         }
                     }
