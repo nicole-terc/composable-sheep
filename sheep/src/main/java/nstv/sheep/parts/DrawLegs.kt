@@ -9,10 +9,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.unit.dp
-import nstv.canvasExtensions.getCircumferencePointForAngle
 import nstv.canvasExtensions.guidelines.GuidelineAlpha
 import nstv.canvasExtensions.guidelines.GuidelineDashPattern
 import nstv.canvasExtensions.guidelines.GuidelineStrokeWidth
+import nstv.canvasExtensions.maths.getCircumferencePointForAngle
 import nstv.sheep.model.Sheep
 
 private const val OverlapPercentage = 0.5f

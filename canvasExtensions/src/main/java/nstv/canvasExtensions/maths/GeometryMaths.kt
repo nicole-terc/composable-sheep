@@ -1,8 +1,7 @@
-package nstv.canvasExtensions
+package nstv.canvasExtensions.maths
 
 import androidx.compose.ui.geometry.Offset
 import kotlin.math.PI
-import kotlin.math.abs
 import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.pow
@@ -19,9 +18,8 @@ val FullCircleAngleInRadians = Math.toRadians(360.0)
  * - x obtained with trigonometry: cos(angle) = Adjacent/Hypotenuse = (x-x0)/radius
  * => x = cos(angle) * r + x0
  *
- * - y obtained from circle formula: r^2 = (x-x0)^2 + (y-y0)^2
- * => y = sqrt[r^2 - (x-x0)^2] + y0
- * y sign obtained form sin(angle), same +/- sign as sin(angle)
+ * - y obtained with trigonometry: sin(angle) = Opposite/Hypotenuse = (y-y0)/radius
+ * => y = sin(angle) * r + y0
  *
  **/
 fun getCircumferencePointForAngle(
@@ -29,12 +27,8 @@ fun getCircumferencePointForAngle(
     radius: Float,
     circleCenter: Offset = Offset.Zero
 ): Offset {
-    // 1. get X
     val x = cos(angleInRadians).times(radius).plus(circleCenter.x).toFloat()
-
-    // 2. get Y sign
-    val ySign = if (sin(angleInRadians) >= 0) 1 else -1
-    val y = sqrt(abs(radius.pow(2) - (x - circleCenter.x).pow(2))).times(ySign).plus(circleCenter.y)
+    val y = sin(angleInRadians).times(radius).plus(circleCenter.y).toFloat()
 
     return Offset(x, y)
 }

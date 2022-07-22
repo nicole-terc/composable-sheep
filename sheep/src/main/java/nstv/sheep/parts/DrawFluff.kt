@@ -9,14 +9,14 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.unit.dp
-import nstv.canvasExtensions.FullCircleAngleInRadians
-import nstv.canvasExtensions.distanceToOffset
-import nstv.canvasExtensions.getCircumferencePointForAngle
-import nstv.canvasExtensions.getCurveControlPoint
-import nstv.canvasExtensions.getMiddlePoint
 import nstv.canvasExtensions.guidelines.GuidelineAlpha
 import nstv.canvasExtensions.guidelines.drawAxis
 import nstv.canvasExtensions.guidelines.drawGrid
+import nstv.canvasExtensions.maths.FullCircleAngleInRadians
+import nstv.canvasExtensions.maths.distanceToOffset
+import nstv.canvasExtensions.maths.getCircumferencePointForAngle
+import nstv.canvasExtensions.maths.getCurveControlPoint
+import nstv.canvasExtensions.maths.getMiddlePoint
 import nstv.sheep.model.FluffStyle
 import nstv.sheep.model.Sheep
 

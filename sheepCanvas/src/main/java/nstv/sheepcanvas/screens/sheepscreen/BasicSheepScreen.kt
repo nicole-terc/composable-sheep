@@ -12,13 +12,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
-import nstv.canvasExtensions.distanceToOffset
-import nstv.canvasExtensions.getCircumferencePointForAngle
-import nstv.canvasExtensions.getMiddlePoint
 import nstv.canvasExtensions.guidelines.GuidelineDashPattern
 import nstv.canvasExtensions.guidelines.drawAxis
 import nstv.canvasExtensions.guidelines.drawPoint
 import nstv.canvasExtensions.guidelines.drawRectGuideline
+import nstv.canvasExtensions.maths.distanceToOffset
+import nstv.canvasExtensions.maths.getCircumferencePointForAngle
+import nstv.canvasExtensions.maths.getMiddlePoint
 import nstv.design.theme.ComposableSheepTheme
 
 private const val ShowGuidelines = false

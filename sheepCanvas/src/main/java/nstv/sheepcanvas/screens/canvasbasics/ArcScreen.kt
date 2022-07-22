@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -22,11 +23,11 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import nstv.canvasExtensions.getCircumferencePointForAngle
 import nstv.canvasExtensions.guidelines.GuidelineAlpha
 import nstv.canvasExtensions.guidelines.drawAxis
 import nstv.canvasExtensions.guidelines.drawGrid
 import nstv.canvasExtensions.guidelines.drawPoint
+import nstv.canvasExtensions.maths.getCircumferencePointForAngle
 import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
@@ -62,6 +63,7 @@ fun ArcScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
+                .padding(Grid.Half)
         ) {
             val drawStyle = drawStyleOptions[drawStyleIndex].second
 
