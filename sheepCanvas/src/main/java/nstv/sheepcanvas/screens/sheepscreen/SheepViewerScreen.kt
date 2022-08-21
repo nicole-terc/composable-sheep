@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.Grid
+import nstv.design.theme.SheepColor
 import nstv.design.theme.components.CheckBoxLabel
 import nstv.design.theme.components.SliderLabelValue
 import nstv.sheep.ComposableSheep
@@ -38,10 +39,22 @@ private val legs = listOf(
     "Four Legs" to fourLegs(),
 )
 
+// Fluff to Glasses colors
+private val colors = listOf(
+    SheepColor.Gray to SheepColor.Black,
+    SheepColor.Blue to SheepColor.Black,
+    SheepColor.Green to SheepColor.Black,
+    SheepColor.Purple to SheepColor.Black,
+    SheepColor.Magenta to SheepColor.Black,
+    SheepColor.Black to SheepColor.Gray,
+    SheepColor.Orange to SheepColor.Blue,
+)
+
 @Composable
 fun SheepViewerScreen(modifier: Modifier = Modifier) {
     var showGuidelines by remember { mutableStateOf(false) }
     var fluffStyleIndex by remember { mutableStateOf(0) }
+    var fluffColorIndex by remember { mutableStateOf(0) }
     var legsIndex by remember { mutableStateOf(0) }
     var sheep by remember {
         mutableStateOf(
@@ -64,8 +77,8 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         )
         Text(
             text = "${fluffStyles[fluffStyleIndex].first} " +
-                "| ${legs[legsIndex].first} " +
-                "| ${floor(sheep.headAngle)}°"
+                    "| ${legs[legsIndex].first} " +
+                    "| ${floor(sheep.headAngle)}°"
         )
 
         Spacer(modifier = Modifier.height(Grid.Two))
@@ -90,6 +103,17 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
             }
         ) {
             val text = "Change Fluff Style"
+            Text(text = text)
+        }
+
+        Button(modifier = Modifier.fillMaxWidth(), onClick = {
+            fluffColorIndex = colors.nextIndexLoop(fluffColorIndex)
+            sheep = sheep.copy(
+                fluffColor = colors[fluffColorIndex].first,
+                glassesColor = colors[fluffColorIndex].second,
+            )
+        }) {
+            val text = "Change Colors"
             Text(text = text)
         }
 
