@@ -113,8 +113,6 @@ fun getFluffPath(
         quadraticBezierTo(controlPoint.x, controlPoint.y, fluffPoint.x, fluffPoint.y)
         currentPoint = fluffPoint
     }
-
-    close()
 }
 
 private fun DrawScope.drawFluffGuidelines(
