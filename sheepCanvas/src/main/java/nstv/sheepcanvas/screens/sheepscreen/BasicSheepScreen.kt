@@ -28,9 +28,9 @@ fun BasicSheepScreen() {
 
     // Sheep Colors
     val fluffColor = Color.LightGray
-    val bodyColor = Color.DarkGray
+    val headColor = Color.DarkGray
 
-    // Round sheep
+    // Basic sheep
     Canvas(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,28 +45,18 @@ fun BasicSheepScreen() {
                 height = bodyRadius.times(1.2f)
             )
 
-            val legSeparation = legSize.width.times(2f)
-
-            val leftLegTopLeft = Offset(
-                x = center.x - legSize.width - legSeparation.div(2),
-                y = center.y
-            )
-
-            val rightLegTopLeft = Offset(
-                x = center.x + legSeparation.div(2),
-                y = center.y
-            )
+            val (rightLegTopLeft, leftLegTopLeft) = getSimpleLegsTopLeft(legSize)
 
             // Left leg
             drawRect(
-                color = bodyColor,
+                color = headColor,
                 topLeft = leftLegTopLeft,
                 size = legSize
             )
 
             // Right leg
             drawRect(
-                color = bodyColor,
+                color = headColor,
                 topLeft = rightLegTopLeft,
                 size = legSize
             )
@@ -78,8 +68,13 @@ fun BasicSheepScreen() {
                 radius = bodyRadius
             )
 
-            // HEAD
+            // Uncomment for basic fluff sheep
+//            drawSimpleFluffCircles(
+//                color = fluffColor,
+//                radius = bodyRadius
+//            )
 
+            // HEAD
             // Head size is as width as half the body (circle radius) and has a 2/3 height ratio
             val headSize = Size(
                 width = bodyRadius,
@@ -93,7 +88,7 @@ fun BasicSheepScreen() {
             )
 
             drawOval(
-                color = bodyColor,
+                color = headColor,
                 topLeft = headTopLeft,
                 size = headSize
             )
@@ -124,7 +119,7 @@ fun BasicSheepScreen() {
     )
 }
 
-fun DrawScope.drawSimpleFluffCircles(
+private fun DrawScope.drawSimpleFluffCircles(
     color: Color,
     radius: Float,
     center: Offset = size.center,
@@ -188,6 +183,25 @@ fun DrawScope.drawSimpleFluffCircles(
             )
         }
     }
+}
+
+private fun DrawScope.getSimpleLegsTopLeft(
+    legSize: Size,
+): Pair<Offset, Offset> {
+    // LEGS
+    val legSeparation = legSize.width.times(2f)
+
+    val leftLegTopLeft = Offset(
+        x = center.x - legSize.width - legSeparation.div(2),
+        y = center.y
+    )
+
+    val rightLegTopLeft = Offset(
+        x = center.x + legSeparation.div(2),
+        y = center.y
+    )
+
+    return Pair(leftLegTopLeft, rightLegTopLeft)
 }
 
 @Preview(showSystemUi = true)
