@@ -37,11 +37,12 @@ import nstv.sheepcanvas.screens.canvasbasics.MySuperScreen
 import nstv.sheepcanvas.screens.canvasbasics.PointsScreen
 import nstv.sheepcanvas.screens.canvasbasics.QuadraticBezierScreen
 import nstv.sheepcanvas.screens.canvasbasics.ShapeScreen
+import nstv.sheepcanvas.screens.canvasbasics.SimplePathScreen
 import nstv.sheepcanvas.screens.sheepscreen.BasicSheepScreen
 import nstv.sheepcanvas.screens.sheepscreen.SheepViewerScreen
 
 private enum class Screen {
-    SHEEP, BASIC_SHEEP, LINE, POINTS, SHAPE, ARC, SUPER, BEZIER
+    SHEEP, BASIC_SHEEP, LINE, POINTS, SHAPE, ARC, SUPER, BEZIER, SIMPLE_PATH,
 }
 
 class CanvasMainActivity : ComponentActivity() {
@@ -114,6 +115,7 @@ class CanvasMainActivity : ComponentActivity() {
                             Screen.SUPER -> MySuperScreen()
                             Screen.BASIC_SHEEP -> BasicSheepScreen()
                             Screen.BEZIER -> QuadraticBezierScreen()
+                            Screen.SIMPLE_PATH -> SimplePathScreen()
                         }
                     }
                 }
