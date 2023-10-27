@@ -1,38 +1,137 @@
 package nstv.sheepcanvas.screens.sheepscreen
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.rememberInfiniteTransition
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import nstv.canvasExtensions.guidelines.GuidelineDashPattern
 import nstv.canvasExtensions.guidelines.drawAxis
 import nstv.canvasExtensions.guidelines.drawPoint
 import nstv.canvasExtensions.guidelines.drawRectGuideline
+import nstv.canvasExtensions.maths.FullCircleAngleInRadians
 import nstv.canvasExtensions.maths.distanceToOffset
 import nstv.canvasExtensions.maths.getCircumferencePointForAngle
 import nstv.canvasExtensions.maths.getMiddlePoint
-import nstv.design.theme.ComposableSheepTheme
+import nstv.sheep.model.FluffStyle
+import nstv.sheep.parts.getFluffPath
+import nstv.sheepcanvas.screens.sheepscreen.BasicSheepColor.Fluff
+import nstv.sheepcanvas.screens.sheepscreen.BasicSheepColor.Skin
 
 private const val ShowGuidelines = false
 
+object BasicSheepColor {
+    val Gray = Color(0xFFCCCCCC)
+    val Blue = Color(0xFF1976D2)
+    val Green = Color(0xFF3DDC84)
+    val Purple = Color(0xFF6200EA)
+    val Magenta = Color(0xFFC51162)
+    val Orange = Color(0xFFFF9800)
+    val Red = Color(0xFFFF0000)
+    val Fluff = Color(0xFFCCCCCC)
+    val Skin = Color(0xFF444444)
+
+    val list = listOf(
+        Gray,
+        Blue,
+        Green,
+        Purple,
+        Magenta,
+        Orange,
+        Red,
+        Fluff,
+    )
+}
+
 @Composable
-fun BasicSheepScreen() {
+fun LoadingBasicSheep(
+    modifier: Modifier = Modifier,
+    spinning: Boolean = true,
+) {
+    val durationMillis = 1000
+    val delayMillis = 300
+    val infiniteTransition = rememberInfiniteTransition()
+    val rotation by infiniteTransition.animateFloat(
+        initialValue = 0f,
+        targetValue = 360f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = durationMillis,
+                delayMillis = delayMillis,
+                easing = FastOutSlowInEasing,
+            ),
+            repeatMode = RepeatMode.Restart
+        )
+    )
+    val animatedScale by infiniteTransition.animateFloat(
+        initialValue = 1f,
+        targetValue = 0.8f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(
+                durationMillis = durationMillis,
+                delayMillis = delayMillis,
+                easing = LinearEasing,
+            ),
+            repeatMode = RepeatMode.Reverse
+        )
+    )
 
-    // Sheep Colors
-    val fluffColor = Color.LightGray
-    val headColor = Color.DarkGray
+    Box(modifier) {
+        Box(Modifier.fillMaxSize()) {
+            BasicSheepScreen(
+                modifier = Modifier
+                    .fillMaxSize(.5f)
+                    .aspectRatio(
+                        1f,
+                        matchHeightConstraintsFirst = true
+                    )
+                    .align(Alignment.BottomCenter)
+                    .graphicsLayer {
+                        if (spinning) {
+                            transformOrigin = TransformOrigin(
+                                pivotFractionX = 0.5f,
+                                pivotFractionY = 0.1f,
+                            )
+                            rotationZ = rotation
+                            scaleX = animatedScale
+                            scaleY = animatedScale
+                        }
+                    },
+            )
+        }
+    }
+}
 
+@Composable
+fun BasicSheepScreen(
+    modifier: Modifier = Modifier,
+) {
     // Basic sheep
     Canvas(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .aspectRatio(1f),
         onDraw = {
@@ -49,30 +148,39 @@ fun BasicSheepScreen() {
 
             // Left leg
             drawRect(
-                color = headColor,
+                color = Skin,
                 topLeft = leftLegTopLeft,
                 size = legSize
             )
 
             // Right leg
             drawRect(
-                color = headColor,
+                color = Skin,
                 topLeft = rightLegTopLeft,
                 size = legSize
             )
 
             // FLUFF
             drawCircle(
-                color = fluffColor,
+                color = Fluff,
                 center = center,
                 radius = bodyRadius
             )
 
-            // Uncomment for basic fluff sheep
+            // Basic fluff sheep
 //            drawSimpleFluffCircles(
-//                color = fluffColor,
+//                color = Fluff,
 //                radius = bodyRadius
 //            )
+
+            // Bassic Sheep Path
+            drawPath(
+                getBasicFluffPath(
+                    circleRadius = bodyRadius,
+                    circleCenterOffset = center,
+                ),
+                brush = SolidColor(BasicSheepColor.list.random())
+            )
 
             // HEAD
             // Head size is as width as half the body (circle radius) and has a 2/3 height ratio
@@ -88,7 +196,7 @@ fun BasicSheepScreen() {
             )
 
             drawOval(
-                color = headColor,
+                color = Skin,
                 topLeft = headTopLeft,
                 size = headSize
             )
@@ -123,7 +231,7 @@ private fun DrawScope.drawSimpleFluffCircles(
     color: Color,
     radius: Float,
     center: Offset = size.center,
-    numberOfFluffs: Int = 10
+    numberOfFluffs: Int = 15
 ) {
     val fullCircleAngleInRadians = Math.toRadians(360.0)
     val singleFluffAngle = fullCircleAngleInRadians.div(numberOfFluffs)
@@ -204,10 +312,51 @@ private fun DrawScope.getSimpleLegsTopLeft(
     return Pair(leftLegTopLeft, rightLegTopLeft)
 }
 
-@Preview(showSystemUi = true)
-@Composable
-private fun Preview() {
-    ComposableSheepTheme {
-        BasicSheepScreen()
+fun getBasicFluffPath(
+    circleRadius: Float,
+    circleCenterOffset: Offset,
+    fluffStyle: FluffStyle = FluffStyle.Random(),
+) = getFluffPath(
+    fluffPoints = getBasicFluffPoints(
+        fluffPercentages = fluffStyle.fluffChunksPercentages,
+        radius = circleRadius,
+        circleCenter = circleCenterOffset
+    ),
+    circleRadius = circleRadius,
+    circleCenterOffset = circleCenterOffset,
+)
+
+private fun getBasicFluffPoints(
+    fluffPercentages: List<Double>,
+    radius: Float,
+    circleCenter: Offset = Offset.Zero,
+    totalAngleInRadians: Double = FullCircleAngleInRadians
+): List<Offset> {
+    val fluffPoints = mutableListOf<Offset>()
+
+    var totalPercentage = 0.0
+    fluffPercentages.forEach { fluffPercentage ->
+        totalPercentage += fluffPercentage
+        fluffPoints.add(
+            getCircumferencePointForAngle(
+                totalPercentage.div(100.0).times(totalAngleInRadians),
+                radius,
+                circleCenter
+            )
+        )
     }
+    return fluffPoints
+}
+
+
+@Preview
+@Composable
+private fun PreviewLoadingSheep() {
+    LoadingBasicSheep(Modifier.size(200.dp))
+}
+
+@Preview
+@Composable
+private fun PreviewBasicSheep() {
+    BasicSheepScreen()
 }

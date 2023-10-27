@@ -1,5 +1,7 @@
 package nstv.sheepcanvas.screens.sheepscreen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
@@ -15,6 +17,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import nstv.canvasExtensions.nextIndexLoop
 import nstv.design.theme.Grid
 import nstv.design.theme.SheepColor
@@ -56,6 +59,8 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
     var fluffStyleIndex by remember { mutableStateOf(0) }
     var fluffColorIndex by remember { mutableStateOf(0) }
     var legsIndex by remember { mutableStateOf(0) }
+    var showBinarySheep by remember { mutableStateOf(false) }
+    var showInvertBinarySheep by remember { mutableStateOf(false) }
     var sheep by remember {
         mutableStateOf(
             Sheep(
@@ -65,11 +70,28 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
         )
     }
 
+    val binarySheep = Sheep(
+        fluffColor = Color.Black,
+        headColor = Color.White,
+        legColor = Color.White,
+        glassesColor = Color.White,
+    )
+
+    val invertedBinarySheep = Sheep(
+        fluffColor = Color.White,
+        headColor = Color.Black,
+        legColor = Color.Black,
+        glassesColor = Color.Black,
+    )
+
     Column(
-        modifier = modifier.verticalScroll(rememberScrollState()),
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .background(color = if (showBinarySheep) Color.Gray else Color.Unspecified),
     ) {
+        val binarySheepToUse = if (showInvertBinarySheep) invertedBinarySheep else binarySheep
         ComposableSheep(
-            sheep = sheep,
+            sheep = if (showBinarySheep) binarySheepToUse else sheep,
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f),
@@ -133,5 +155,22 @@ fun SheepViewerScreen(modifier: Modifier = Modifier) {
             checked = showGuidelines,
             onCheckedChange = { showGuidelines = it }
         )
+
+        CheckBoxLabel(
+            text = "Binary Sheep",
+            checked = showBinarySheep,
+            onCheckedChange = {
+                showBinarySheep = it
+            }
+        )
+        AnimatedVisibility(visible = showBinarySheep) {
+            CheckBoxLabel(
+                text = "Invert Binary Sheep",
+                checked = showInvertBinarySheep,
+                onCheckedChange = {
+                    showInvertBinarySheep = it
+                }
+            )
+        }
     }
 }
