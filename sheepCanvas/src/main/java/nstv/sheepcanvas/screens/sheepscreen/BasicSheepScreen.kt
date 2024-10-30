@@ -21,6 +21,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.geometry.center
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.drawscope.DrawScope
@@ -35,11 +36,16 @@ import nstv.canvasExtensions.guidelines.drawRectGuideline
 import nstv.canvasExtensions.maths.FullCircleAngleInRadians
 import nstv.canvasExtensions.maths.distanceToOffset
 import nstv.canvasExtensions.maths.getCircumferencePointForAngle
+import nstv.canvasExtensions.maths.getCurveControlPoint
 import nstv.canvasExtensions.maths.getMiddlePoint
-import nstv.sheep.model.FluffStyle
-import nstv.sheep.parts.getFluffPath
+import nstv.canvasExtensions.maths.toRadians
 import nstv.sheepcanvas.screens.sheepscreen.BasicSheepColor.Fluff
 import nstv.sheepcanvas.screens.sheepscreen.BasicSheepColor.Skin
+
+/**
+ * Have fun with the Basic Composable Sheep!
+ * Found more about them here: https://github.com/nicole-terc/composable-sheep
+ */
 
 private const val ShowGuidelines = false
 
@@ -101,7 +107,7 @@ fun LoadingBasicSheep(
 
     Box(modifier) {
         Box(Modifier.fillMaxSize()) {
-            BasicSheepScreen(
+            BasicSheep(
                 modifier = Modifier
                     .fillMaxSize(.5f)
                     .aspectRatio(
@@ -126,7 +132,7 @@ fun LoadingBasicSheep(
 }
 
 @Composable
-fun BasicSheepScreen(
+fun BasicSheep(
     modifier: Modifier = Modifier,
 ) {
     // Basic sheep
@@ -233,8 +239,7 @@ private fun DrawScope.drawSimpleFluffCircles(
     center: Offset = size.center,
     numberOfFluffs: Int = 15
 ) {
-    val fullCircleAngleInRadians = Math.toRadians(360.0)
-    val singleFluffAngle = fullCircleAngleInRadians.div(numberOfFluffs)
+    val singleFluffAngle = FullCircleAngleInRadians.div(numberOfFluffs)
 
     var totalAngle = 0.0 // Previous angle
 
@@ -244,7 +249,7 @@ private fun DrawScope.drawSimpleFluffCircles(
         circleCenter = center
     )
 
-    while (totalAngle < fullCircleAngleInRadians) {
+    while (totalAngle < FullCircleAngleInRadians) {
         // 1. Get the next fluff end point
         val nextFluffTotalAngle = totalAngle + singleFluffAngle
         val nextFluffEndOffset = getCircumferencePointForAngle(
@@ -315,10 +320,10 @@ private fun DrawScope.getSimpleLegsTopLeft(
 fun getBasicFluffPath(
     circleRadius: Float,
     circleCenterOffset: Offset,
-    fluffStyle: FluffStyle = FluffStyle.Random(),
+    numberOfFluffChunks: Int = 10,
 ) = getFluffPath(
     fluffPoints = getBasicFluffPoints(
-        fluffPercentages = fluffStyle.fluffChunksPercentages,
+        fluffPercentages = List(numberOfFluffChunks) { 100.0.div(numberOfFluffChunks) },
         radius = circleRadius,
         circleCenter = circleCenterOffset
     ),
@@ -348,6 +353,31 @@ private fun getBasicFluffPoints(
     return fluffPoints
 }
 
+/**
+ * Returns the path of the fluff for the given fluff points.
+ * Uses quadratic brazier curves to create the fluff curves.
+ */
+
+fun getFluffPath(
+    fluffPoints: List<Offset>,
+    circleRadius: Float,
+    circleCenterOffset: Offset,
+) = Path().apply {
+    var currentPoint = getCircumferencePointForAngle(
+        0.0.toRadians(),
+        circleRadius,
+        circleCenterOffset
+    )
+
+    moveTo(currentPoint.x, currentPoint.y)
+
+    fluffPoints.forEach { fluffPoint ->
+        val controlPoint =
+            getCurveControlPoint(currentPoint, fluffPoint, circleCenterOffset)
+        quadraticBezierTo(controlPoint.x, controlPoint.y, fluffPoint.x, fluffPoint.y)
+        currentPoint = fluffPoint
+    }
+}
 
 @Preview
 @Composable
@@ -358,5 +388,5 @@ private fun PreviewLoadingSheep() {
 @Preview
 @Composable
 private fun PreviewBasicSheep() {
-    BasicSheepScreen()
+    BasicSheep()
 }
