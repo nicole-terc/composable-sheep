@@ -1,10 +1,12 @@
 plugins {
     id(Plugins.library)
     kotlin(Plugins.android)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     compileSdk = ModuleExtension.compileSdkVersion
+    namespace = "nstv.sheep"
 
     defaultConfig {
         minSdk = ModuleExtension.DefaultConfigs.minSdkVersion
@@ -23,9 +25,6 @@ android {
     }
     buildFeatures {
         compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.core.get()
     }
     packagingOptions {
         resources {

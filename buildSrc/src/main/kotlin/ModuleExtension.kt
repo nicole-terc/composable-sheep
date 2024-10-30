@@ -1,6 +1,6 @@
 object ModuleExtension {
     const val compileSdkVersion = 31
-    const val jvmTarget = "1.8"
+    const val jvmTarget = "11"
 
     object DefaultConfigs {
         const val minSdkVersion = 23
@@ -14,8 +14,8 @@ object ModuleExtension {
     object App {
         const val applicationIdCanvas = "nstv.sheep.canvas"
         const val applicationIdAnimations = "nstv.sheep.animations"
-        const val versionName = "1.0"
-        const val versionCode = 1
+        const val versionName = "1.1"
+        const val versionCode = 2
     }
 
     object FilePath {

@@ -5,10 +5,12 @@ plugins {
     id(Plugins.parcelize)
     id(Plugins.daggerHilt)
     kotlin(Plugins.serialize)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     compileSdk = ModuleExtension.compileSdkVersion
+    namespace = "nstv.sheepanimations"
     defaultConfig {
         applicationId = ModuleExtension.App.applicationIdAnimations
         minSdk = ModuleExtension.DefaultConfigs.minSdkVersion
@@ -32,8 +34,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = ModuleExtension.jvmTarget

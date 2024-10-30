@@ -5,10 +5,13 @@ plugins {
     id(Plugins.parcelize)
     id(Plugins.daggerHilt)
     kotlin(Plugins.serialize)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
     compileSdk = ModuleExtension.compileSdkVersion
+    namespace = "nstv.sheepcanvas"
+
     defaultConfig {
         applicationId = ModuleExtension.App.applicationIdCanvas
         minSdk = ModuleExtension.DefaultConfigs.minSdkVersion
@@ -32,8 +35,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = ModuleExtension.jvmTarget
@@ -41,9 +44,7 @@ android {
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.core.get()
-    }
+
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

@@ -1,12 +1,12 @@
-// TODO: get plugins from version catalog once this issue is tackled: https://youtrack.jetbrains.com/issue/KTIJ-19369
 @Suppress("DSL_SCOPE_VIOLATION", "UnstableApiUsage")
 plugins {
-    id("com.android.application").version("7.1.1").apply(false)
-    id("com.android.library").version("7.1.1").apply(false)
-    id("org.jetbrains.kotlin.android").version("1.6.10").apply(false)
-    kotlin("plugin.serialization") version "1.6.10"
-    id(Plugins.ktlint).version(libs.plugins.ktlint.get().version.toString())
-    id(Plugins.detekt).version(libs.plugins.detekt.get().version.toString())
+    alias(libs.plugins.application).apply(false)
+    alias(libs.plugins.library).apply(false)
+    alias(libs.plugins.kotlin).apply(false)
+    alias(libs.plugins.compose.compiler).apply(false)
+    alias(libs.plugins.serialization).apply(false)
+    alias(libs.plugins.ktlint).apply(true)
+    alias(libs.plugins.detekt).apply(true)
 }
 
 buildscript {

@@ -9,6 +9,8 @@ import kotlin.math.sin
 import kotlin.math.sqrt
 
 val FullCircleAngleInRadians = Math.toRadians(360.0)
+fun Double.toRadians() = PI * this / 180.0
+
 
 /**
  * Returns a point in a circumference given the angle from the x axis in radians,
