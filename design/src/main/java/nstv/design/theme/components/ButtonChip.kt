@@ -18,8 +18,8 @@ fun StartStopBehaviorButton(
 ) {
     val buttonColors =
         ButtonDefaults.buttonColors(
-            containerColor = colors.containerColor(enabled = !isBehaviorActive).value,
-            contentColor = colors.contentColor(enabled = !isBehaviorActive).value,
+            containerColor = if (isBehaviorActive) colors.containerColor else colors.disabledContainerColor,
+            contentColor = if (isBehaviorActive) colors.contentColor else colors.disabledContentColor,
         )
 
     Button(

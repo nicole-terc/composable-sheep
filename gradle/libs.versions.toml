@@ -1,40 +1,41 @@
 [versions]
 #kotlin
-coroutines = "1.5.2"
-serialization = "1.3.2"
+coroutines = "1.10.2"
+serialization = "1.9.0"
 
 #android
-agp = "8.7.1"
-material = "1.5.0"
-material3 = "1.0.0-alpha10"
-hilt = "2.40.5"
+agp = "8.11.1"
+material = "1.12.0"
+material-icons = "1.7.8"
+material3 = "1.3.2"
+hilt = "2.57.1"
 
 #jetpack
-core = "1.7.0"
-activity = "1.3.1"
-lifecycle = "2.4.1"
-room = "2.4.2"
+core = "1.17.0"
+activity = "1.10.1"
+lifecycle = "2.9.2"
+room = "2.7.2"
 
 #compose
-compose-core = "1.1.1"
-compose-navigation = "2.4.0-alpha06"
-compose-navigation-hilt = "1.0.0"
+compose-core = "1.9.0"
+compose-navigation = "2.9.3"
+compose-navigation-hilt = "1.2.0"
 compose-paging = "1.0.0-alpha14"
-accompanist = "0.23.1"
+accompanist = "0.37.3"
 
 #testing
 jUnit = "4.13.2"
-jUnitExtensions = "1.1.3"
-espresso = "3.4.0"
+jUnitExtensions = "1.3.0"
+espresso = "3.7.0"
 mockk = "1.12.3"
 coroutinesTest = "1.5.2"
 mockWebServer = "4.9.3"
 
 #plugins
 gradle = "8.9.0"
-kotlin = "2.0.21"
-ktlint = "10.2.1"
-detekt = "1.19.0"
+kotlin = "2.2.10"
+ktlint = "13.1.0"
+detekt = "1.23.8"
 
 [libraries]
 #android
@@ -60,7 +61,7 @@ compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose-core" }
 compose-ui-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-core" }
 compose-material = { module = "androidx.compose.material:material", version.ref = "compose-core" }
 compose-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-compose-extended-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "compose-core" }
+compose-extended-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "material-icons" }
 compose-activity = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 compose-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
 compose-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
@@ -68,10 +69,7 @@ compose-navigation-hilt = { module = "androidx.hilt:hilt-navigation-compose", ve
 
 #accompanist
 accompanist-drawablepainter = { module = "com.google.accompanist:accompanist-drawablepainter", version.ref = "accompanist" }
-accompanist-systemuicontroller = { module = "com.google.accompanist:accompanist-systemuicontroller", version.ref = "accompanist" }
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist" }
-accompanist-flowlayout = { module = "com.google.accompanist:accompanist-flowlayout", version.ref = "accompanist" }
-accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 
 #room
 room-core = { module = "androidx.room:room-runtime", version.ref = "room" }
@@ -116,10 +114,7 @@ compose-jetpack = [
 ]
 accompanist = [
     "accompanist-drawablepainter",
-    "accompanist-systemuicontroller",
     "accompanist-permissions",
-    "accompanist-flowlayout",
-    "accompanist-swiperefresh"
 ]
 
 [plugins]

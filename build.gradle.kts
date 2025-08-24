@@ -23,15 +23,6 @@ subprojects {
         config = files("$rootDir/${ModuleExtension.FilePath.detekt}")
         buildUponDefaultConfig = true
     }
-
-    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class).all {
-        kotlinOptions {
-            freeCompilerArgs = freeCompilerArgs + listOf(
-                "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            )
-        }
-    }
 }
 
 tasks.register("clean", Delete::class) {

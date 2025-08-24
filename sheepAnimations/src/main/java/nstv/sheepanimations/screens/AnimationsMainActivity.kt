@@ -2,7 +2,9 @@ package nstv.sheepanimations.screens
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
@@ -23,16 +25,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import nstv.design.theme.ComposableSheepTheme
 import nstv.design.theme.Grid
+import nstv.design.theme.darkScrim
+import nstv.design.theme.lightScrim
 import nstv.sheepanimations.screens.canvas.CircleAnimationScreen
 import nstv.sheepanimations.screens.coroutine.CoroutinesJumpScreen
 import nstv.sheepanimations.screens.gesture.ChasingSheep
@@ -64,26 +67,32 @@ class AnimationsMainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposableSheepTheme {
+                val darkTheme = isSystemInDarkTheme()
 
-                val systemUiController = rememberSystemUiController()
-                val useDarkIcons = isSystemInDarkTheme().not()
-                val surfaceColor = MaterialTheme.colorScheme.surface
-
-                SideEffect {
-                    systemUiController.setSystemBarsColor(
-                        color = surfaceColor, darkIcons = useDarkIcons
+                DisposableEffect(darkTheme) {
+                    enableEdgeToEdge(
+                        statusBarStyle = SystemBarStyle.auto(
+                            android.graphics.Color.TRANSPARENT,
+                            android.graphics.Color.TRANSPARENT,
+                        ) { darkTheme },
+                        navigationBarStyle = SystemBarStyle.auto(
+                            lightScrim,
+                            darkScrim,
+                        ) { darkTheme },
                     )
+                    onDispose {}
                 }
 
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
-                ) {
+                ) { paddingValues ->
                     var expanded by remember { mutableStateOf(false) }
                     var selectedScreen by remember { mutableStateOf(Screen.CHASING_SHEEP_GESTURES) }
 
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .padding(paddingValues)
                             .padding(Grid.Two)
                     ) {
                         Box(
